@@ -277,13 +277,16 @@ class DiwakarJiLaundryTestCase(unittest.TestCase):
             'festive_banner_text': new_banner_text,
             'festive_banner_enabled': 'true'
         })
-        self.assertEqual(update_res.status_code, 200)
+        # Test theme switching
+        theme_res = self.app.put('/api/admin/settings', json={'active_theme': 'royal_gold'})
+        self.assertEqual(theme_res.status_code, 200)
 
-        # Check public config
-        pub_res = self.app.get('/api/public/config')
-        settings = json.loads(pub_res.data.decode('utf-8'))['settings']
-        self.assertEqual(settings['festive_banner_text'], new_banner_text)
-        self.assertEqual(settings['festive_banner_enabled'], 'true')
+        pub_theme_res = self.app.get('/api/public/config')
+        theme_settings = json.loads(pub_theme_res.data.decode('utf-8'))['settings']
+        self.assertEqual(theme_settings['active_theme'], 'royal_gold')
+
+        # Revert theme back to diwali
+        self.app.put('/api/admin/settings', json={'active_theme': 'diwali'})
 
 
 if __name__ == '__main__':

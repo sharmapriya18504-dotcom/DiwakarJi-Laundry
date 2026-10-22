@@ -19,6 +19,7 @@
 
   <!-- ========== FLOATING WHATSAPP BUTTON ========== -->
   <a href="https://wa.me/917860462268" target="_blank" id="whatsapp-float" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <span class="whatsapp-diya-companion" title="Shubh Diwali!">🪔</span>
     <i class="fa-brands fa-whatsapp" style="font-size:26px;"></i>
     <span>Chat on WhatsApp</span>
   </a>
@@ -114,6 +115,28 @@
   <!-- ========== HERO SECTION ========== -->
   <section class="hero" id="home">
     <div class="hero-bg-rangoli" aria-hidden="true"></div>
+    
+    <!-- Rotating Rangoli Mandala SVG (Diwali Theme) -->
+    <svg class="hero-rangoli-mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="200" cy="200" r="190" stroke="#f5c453" stroke-width="1.5" stroke-dasharray="6 6"/>
+      <circle cx="200" cy="200" r="160" stroke="#f5c453" stroke-width="1.2"/>
+      <circle cx="200" cy="200" r="120" stroke="#f5c453" stroke-width="1.5"/>
+      <circle cx="200" cy="200" r="80" stroke="#f5c453" stroke-width="1.2"/>
+      <circle cx="200" cy="200" r="40" stroke="#f5c453" stroke-width="1.5"/>
+      <!-- 8-petal sacred lotus mandala symmetry -->
+      <g stroke="#f5c453" stroke-width="1.5" fill="none">
+        <path d="M200 40 Q240 120 200 200 Q160 120 200 40Z" />
+        <path d="M200 360 Q240 280 200 200 Q160 280 200 360Z" />
+        <path d="M40 200 Q120 240 200 200 Q120 160 40 200Z" />
+        <path d="M360 200 Q280 240 200 200 Q280 160 360 200Z" />
+        <path d="M87 87 Q170 145 200 200 Q145 170 87 87Z" />
+        <path d="M313 313 Q230 255 200 200 Q255 230 313 313Z" />
+        <path d="M87 313 Q145 230 200 200 Q170 255 87 313Z" />
+        <path d="M313 87 Q255 170 200 200 Q230 145 313 87Z" />
+      </g>
+      <circle cx="200" cy="200" r="14" fill="#f5c453" opacity="0.3"/>
+    </svg>
+
     <div class="hero-bg-shapes">
       <div class="shape shape-1"></div>
       <div class="shape shape-2"></div>
@@ -121,10 +144,48 @@
     </div>
     <div class="container hero-inner">
       <div class="hero-content reveal">
-        <div class="festive-hero-badge" id="festive-hero-badge">
-          <span class="diya-flame-mini"></span>
-          <span>Festive Laundry Special • Kanpur</span>
+        <!-- Authentic Earthen Clay Diya Badge with 3-Layer Animated Flame -->
+        <div class="traditional-diya-hero" id="traditional-diya-hero">
+          <svg class="clay-diya-svg" viewBox="0 0 50 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="25" cy="14" rx="18" ry="12" fill="url(#haloGlow)" />
+            <!-- Earthen Clay Diya Body -->
+            <path d="M7 26 C8 34 16 38 25 38 C34 38 42 34 43 26 C43 23 37 21 25 21 C13 21 7 23 7 26 Z" fill="url(#clayGrad)" stroke="#7c2d12" stroke-width="1"/>
+            <!-- Golden Trimmed Oil Rim -->
+            <ellipse cx="25" cy="22" rx="18" ry="4" fill="url(#oilGrad)" stroke="#f5c453" stroke-width="0.8"/>
+            <path d="M22 21 C24 19 26 19 28 21 Z" fill="#9a3412"/>
+            <!-- Realistic 3-layer Flame -->
+            <g class="diya-animated-flame">
+              <!-- Outer Saffron Flame -->
+              <path d="M25 7 C21 14 20 18 25 21 C30 18 29 14 25 7 Z" fill="#ea580c"/>
+              <!-- Mid Radiant Gold Flame -->
+              <path d="M25 10 C22.5 15 22 17.5 25 20 C28 17.5 27.5 15 25 10 Z" fill="#fbbf24"/>
+              <!-- Sacred White Core Flame -->
+              <path d="M25 13 C23.8 16 23.5 17.5 25 19 C26.5 17.5 26.2 16 25 13 Z" fill="#ffffff"/>
+            </g>
+            <defs>
+              <linearGradient id="clayGrad" x1="7" y1="21" x2="43" y2="38" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#c2410c"/>
+                <stop offset="50%" stop-color="#9a3412"/>
+                <stop offset="100%" stop-color="#7c2d12"/>
+              </linearGradient>
+              <radialGradient id="oilGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#d97706"/>
+                <stop offset="70%" stop-color="#78350f"/>
+                <stop offset="100%" stop-color="#451a03"/>
+              </radialGradient>
+              <radialGradient id="haloGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(254, 240, 138, 0.45)"/>
+                <stop offset="60%" stop-color="rgba(245, 196, 83, 0.15)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+          </svg>
+          <div class="diya-badge-text">
+            <span class="diya-badge-main"><span class="sparkle-star">✦</span> Shubh Deepavali 2026</span>
+            <span class="diya-badge-sub">Kanpur ki Vishesh Festive Laundry Seva</span>
+          </div>
         </div>
+
         <div class="hero-badge">
           <span class="badge-dot"></span>
           Serving Kanpur Since 2010

@@ -181,6 +181,11 @@
   }
 
   function applySettingsToDOM(settings) {
+    // Dynamic Multi-Theme Engine
+    const activeTheme = settings.active_theme || 'diwali';
+    document.documentElement.setAttribute('data-theme', activeTheme);
+    document.body.setAttribute('data-theme', activeTheme);
+
     // Festive Banner
     const banner = document.getElementById('festive-banner');
     const bannerText = document.getElementById('festive-banner-text');
@@ -197,12 +202,21 @@
       }
     }
 
-    // Diwali Decorations (Fairy lights & badges)
+    // Diwali Decorations & Traditional Clay Diya
     const fairyLights = document.getElementById('fairy-lights');
     const festiveBadge = document.getElementById('festive-hero-badge');
+    const traditionalDiya = document.getElementById('traditional-diya-hero');
+    const rangoliMandala = document.querySelector('.hero-rangoli-mandala');
+    const waCompanion = document.querySelector('.whatsapp-diya-companion');
     const isDecorEnabled = settings.diwali_decorations_enabled === 'true' || settings.diwali_decorations_enabled === true;
-    if (fairyLights) fairyLights.style.display = isDecorEnabled ? 'flex' : 'none';
-    if (festiveBadge) festiveBadge.style.display = isDecorEnabled ? 'inline-flex' : 'none';
+
+    const showDiwali = (activeTheme === 'diwali') && isDecorEnabled;
+
+    if (fairyLights) fairyLights.style.display = showDiwali ? 'flex' : 'none';
+    if (festiveBadge) festiveBadge.style.display = showDiwali ? 'inline-flex' : 'none';
+    if (traditionalDiya) traditionalDiya.style.display = showDiwali ? 'inline-flex' : 'none';
+    if (rangoliMandala) rangoliMandala.style.display = showDiwali ? 'block' : 'none';
+    if (waCompanion) waCompanion.style.display = showDiwali ? 'flex' : 'none';
 
     // Hero Text
     const heroTitle = document.getElementById('hero-title');

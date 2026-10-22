@@ -501,6 +501,12 @@
       const data = await res.json();
       const s = data.settings || {};
 
+      // Theme selection
+      if (s.active_theme) {
+        const themeRadio = document.querySelector(`input[name="admin_theme_choice"][value="${s.active_theme}"]`);
+        if (themeRadio) themeRadio.checked = true;
+      }
+
       document.getElementById('setting-diwali-decorations').checked = (s.diwali_decorations_enabled === 'true' || s.diwali_decorations_enabled === true);
       document.getElementById('setting-banner-enabled').checked = (s.festive_banner_enabled === 'true' || s.festive_banner_enabled === true);
       document.getElementById('setting-banner-text').value = s.festive_banner_text || '';
@@ -519,7 +525,11 @@
   if (settingsForm) {
     settingsForm.addEventListener('submit', async function (e) {
       e.preventDefault();
+      const themeRadio = document.querySelector('input[name="admin_theme_choice"]:checked');
+      const chosenTheme = themeRadio ? themeRadio.value : 'diwali';
+
       const payload = {
+        active_theme: chosenTheme,
         diwali_decorations_enabled: document.getElementById('setting-diwali-decorations').checked ? 'true' : 'false',
         festive_banner_enabled: document.getElementById('setting-banner-enabled').checked ? 'true' : 'false',
         festive_banner_text: document.getElementById('setting-banner-text').value.trim(),
@@ -538,7 +548,7 @@
           body: JSON.stringify(payload)
         });
         if (res.ok) {
-          showToast('✓ Diwali & Website settings updated successfully!');
+          showToast(`✓ Website settings updated! Active theme: ${chosenTheme}`);
         } else {
           showToast('Failed to save settings.');
         }

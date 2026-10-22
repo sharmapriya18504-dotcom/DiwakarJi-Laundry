@@ -532,7 +532,7 @@ def admin_update_settings():
     allowed_keys = [
         'business_name', 'contact_phone', 'whatsapp_number', 'owner_name',
         'festive_banner_enabled', 'festive_banner_text', 'festive_discount_badge',
-        'diwali_decorations_enabled', 'hero_headline', 'hero_subtitle',
+        'diwali_decorations_enabled', 'active_theme', 'hero_headline', 'hero_subtitle',
         'opening_hours', 'service_areas'
     ]
 

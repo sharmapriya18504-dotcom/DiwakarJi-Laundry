@@ -1887,26 +1887,301 @@ textarea:focus-visible {
   outline-offset: 2px !important;
 }
 
-/* Mobile responsive fixes for modal and banner */
-@media (max-width: 600px) {
-  .festive-banner { padding: 8px 12px; font-size: 0.8rem; }
-  .festive-banner-inner { justify-content: flex-start; text-align: left; }
-  .festive-tag-pill { font-size: 0.65rem; padding: 2px 7px; }
-  .festive-banner-close { display: none; }
-  body.has-festive-banner .header { top: 56px; }
-  
-  .booking-modal-card { max-height: 94vh; margin: 10px; }
-  .modal-header-festive { padding: 18px 20px; }
-  .modal-title { font-size: 1.15rem; }
-  .modal-body { padding: 18px 20px; }
-  .modal-summary-grid { grid-template-columns: 1fr; gap: 8px; }
-  .summary-item.full-width { grid-column: span 1; }
-  .modal-alt-actions { flex-direction: column; }
+/* ============================================================
+   MULTI-THEME ENGINE
+   Supported: 'diwali' | 'classic' | 'royal_gold' | 'fresh_mint'
+   ============================================================ */
+
+/* 1. SHUBH DIWALI THEME (Default & Premium Festive) */
+:root,
+[data-theme="diwali"] {
+  --theme-hero-bg: radial-gradient(circle at 50% 30%, #20113c 0%, #110924 50%, #070c1a 100%) !important;
+  --theme-accent: #f5c453 !important;
+  --theme-accent-bright: #fde047 !important;
+  --theme-accent-dark: #b88228 !important;
+  --theme-gold-glow: rgba(245, 196, 83, 0.45) !important;
+  --theme-card-border: rgba(212, 163, 75, 0.4) !important;
+  --theme-card-hover: rgba(245, 196, 83, 0.8) !important;
+  --theme-badge-bg: linear-gradient(135deg, #d4a34b 0%, #f5c453 100%) !important;
+  --theme-badge-text: #080d1a !important;
+  --theme-ribbon-display: inline-block !important;
+  --theme-festive-display: flex !important;
 }
 
-@media (max-width: 360px) {
-  .btn-submit { font-size: 0.88rem; padding: 14px 18px; }
-  .hero-title { font-size: 2.1rem; }
-  .service-price { font-size: 1rem; }
+[data-theme="diwali"] .hero {
+  background: var(--theme-hero-bg) !important;
 }
+
+[data-theme="diwali"] .hero-title .gradient-text {
+  background: linear-gradient(135deg, #f5c453 0%, #fef08a 50%, #d4a34b 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* 2. CLASSIC OCEAN THEME (Original Professional Look) */
+[data-theme="classic"] {
+  --theme-hero-bg: linear-gradient(135deg, #10243A 0%, #1a3a5c 50%, #10243A 100%) !important;
+  --theme-accent: #2878F0 !important;
+  --theme-accent-bright: #5ba3ff !important;
+  --theme-accent-dark: #1a5ecf !important;
+  --theme-gold-glow: rgba(40, 120, 240, 0.3) !important;
+  --theme-card-border: #e2e8f0 !important;
+  --theme-card-hover: #2878F0 !important;
+  --theme-badge-bg: #2878F0 !important;
+  --theme-badge-text: #ffffff !important;
+  --theme-ribbon-display: none !important;
+  --theme-festive-display: none !important;
+}
+
+[data-theme="classic"] .hero {
+  background: var(--theme-hero-bg) !important;
+}
+
+[data-theme="classic"] .fairy-lights-garland,
+[data-theme="classic"] .hero-bg-rangoli,
+[data-theme="classic"] .festive-hero-badge,
+[data-theme="classic"] .hero-rangoli-mandala,
+[data-theme="classic"] .traditional-diya-hero,
+[data-theme="classic"] .festive-card-ribbon {
+  display: none !important;
+}
+
+/* 3. ROYAL GOLD THEME (Luxury Boutique) */
+[data-theme="royal_gold"] {
+  --theme-hero-bg: linear-gradient(135deg, #090d16 0%, #161824 50%, #090d16 100%) !important;
+  --theme-accent: #e2b866 !important;
+  --theme-accent-bright: #f3d48d !important;
+  --theme-accent-dark: #8e6822 !important;
+  --theme-gold-glow: rgba(226, 184, 102, 0.35) !important;
+  --theme-card-border: rgba(226, 184, 102, 0.35) !important;
+  --theme-card-hover: #e2b866 !important;
+  --theme-badge-bg: linear-gradient(135deg, #c49746 0%, #e2b866 100%) !important;
+  --theme-badge-text: #090d16 !important;
+  --theme-ribbon-display: inline-block !important;
+  --theme-festive-display: none !important;
+}
+
+[data-theme="royal_gold"] .hero {
+  background: var(--theme-hero-bg) !important;
+}
+
+[data-theme="royal_gold"] .hero-title .gradient-text {
+  background: linear-gradient(135deg, #e2b866 0%, #fae8b4 50%, #9e7529 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="royal_gold"] .fairy-lights-garland,
+[data-theme="royal_gold"] .hero-bg-rangoli,
+[data-theme="royal_gold"] .traditional-diya-hero {
+  display: none !important;
+}
+
+/* 4. FRESH MINT THEME (Eco-Friendly Organic Green) */
+[data-theme="fresh_mint"] {
+  --theme-hero-bg: linear-gradient(135deg, #064e3b 0%, #047857 50%, #064e3b 100%) !important;
+  --theme-accent: #10b981 !important;
+  --theme-accent-bright: #34d399 !important;
+  --theme-accent-dark: #047857 !important;
+  --theme-gold-glow: rgba(16, 185, 129, 0.35) !important;
+  --theme-card-border: rgba(16, 185, 129, 0.25) !important;
+  --theme-card-hover: #10b981 !important;
+  --theme-badge-bg: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+  --theme-badge-text: #ffffff !important;
+  --theme-ribbon-display: none !important;
+  --theme-festive-display: none !important;
+}
+
+[data-theme="fresh_mint"] .hero {
+  background: var(--theme-hero-bg) !important;
+}
+
+[data-theme="fresh_mint"] .hero-title .gradient-text {
+  background: linear-gradient(135deg, #34d399 0%, #a7f3d0 50%, #059669 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="fresh_mint"] .fairy-lights-garland,
+[data-theme="fresh_mint"] .hero-bg-rangoli,
+[data-theme="fresh_mint"] .festive-hero-badge,
+[data-theme="fresh_mint"] .traditional-diya-hero {
+  display: none !important;
+}
+
+/* ============================================================
+   ENHANCED DIWALI VISUAL MASTERPIECE
+   Realistic Earthen Diya, Rotating Rangoli Mandala, Golden Sparkles
+   ============================================================ */
+
+/* ---- ROTATING RANGOLI MANDALA BACKGROUND ---- */
+.hero-rangoli-mandala {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 720px;
+  height: 720px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.09;
+  z-index: 0;
+  animation: rangoliSpin 160s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes rangoliSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ---- AUTHENTIC TRADITIONAL CLAY DIYA (MITTI KA DIYA) ---- */
+.traditional-diya-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(12, 19, 36, 0.7);
+  border: 1.5px solid rgba(245, 196, 83, 0.4);
+  border-radius: 50px;
+  padding: 6px 16px 6px 8px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 196, 83, 0.25);
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.clay-diya-svg {
+  width: 44px;
+  height: 38px;
+  filter: drop-shadow(0 0 10px rgba(245, 196, 83, 0.8));
+  flex-shrink: 0;
+}
+
+.diya-animated-flame {
+  transform-origin: 22px 18px;
+  animation: realisticFlame 2s ease-in-out infinite;
+}
+
+@keyframes realisticFlame {
+  0% {
+    transform: scale(1) rotate(-1.5deg);
+    filter: drop-shadow(0 -2px 6px #fbbf24) drop-shadow(0 -4px 14px #ea580c);
+  }
+  25% {
+    transform: scale(1.05, 0.96) rotate(1.5deg);
+    filter: drop-shadow(0 -3px 8px #fde047) drop-shadow(0 -6px 18px #f97316);
+  }
+  50% {
+    transform: scale(0.96, 1.06) rotate(-2deg);
+    filter: drop-shadow(0 -2px 5px #f59e0b) drop-shadow(0 -4px 12px #ea580c);
+  }
+  75% {
+    transform: scale(1.06, 0.98) rotate(2deg);
+    filter: drop-shadow(0 -3px 9px #fbbf24) drop-shadow(0 -7px 20px #f97316);
+  }
+  100% {
+    transform: scale(1) rotate(-1.5deg);
+    filter: drop-shadow(0 -2px 6px #fbbf24) drop-shadow(0 -4px 14px #ea580c);
+  }
+}
+
+.diya-badge-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.diya-badge-main {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #fef08a;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.diya-badge-sub {
+  font-size: 0.72rem;
+  color: #fbd38d;
+  font-weight: 500;
+}
+
+/* Floating Diya beside Floating WhatsApp Button */
+.whatsapp-diya-companion {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  width: 28px;
+  height: 28px;
+  background: radial-gradient(circle, #fef08a 0%, #f59e0b 60%, transparent 80%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 0 12px #f59e0b;
+  animation: diyaGlow 2.5s ease-in-out infinite alternate;
+}
+
+/* Golden Sparkle Starbursts */
+.sparkle-star {
+  display: inline-block;
+  color: #f5c453;
+  animation: starTwinkle 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes starTwinkle {
+  0% { transform: scale(0.85); opacity: 0.5; filter: drop-shadow(0 0 2px #f5c453); }
+  100% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 8px #fde047); }
+}
+
+/* Enhanced Pricing & Service Cards in Diwali Mode */
+[data-theme="diwali"] .service-card {
+  border: 1.5px solid rgba(212, 163, 75, 0.35) !important;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="diwali"] .service-card:hover {
+  border-color: #f5c453 !important;
+  box-shadow: 0 18px 45px rgba(12, 20, 36, 0.18), 0 0 25px rgba(245, 196, 83, 0.25) !important;
+  transform: translateY(-8px);
+}
+
+[data-theme="diwali"] .price-card.featured {
+  background: radial-gradient(circle at 50% 20%, #2b154a 0%, #150a2e 60%, #0a0518 100%) !important;
+  border: 2px solid #f5c453 !important;
+  box-shadow: 0 16px 45px rgba(12, 20, 36, 0.4), 0 0 35px rgba(245, 196, 83, 0.3) !important;
+}
+
+[data-theme="diwali"] .festive-banner {
+  background: linear-gradient(90deg, #100820 0%, #3d0c24 30%, #6b1220 50%, #3d0c24 70%, #100820 100%) !important;
+  border-bottom: 2px solid #f5c453 !important;
+}
+
+[data-theme="diwali"] .header.scrolled {
+  background: rgba(12, 20, 36, 0.95) !important;
+  border-bottom: 1px solid rgba(245, 196, 83, 0.3) !important;
+}
+
+[data-theme="diwali"] .header.scrolled .logo-name {
+  color: #ffffff !important;
+}
+
+[data-theme="diwali"] .header.scrolled .nav-link {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="diwali"] .header.scrolled .nav-link:hover {
+  color: #f5c453 !important;
+  background: rgba(245, 196, 83, 0.12) !important;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .hero-rangoli-mandala { animation: none !important; }
+  .diya-animated-flame { animation: none !important; }
+  .sparkle-star { animation: none !important; }
+  .whatsapp-diya-companion { animation: none !important; }
+}
+
 

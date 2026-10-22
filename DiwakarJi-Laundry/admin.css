@@ -1077,3 +1077,86 @@ input:checked + .slider:before {
   .form-row.two-col { grid-template-columns: 1fr; }
   .bookings-table th, .bookings-table td { padding: 10px 12px; font-size: 0.82rem; }
 }
+
+/* ============================================================
+   ADMIN THEME SELECTOR STYLES
+   ============================================================ */
+.theme-selector-box {
+  background: #ffffff;
+  border-radius: var(--admin-radius);
+  border: 1.5px solid var(--admin-border);
+}
+
+.theme-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.theme-choice-card {
+  position: relative;
+  display: block;
+  background: #ffffff;
+  border: 2px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-choice-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+.theme-choice-card input[type="radio"] {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  accent-color: var(--admin-blue);
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.theme-choice-card:has(input:checked) {
+  border-color: #2878F0;
+  background: #f8faff;
+  box-shadow: 0 6px 22px rgba(40, 120, 240, 0.18);
+}
+
+.theme-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.theme-color-swatches {
+  display: flex;
+  height: 26px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.theme-color-swatches span {
+  flex: 1;
+}
+
+.theme-name {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--admin-navy);
+}
+
+.theme-desc {
+  font-size: 0.78rem;
+  color: var(--admin-text-muted);
+  line-height: 1.45;
+  margin-top: 3px;
+}
+

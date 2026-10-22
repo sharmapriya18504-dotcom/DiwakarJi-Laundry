@@ -314,6 +314,81 @@
         </div>
 
         <form id="settings-form" class="settings-form">
+          <!-- Dynamic Theme Selector -->
+          <div class="settings-box theme-selector-box">
+            <div class="box-title">
+              <i class="fa-solid fa-palette"></i>
+              <h3>Select Website Theme</h3>
+            </div>
+            <p class="helper-text" style="margin-top: -6px;">Choose which visual theme should be active on the public website. Changes apply immediately in real time!</p>
+
+            <div class="theme-cards-grid">
+              <!-- Theme 1: Diwali -->
+              <label class="theme-choice-card" for="theme-opt-diwali">
+                <input type="radio" name="admin_theme_choice" id="theme-opt-diwali" value="diwali" checked />
+                <div class="theme-card-content">
+                  <div class="theme-color-swatches diwali-swatch">
+                    <span style="background: #080d1a;"></span>
+                    <span style="background: #251240;"></span>
+                    <span style="background: #f5c453;"></span>
+                  </div>
+                  <div class="theme-text-info">
+                    <div class="theme-name">🪔 Shubh Diwali (Festive)</div>
+                    <div class="theme-desc">Royal Navy &amp; Purple with realistic earthen diyas, fairy lights &amp; golden rangoli</div>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Theme 2: Classic Ocean -->
+              <label class="theme-choice-card" for="theme-opt-classic">
+                <input type="radio" name="admin_theme_choice" id="theme-opt-classic" value="classic" />
+                <div class="theme-card-content">
+                  <div class="theme-color-swatches classic-swatch">
+                    <span style="background: #10243A;"></span>
+                    <span style="background: #2878F0;"></span>
+                    <span style="background: #EAF4FF;"></span>
+                  </div>
+                  <div class="theme-text-info">
+                    <div class="theme-name">🌊 Classic Ocean Blue</div>
+                    <div class="theme-desc">Clean, corporate modern laundry style with ocean blue &amp; white surfaces</div>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Theme 3: Royal Gold -->
+              <label class="theme-choice-card" for="theme-opt-royal_gold">
+                <input type="radio" name="admin_theme_choice" id="theme-opt-royal_gold" value="royal_gold" />
+                <div class="theme-card-content">
+                  <div class="theme-color-swatches royal-swatch">
+                    <span style="background: #090d16;"></span>
+                    <span style="background: #e2b866;"></span>
+                    <span style="background: #334155;"></span>
+                  </div>
+                  <div class="theme-text-info">
+                    <div class="theme-name">👑 Royal Gold Luxury</div>
+                    <div class="theme-desc">Midnight charcoal &amp; champagne gold for an upscale luxury boutique experience</div>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Theme 4: Fresh Mint -->
+              <label class="theme-choice-card" for="theme-opt-fresh_mint">
+                <input type="radio" name="admin_theme_choice" id="theme-opt-fresh_mint" value="fresh_mint" />
+                <div class="theme-card-content">
+                  <div class="theme-color-swatches mint-swatch">
+                    <span style="background: #064e3b;"></span>
+                    <span style="background: #10b981;"></span>
+                    <span style="background: #ecfdf5;"></span>
+                  </div>
+                  <div class="theme-text-info">
+                    <div class="theme-name">🌿 Eco Fresh Mint</div>
+                    <div class="theme-desc">Organic emerald &amp; mint green with eco-friendly fabric care aesthetic</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
           <!-- Festive Diwali Controls -->
           <div class="settings-box festive-box">
             <div class="box-title">

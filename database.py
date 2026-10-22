@@ -93,6 +93,7 @@ def init_db():
         ('festive_banner_text', '🪔 Shubh Diwali Offer: 15% OFF on Blankets & Dry Cleaning! Free Pickup & Delivery across Kanpur.'),
         ('festive_discount_badge', 'Diwali Festive Offer'),
         ('diwali_decorations_enabled', 'true'),
+        ('active_theme', 'diwali'),
         ('hero_headline', 'Fresh Clothes. Fresh Feel.'),
         ('hero_subtitle', 'Professional laundry & dry cleaning with free doorstep pickup & delivery across Kanpur. Cleaner clothes, happier homes.'),
         ('opening_hours', '7:00 AM – 8:00 PM (All 7 Days)'),
