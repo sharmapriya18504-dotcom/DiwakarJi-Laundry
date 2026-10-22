@@ -1,206 +1,238 @@
 /* ============================================================
-   DIWAKAR JI LAUNDRY — DUAL & MULTI-THEME ENGINE
-   Themes: Shubh Diwali, Classic Ocean (Everyday), Royal Gold, Fresh Mint
+   DIWAKAR JI LAUNDRY — EDITORIAL ATELIER DESIGN SYSTEM
+   Inspired by Reference Atelier Aesthetic ("Your clothes, our care, at your doorstep.")
+   Themes: 
+     1. Normal Daily Theme (White / Soft Fog Canvas, Deep Navy, Sky Blue, Crisp Atelier Minimal)
+     2. Special Diwali Theme (Royal Plum / Velvet Night, Warm Ivory, Champagne Gold, Sacred Diya)
    ============================================================ */
 
-/* 1. SHUBH DIWALI THEME (Sacred Purple, Night Sky, Warm Clay Diya, Gold Sparkles) */
-[data-theme="diwali"] {
-  --bg-primary: #0c1424;
-  --bg-secondary: #140d28;
-  --bg-card: rgba(20, 13, 40, 0.75);
-  --text-main: #f8fafc;
-  --text-muted: #cbd5e1;
-  --text-heading: #fef08a;
-  
-  --theme-hero-bg: radial-gradient(circle at 50% 30%, #22123d 0%, #110920 60%, #080312 100%);
-  --theme-accent: #f5c453;
-  --theme-accent-bright: #fde047;
-  --theme-accent-dark: #b45309;
-  --theme-gold-glow: rgba(245, 196, 83, 0.4);
-  --theme-card-border: rgba(245, 196, 83, 0.3);
-  --theme-card-hover: #f5c453;
-  --theme-badge-bg: linear-gradient(135deg, #d4a34b 0%, #f5c453 100%);
-  --theme-badge-text: #1a0e05;
-  --theme-garland-display: flex;
-  --theme-rangoli-display: block;
-  --theme-diya-display: inline-flex;
-  --theme-lantern-display: block;
+/* ---- BASE THEME TOKENS ---- */
+:root {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Outfit', var(--font-sans);
+
+  --radius-pill: 50px;
+  --radius-card: 20px;
+  --radius-inner: 12px;
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-[data-theme="diwali"] .hero {
-  background: var(--theme-hero-bg) !important;
-}
-
-[data-theme="diwali"] .section-title {
-  color: #fef08a;
-}
-
-[data-theme="diwali"] .service-card,
-[data-theme="diwali"] .price-card,
-[data-theme="diwali"] .booking-form-wrap,
-[data-theme="diwali"] .booking-info,
-[data-theme="diwali"] .review-card,
-[data-theme="diwali"] .why-inner,
-[data-theme="diwali"] .step-card {
-  border-color: rgba(245, 196, 83, 0.25);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(245, 196, 83, 0.08);
-}
-
-[data-theme="diwali"] .service-card:hover {
-  border-color: #f5c453 !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), 0 0 25px rgba(245, 196, 83, 0.25) !important;
-}
-
-/* 2. CLASSIC OCEAN THEME (Everyday Default: White / Ivory + Navy #10243A + Royal Blue #2878F0) */
-[data-theme="classic"] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8faff;
+/* ============================================================
+   1. NORMAL DAILY THEME (ATELIER MINIMALIST)
+   Reference Image Match: Soft airy mist/ivory canvas, deep ink navy,
+   pill buttons with thin borders and arrows (↗), generous whitespace.
+   ============================================================ */
+[data-theme="classic"],
+[data-theme="normal"] {
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
   --bg-card: #ffffff;
-  --text-main: #1e293b;
+  --bg-subtle: #f1f5f9;
+  --bg-pill: #ffffff;
+
+  --text-headline: #0f172a;
+  --text-body: #475569;
   --text-muted: #64748b;
-  --text-heading: #10243A;
+  --text-accent: #1e3a8a;
 
-  --theme-hero-bg: linear-gradient(135deg, #0f243d 0%, #173b64 50%, #0d1e33 100%);
-  --theme-accent: #2878F0;
-  --theme-accent-bright: #60a5fa;
-  --theme-accent-dark: #1d4ed8;
-  --theme-gold-glow: rgba(40, 120, 240, 0.3);
-  --theme-card-border: #e2e8f0;
-  --theme-card-hover: #2878F0;
-  --theme-badge-bg: linear-gradient(135deg, #1d4ed8 0%, #2878F0 100%);
-  --theme-badge-text: #ffffff;
-  --theme-garland-display: none;
-  --theme-rangoli-display: none;
-  --theme-diya-display: none;
-  --theme-lantern-display: none;
+  --border-subtle: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-pill: #0f172a;
+
+  --btn-primary-bg: #0f172a;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover: #1e293b;
+
+  --btn-pill-border: #0f172a;
+  --btn-pill-text: #0f172a;
+  --btn-pill-hover-bg: #0f172a;
+  --btn-pill-hover-text: #ffffff;
+
+  --accent-blue: #2563eb;
+  --accent-sky: #e0f2fe;
+  --accent-wa: #25D366;
+
+  --hero-kicker-color: #64748b;
+  --hero-bg: #f8fafc;
+  --header-bg: rgba(248, 250, 252, 0.85);
+
+  --shadow-subtle: 0 4px 20px rgba(15, 23, 42, 0.04);
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.06);
+  --shadow-hover: 0 16px 40px rgba(15, 23, 42, 0.1);
+
+  --festive-decor-display: none !important;
 }
 
-[data-theme="classic"] .hero {
-  background: var(--theme-hero-bg) !important;
+/* ============================================================
+   2. SPECIAL DIWALI THEME (ROYAL PLUM & CHAMPAGNE GOLD)
+   Deep regal plum canvas, warm ivory highlights, champagne gold accents,
+   warm diya lighting aura, sacred rangoli geometry, glowing pill CTAs.
+   ============================================================ */
+[data-theme="diwali"] {
+  --bg-page: #10081d;
+  --bg-surface: #170d2b;
+  --bg-card: rgba(26, 15, 46, 0.85);
+  --bg-subtle: #1f1238;
+  --bg-pill: rgba(255, 255, 255, 0.08);
+
+  --text-headline: #faf7f2;
+  --text-body: #e2d9ec;
+  --text-muted: #ad9ebf;
+  --text-accent: #f5c453;
+
+  --border-subtle: rgba(245, 196, 83, 0.2);
+  --border-medium: rgba(245, 196, 83, 0.4);
+  --border-pill: #f5c453;
+
+  --btn-primary-bg: linear-gradient(135deg, #f5c453 0%, #d4a34b 100%);
+  --btn-primary-text: #170d2b;
+  --btn-primary-hover: linear-gradient(135deg, #fde047 0%, #f5c453 100%);
+
+  --btn-pill-border: #f5c453;
+  --btn-pill-text: #f5c453;
+  --btn-pill-hover-bg: #f5c453;
+  --btn-pill-hover-text: #170d2b;
+
+  --accent-gold: #f5c453;
+  --accent-amber: #f59e0b;
+  --accent-wa: #25D366;
+
+  --hero-kicker-color: #f5c453;
+  --hero-bg: radial-gradient(circle at 70% 30%, #261245 0%, #150929 50%, #0c0517 100%);
+  --header-bg: rgba(16, 8, 29, 0.88);
+
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 196, 83, 0.1);
+  --shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(245, 196, 83, 0.25);
+
+  --festive-decor-display: block !important;
 }
 
-[data-theme="classic"] .fairy-lights-garland,
-[data-theme="classic"] .hero-rangoli-mandala,
-[data-theme="classic"] .traditional-diya-hero,
-[data-theme="classic"] .hero-lantern,
-[data-theme="classic"] .whatsapp-diya-companion {
-  display: none !important;
+/* ============================================================
+   GLOBAL BODY & THEME WRAPPER
+   ============================================================ */
+body {
+  background-color: var(--bg-page);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-/* 3. ROYAL GOLD THEME (Onyx & Imperial Champagne Gold) */
-[data-theme="royal_gold"] {
-  --bg-primary: #090d16;
-  --bg-secondary: #131722;
-  --bg-card: rgba(19, 23, 34, 0.85);
-  --text-main: #f1f5f9;
-  --text-muted: #94a3b8;
-  --text-heading: #fae8b4;
-
-  --theme-hero-bg: linear-gradient(135deg, #090d16 0%, #1c1d28 50%, #090d16 100%);
-  --theme-accent: #e2b866;
-  --theme-accent-bright: #fae8b4;
-  --theme-accent-dark: #9e7529;
-  --theme-gold-glow: rgba(226, 184, 102, 0.35);
-  --theme-card-border: rgba(226, 184, 102, 0.3);
-  --theme-card-hover: #e2b866;
-  --theme-badge-bg: linear-gradient(135deg, #c49746 0%, #e2b866 100%);
-  --theme-badge-text: #090d16;
-  --theme-garland-display: none;
-  --theme-rangoli-display: none;
-  --theme-diya-display: none;
-  --theme-lantern-display: none;
+h1, h2, h3, h4, .serif-font {
+  font-family: var(--font-serif);
+  color: var(--text-headline);
 }
 
-[data-theme="royal_gold"] .hero {
-  background: var(--theme-hero-bg) !important;
+/* Reference Image Pill Button (↗) */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--btn-pill-border);
+  color: var(--btn-pill-text);
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--transition-smooth);
 }
 
-[data-theme="royal_gold"] .fairy-lights-garland,
-[data-theme="royal_gold"] .hero-rangoli-mandala,
-[data-theme="royal_gold"] .traditional-diya-hero,
-[data-theme="royal_gold"] .hero-lantern,
-[data-theme="royal_gold"] .whatsapp-diya-companion {
-  display: none !important;
+.btn-pill:hover {
+  background: var(--btn-pill-hover-bg);
+  color: var(--btn-pill-hover-text);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* 4. FRESH MINT THEME (Eco-Friendly Emerald & Sage) */
-[data-theme="fresh_mint"] {
-  --bg-primary: #fcfdfd;
-  --bg-secondary: #f0fdf4;
-  --bg-card: #ffffff;
-  --text-main: #14532d;
-  --text-muted: #4b5563;
-  --text-heading: #064e3b;
-
-  --theme-hero-bg: linear-gradient(135deg, #064e3b 0%, #047857 50%, #064e3b 100%);
-  --theme-accent: #10b981;
-  --theme-accent-bright: #34d399;
-  --theme-accent-dark: #047857;
-  --theme-gold-glow: rgba(16, 185, 129, 0.35);
-  --theme-card-border: rgba(16, 185, 129, 0.25);
-  --theme-card-hover: #10b981;
-  --theme-badge-bg: linear-gradient(135deg, #059669 0%, #10b981 100%);
-  --theme-badge-text: #ffffff;
-  --theme-garland-display: none;
-  --theme-rangoli-display: none;
-  --theme-diya-display: none;
-  --theme-lantern-display: none;
+.btn-pill .arrow-icon {
+  font-size: 13px;
+  transition: transform 0.25s ease;
 }
 
-[data-theme="fresh_mint"] .hero {
-  background: var(--theme-hero-bg) !important;
+.btn-pill:hover .arrow-icon {
+  transform: translate(2px, -2px);
 }
 
-[data-theme="fresh_mint"] .fairy-lights-garland,
-[data-theme="fresh_mint"] .hero-rangoli-mandala,
-[data-theme="fresh_mint"] .traditional-diya-hero,
-[data-theme="fresh_mint"] .hero-lantern,
-[data-theme="fresh_mint"] .whatsapp-diya-companion {
-  display: none !important;
+.btn-pill-filled {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: var(--radius-pill);
+  border: none;
+  color: var(--btn-primary-text);
+  background: var(--btn-primary-bg);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transition: all var(--transition-smooth);
 }
 
-/* Hanging Lanterns Keyframe Animations */
-@keyframes lanternSwingLeft {
-  0% { transform: rotate(-3deg); }
-  100% { transform: rotate(3deg); }
+.btn-pill-filled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes lanternSwingRight {
-  0% { transform: rotate(3deg); }
-  100% { transform: rotate(-3deg); }
+/* Reference Kicker Badge (• CATEGORY) */
+.reference-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hero-kicker-color);
+  margin-bottom: 20px;
 }
 
-.hero-lantern {
-  position: absolute;
-  top: 0;
-  z-index: 10;
-  pointer-events: none;
-  transform-origin: top center;
+.reference-kicker .kicker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
 }
 
-.hero-lantern.lantern-left {
-  left: 36px;
-  animation: lanternSwingLeft 5s ease-in-out infinite alternate;
+/* Subtitle Pill with Icon */
+.subtitle-pill-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 24px 0 36px 0;
+  max-width: 480px;
 }
 
-.hero-lantern.lantern-right {
-  right: 36px;
-  animation: lanternSwingRight 5.5s ease-in-out infinite alternate;
+.subtitle-icon-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  color: var(--text-headline);
+  margin-top: 2px;
 }
 
-.lantern-cord {
-  width: 2px;
-  height: 48px;
-  background: linear-gradient(to bottom, rgba(245, 196, 83, 0.7), #d4a34b);
-  margin: 0 auto;
-}
-
-.lantern-svg {
-  width: 58px;
-  height: 105px;
-  filter: drop-shadow(0 0 12px rgba(245, 196, 83, 0.6));
-}
-
-@media (max-width: 768px) {
-  .hero-lantern { display: none !important; }
+.subtitle-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-body);
+  margin: 0;
 }

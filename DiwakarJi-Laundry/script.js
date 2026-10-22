@@ -63,7 +63,7 @@
 
   /* ---- 3. MOBILE HAMBURGER MENU ---- */
   const hamburger = document.getElementById('hamburger');
-  const navLinks  = document.getElementById('nav-links');
+  const navLinks = document.getElementById('nav-links');
 
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', function () {
@@ -115,7 +115,7 @@
   const faqItems = document.querySelectorAll('.faq-item');
 
   faqItems.forEach(function (item) {
-    const btn    = item.querySelector('.faq-question');
+    const btn = item.querySelector('.faq-question');
     const answer = item.querySelector('.faq-answer');
     if (!btn || !answer) return;
 
@@ -139,13 +139,13 @@
   /* ---- 6. DATE RESTRICTION (today to 30 days) ---- */
   const dateInput = document.getElementById('pickup-date');
   if (dateInput) {
-    const today  = new Date();
+    const today = new Date();
     const maxDay = new Date();
     maxDay.setDate(today.getDate() + 30);
 
     function formatDate(d) {
-      const y  = d.getFullYear();
-      const m  = String(d.getMonth() + 1).padStart(2, '0');
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
       const dd = String(d.getDate()).padStart(2, '0');
       return y + '-' + m + '-' + dd;
     }
@@ -271,9 +271,9 @@
 
   function calculatePriceEstimate(serviceName, qtyStr) {
     if (!serviceName) return null;
-    const svc = activeServices.find(s => s.name.toLowerCase() === serviceName.toLowerCase()) 
+    const svc = activeServices.find(s => s.name.toLowerCase() === serviceName.toLowerCase())
       || activeServices.find(s => serviceName.toLowerCase().includes(s.name.toLowerCase()));
-    
+
     if (!svc) return null;
 
     const price = svc.price;
@@ -326,48 +326,48 @@
   if (quantityEl) quantityEl.addEventListener('change', updateLivePrice);
 
   /* ---- 9. FORM VALIDATION & MODAL BOOKING WORKFLOW ---- */
-  const form       = document.getElementById('booking-form');
-  const submitBtn  = document.getElementById('submit-btn');
+  const form = document.getElementById('booking-form');
+  const submitBtn = document.getElementById('submit-btn');
   const submitText = document.getElementById('submit-text');
 
   const fields = [
     {
-      id:      'full-name',
+      id: 'full-name',
       groupId: 'group-name',
       validate: function (v) { return v.trim().length >= 2; }
     },
     {
-      id:      'mobile',
+      id: 'mobile',
       groupId: 'group-mobile',
       validate: function (v) { return /^[6-9]\d{9}$/.test(v.replace(/[\s\-+]/g, '')); }
     },
     {
-      id:      'address',
+      id: 'address',
       groupId: 'group-address',
       validate: function (v) { return v.trim().length >= 5; }
     },
     {
-      id:      'area',
+      id: 'area',
       groupId: 'group-area',
       validate: function (v) { return v.trim().length >= 2; }
     },
     {
-      id:      'service',
+      id: 'service',
       groupId: 'group-service',
       validate: function (v) { return v !== ''; }
     },
     {
-      id:      'quantity',
+      id: 'quantity',
       groupId: 'group-quantity',
       validate: function (v) { return v !== ''; }
     },
     {
-      id:      'pickup-date',
+      id: 'pickup-date',
       groupId: 'group-date',
       validate: function (v) { return v !== ''; }
     },
     {
-      id:      'pickup-time',
+      id: 'pickup-time',
       groupId: 'group-time',
       validate: function (v) { return v !== ''; }
     }
@@ -406,8 +406,8 @@
     if (!dateStr) return '';
     try {
       const d = new Date(dateStr + 'T00:00:00');
-      const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
     } catch (e) {
       return dateStr;
@@ -426,17 +426,17 @@
     if (ref) {
       msg += '🔖 *Booking Ref:* ' + ref + line;
     }
-    msg += '👤 *Name:* '              + data.name         + line;
-    msg += '📱 *Mobile:* '            + data.mobile       + line;
-    msg += '🏠 *Address:* '           + data.address      + line;
-    msg += '📍 *Area / PIN Code:* '   + data.area         + line;
-    msg += '👕 *Service:* '           + data.service      + line;
-    msg += '⚖️ *Estimated Quantity:* ' + data.quantity    + line;
+    msg += '👤 *Name:* ' + data.name + line;
+    msg += '📱 *Mobile:* ' + data.mobile + line;
+    msg += '🏠 *Address:* ' + data.address + line;
+    msg += '📍 *Area / PIN Code:* ' + data.area + line;
+    msg += '👕 *Service:* ' + data.service + line;
+    msg += '⚖️ *Estimated Quantity:* ' + data.quantity + line;
     if (estPrice) {
-      msg += '💰 *Estimated Price:* ' + estPrice          + line;
+      msg += '💰 *Estimated Price:* ' + estPrice + line;
     }
-    msg += '📅 *Pickup Date:* '       + data.formattedDate+ line;
-    msg += '⏰ *Preferred Time:* '    + data.time         + line;
+    msg += '📅 *Pickup Date:* ' + data.formattedDate + line;
+    msg += '⏰ *Preferred Time:* ' + data.time + line;
     if (data.instructions && data.instructions.trim()) {
       msg += '📝 *Special Instructions:* ' + data.instructions.trim() + line;
     } else {
@@ -466,7 +466,7 @@
     document.getElementById('modal-cust-schedule').textContent = `${bookingData.formattedDate} • ${bookingData.time}`;
     document.getElementById('modal-cust-estimate').textContent = bookingData.estimatedPrice || 'Confirmed at pickup';
     document.getElementById('modal-cust-address').textContent = `${bookingData.address}, ${bookingData.area}`;
-    
+
     const instrEl = document.getElementById('modal-cust-instructions');
     if (instrEl) instrEl.textContent = bookingData.instructions || '—';
 
@@ -500,14 +500,14 @@
       if (lastBookingData && lastBookingData.whatsappUrl) {
         window.open(lastBookingData.whatsappUrl, '_blank');
         showToast('✓ WhatsApp opened. Please tap Send in WhatsApp!');
-        
+
         // Notify backend that notification was opened
         if (lastBookingData.reference) {
           fetch(`${API_BASE}/api/bookings/${lastBookingData.reference}/notification`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status: 'opened' })
-          }).catch(() => {});
+          }).catch(() => { });
         }
       }
     });
@@ -556,15 +556,15 @@
     const formattedDate = formatDateDisplay(rawDate);
 
     const formData = {
-      name:         document.getElementById('full-name').value.trim(),
-      mobile:       cleanMobile,
-      address:      document.getElementById('address').value.trim(),
-      area:         document.getElementById('area').value.trim(),
-      service:      document.getElementById('service').value,
-      quantity:     document.getElementById('quantity').value,
-      date:         rawDate,
-      formattedDate:formattedDate,
-      time:         document.getElementById('pickup-time').value,
+      name: document.getElementById('full-name').value.trim(),
+      mobile: cleanMobile,
+      address: document.getElementById('address').value.trim(),
+      area: document.getElementById('area').value.trim(),
+      service: document.getElementById('service').value,
+      quantity: document.getElementById('quantity').value,
+      date: rawDate,
+      formattedDate: formattedDate,
+      time: document.getElementById('pickup-time').value,
       instructions: document.getElementById('instructions').value.trim()
     };
 
@@ -681,9 +681,9 @@
     const statObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          const el   = entry.target;
+          const el = entry.target;
           const text = el.textContent;
-          const num  = parseInt(text.replace(/\D/g, ''));
+          const num = parseInt(text.replace(/\D/g, ''));
           if (!isNaN(num) && num > 0 && !el.dataset.animated) {
             el.dataset.animated = 'true';
             el.dataset.plus = text.includes('+') ? 'true' : '';
@@ -696,110 +696,77 @@
     statNums.forEach(function (el) { statObserver.observe(el); });
   }
 
-  /* ---- 14. INTERACTIVE VISUAL BOOKING CHIPS & THEME SWITCHER ---- */
+  /* ---- 14. DUAL THEME SWITCHER (NORMAL DAILY & SPECIAL DIWALI) ---- */
+  const themeSelector = document.getElementById('theme-selector');
+  const heroHeadline = document.getElementById('hero-headline');
+  const heroSubtitle = document.getElementById('hero-subtitle');
+  const heroScheduleBtn = document.getElementById('hero-schedule-btn');
+  const heroKickerTag = document.getElementById('hero-kicker-tag');
+  const festiveBanner = document.getElementById('festive-banner');
+  const fairyLights = document.getElementById('fairy-lights');
+  const rangoliSvg = document.querySelector('.hero-rangoli-mandala');
 
-  // 1. Live Theme Picker in Header
-  const themePicker = document.getElementById('frontend-theme-picker');
-  if (themePicker) {
-    const savedTheme = localStorage.getItem('diwakar_theme_preference');
-    if (savedTheme) {
-      themePicker.value = savedTheme;
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      document.body.setAttribute('data-theme', savedTheme);
+  function applyTheme(themeName) {
+    const isDiwali = themeName === 'diwali';
+    document.documentElement.setAttribute('data-theme', isDiwali ? 'diwali' : 'classic');
+    localStorage.setItem('diwakar_theme', themeName);
+
+    if (themeSelector) {
+      themeSelector.value = isDiwali ? 'diwali' : 'classic';
     }
-    themePicker.addEventListener('change', function () {
-      const selected = this.value;
-      document.documentElement.setAttribute('data-theme', selected);
-      document.body.setAttribute('data-theme', selected);
-      localStorage.setItem('diwakar_theme_preference', selected);
-      showToast(`Active Theme: ${selected.replace('_', ' ').toUpperCase()}`);
-    });
+
+    if (heroHeadline) {
+      heroHeadline.innerHTML = isDiwali
+        ? 'Celebrate Diwali,<br /><em>we\'ll take care</em><br />of your laundry.'
+        : 'Your clothes,<br /><em>our care,</em><br />at your doorstep.';
+    }
+
+    if (heroSubtitle) {
+      heroSubtitle.innerHTML = isDiwali
+        ? 'Enjoy the festivities while we take care of your laundry needs. Free doorstep pickup &amp; prompt delivery across Kanpur.'
+        : 'Convenient, reliable, and fabric-safe laundry services, delivered with quiet craftsmanship across Kanpur. Free pickup &amp; delivery.';
+    }
+
+    if (heroScheduleBtn) {
+      heroScheduleBtn.innerHTML = isDiwali
+        ? '<span>Book a Pickup</span><span class="arrow-icon">↗</span>'
+        : '<span>Schedule your pickup</span><span class="arrow-icon">↗</span>';
+    }
+
+    if (heroKickerTag) {
+      heroKickerTag.innerHTML = isDiwali
+        ? '<span class="kicker-dot" style="background:#f5c453;"></span><span style="color:#f5c453;">✦ SHUBH DIWALI 2026 FESTIVE SEVA</span>'
+        : '<span class="kicker-dot"></span><span>Kanpur\'s Trusted Laundry Atelier</span>';
+    }
+
+    if (fairyLights) {
+      fairyLights.style.display = isDiwali ? 'flex' : 'none';
+    }
+
+    if (rangoliSvg) {
+      rangoliSvg.style.display = isDiwali ? 'block' : 'none';
+    }
+
+    if (festiveBanner) {
+      festiveBanner.style.display = isDiwali ? 'block' : 'none';
+    }
   }
 
-  // 2. Visual 1-Click Service Selector Cards
-  const serviceChips = document.querySelectorAll('.service-chip');
-  serviceChips.forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      serviceChips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const svcName = chip.getAttribute('data-service');
-      if (serviceEl) {
-        serviceEl.value = svcName;
-        validateField(fields.find(f => f.id === 'service'));
-        updateLivePrice();
-      }
-    });
-  });
+  // Load saved theme or default to classic
+  const savedTheme = localStorage.getItem('diwakar_theme') || 'classic';
+  applyTheme(savedTheme);
 
-  // 3. Fast Kanpur Area Chips
-  const areaChips = document.querySelectorAll('.area-chip');
-  const areaInput = document.getElementById('area');
-  areaChips.forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      const val = chip.getAttribute('data-area');
-      if (areaInput) {
-        areaInput.value = val;
-        validateField(fields.find(f => f.id === 'area'));
-      }
-    });
-  });
-
-  // 4. Quick Date Buttons
-  const dateQuickBtns = document.querySelectorAll('.date-quick-btn');
-  dateQuickBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      dateQuickBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const offset = parseInt(btn.getAttribute('data-offset') || '0', 10);
-      const targetDate = new Date();
-      targetDate.setDate(targetDate.getDate() + offset);
-      if (dateInput) {
-        const y = targetDate.getFullYear();
-        const m = String(targetDate.getMonth() + 1).padStart(2, '0');
-        const d = String(targetDate.getDate()).padStart(2, '0');
-        dateInput.value = `${y}-${m}-${d}`;
-        validateField(fields.find(f => f.id === 'pickup-date'));
-      }
-    });
-  });
-
-  if (dateInput) {
-    dateInput.addEventListener('change', function () {
-      dateQuickBtns.forEach(b => b.classList.remove('active'));
-    });
-  }
-
-  // 5. Visual Time Slot Chips
-  const timeChips = document.querySelectorAll('.time-chip');
-  const timeSelect = document.getElementById('pickup-time');
-  timeChips.forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      timeChips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const slotVal = chip.getAttribute('data-time');
-      if (timeSelect) {
-        timeSelect.value = slotVal;
-        validateField(fields.find(f => f.id === 'pickup-time'));
-      }
-    });
-  });
-
-  // 6. Interactive Clay Diya Celebration
-  const diyaHero = document.getElementById('traditional-diya-hero');
-  if (diyaHero) {
-    diyaHero.style.cursor = 'pointer';
-    diyaHero.addEventListener('click', function () {
-      showToast('✨ Shubh Deepawali ki Hardik Shubhkamnayein! 🪔✨', 4000);
-      diyaHero.classList.add('celebrating');
-      setTimeout(() => diyaHero.classList.remove('celebrating'), 3000);
+  if (themeSelector) {
+    themeSelector.addEventListener('change', function (e) {
+      applyTheme(e.target.value);
+      showToast(e.target.value === 'diwali' ? '🪔 Shubh Diwali Theme Activated!' : '☀️ Normal Daily Theme Activated!');
     });
   }
 
   /* ---- INIT ---- */
   loadPublicConfig();
-  updateLivePrice();
   console.log('%c Diwakar Ji Laundry 🧺 ', 'background:#0c1424;color:#f5c453;font-size:16px;font-weight:bold;border-radius:4px;padding:4px 10px;');
-  console.log('%c Diwali Theme Active • WhatsApp: +91 7860462268 ', 'color:#25D366;font-weight:bold;');
+  console.log('%c Atelier Frontend Active • WhatsApp: +91 7860462268 ', 'color:#25D366;font-weight:bold;');
 
 })();
 

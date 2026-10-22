@@ -41,22 +41,22 @@ app.use(cors({
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
-// Serve React production build first
+// Serve React production build with SPA fallback
 const distPath = path.join(__dirname, '..', '..', 'client', 'dist');
 const fs = require('fs');
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
 }
 
-// Serve static images from client/public and asset folder
-app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
+// Serve static images and assets with index: false to prevent serving legacy index.html over React build
+app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public'), { index: false }));
 app.use(express.static(path.join(__dirname, '..', '..', 'DiwakarJi-Laundry'), { index: false }));
 
 // REST API Routes
 app.use('/api', publicRoutes);
 app.use('/api/admin', adminRoutes);
 
-// SPA client fallback for non-API routes
+// SPA fallback for client routes
 if (fs.existsSync(distPath)) {
   app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api')) return next();

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function WhyChooseUs() {
   return (
-    <section className="why-us section-pad" id="why-us">
+    <section className="why-us section-pad" id="about">
       <div className="container">
         <div className="why-inner">
           <div className="why-content">

@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
@@ -45,33 +45,20 @@
     <button class="festive-banner-close" id="festive-banner-close" aria-label="Dismiss banner">&times;</button>
   </aside>
 
-  <!-- ========== HEADER / NAVIGATION ========== -->
+  <!-- ========== HEADER / NAVIGATION (ATELIER NAVBAR) ========== -->
   <header id="header" class="header">
     <div class="container header-inner">
+      <!-- Atelier Logo — Matches Reference ("Launy" style) -->
       <a href="#" class="logo" id="logo-link">
-        <div class="logo-icon">
-          <!-- Premium Hanger + Leaf SVG Logo -->
-          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
-            <circle cx="26" cy="26" r="26" fill="url(#logoGrad)" />
-            <!-- Hanger hook top -->
-            <path d="M26 10 C26 10 26 8 28 7 C30 6 32 7.5 32 9.5 C32 11 30.5 12 29 12" stroke="white" stroke-width="1.8"
-              stroke-linecap="round" fill="none" />
-            <!-- Hanger neck -->
-            <line x1="26" y1="10" x2="26" y2="18" stroke="white" stroke-width="2" stroke-linecap="round" />
-            <!-- Hanger shoulders -->
-            <path d="M26 18 C20 20 12 25 10 30" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" />
-            <path d="M26 18 C32 20 40 25 42 30" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" />
-            <!-- Hanger base bar -->
-            <path d="M10 30 Q26 34 42 30" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" />
-            <!-- Green leaf accent -->
-            <path d="M29 12 C31 10 35 10 35 13 C35 16 31 17 29 15 C27 13 29 12 29 12Z" fill="#4ade80" />
-            <path d="M29 12 C32 13.5 29 15 29 15" stroke="#22c55e" stroke-width="0.8" stroke-linecap="round" />
-            <defs>
-              <linearGradient id="logoGrad" x1="0" y1="0" x2="52" y2="52" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#1a3a5c" />
-                <stop offset="100%" stop-color="#10243A" />
-              </linearGradient>
-            </defs>
+        <div class="logo-icon-svg" aria-hidden="true">
+          <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" width="42" height="42">
+            <rect width="42" height="42" rx="10" fill="#0f172a" />
+            <rect x="1" y="1" width="40" height="40" rx="9" stroke="#334155" stroke-width="1.2" />
+            <path d="M21 11 C21 11 21 9 22.8 8 C24.5 7 26 8.5 26 10.2 C26 11.5 24.8 12.5 23.5 12.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            <line x1="21" y1="11" x2="21" y2="17" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M21 17 C16 19 11 23 9 27" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M21 17 C26 19 31 23 33 27" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M9 27 Q21 30.5 33 27" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none"/>
           </svg>
         </div>
         <div class="logo-text">
@@ -80,33 +67,35 @@
         </div>
       </a>
 
+      <!-- Center Nav Links -->
       <nav class="nav-links" id="nav-links">
+        <a href="#home" class="nav-link active-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
         <a href="#services" class="nav-link">Services</a>
-        <a href="#pricing" class="nav-link">Pricing</a>
         <a href="#how-it-works" class="nav-link">How It Works</a>
-        <a href="#reviews" class="nav-link">Reviews</a>
-        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#contact" class="nav-link">Contact</a>
       </nav>
 
-      <!-- Theme Switcher Dropdown Pill -->
-      <div class="header-theme-selector" id="header-theme-wrap" title="Switch Theme Preview">
-        <i class="fa-solid fa-palette theme-icon"></i>
-        <select id="frontend-theme-picker" aria-label="Switch Theme Preview">
-          <option value="diwali">🪔 Shubh Diwali</option>
-          <option value="classic">🌊 Classic Ocean</option>
-          <option value="royal_gold">👑 Royal Gold</option>
-          <option value="fresh_mint">🍃 Fresh Mint</option>
-        </select>
+      <!-- Header Actions: Theme Switcher Pill + Pill CTA Book Pickup ↗ -->
+      <div class="header-actions-group">
+        <div class="theme-switch-pill" title="Switch Website Theme">
+          <i class="fa-solid fa-palette" style="color: #2563eb; font-size: 13px;"></i>
+          <select id="theme-selector" aria-label="Switch Website Theme">
+            <option value="classic">☀️ Normal Daily</option>
+            <option value="diwali">🪔 Special Diwali</option>
+          </select>
+        </div>
+
+        <a href="#booking" class="btn-pill" id="nav-book-pickup-btn">
+          <span>Book Pickup</span>
+          <span class="arrow-icon">↗</span>
+        </a>
+
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-
-      <a href="#booking" class="btn btn-whatsapp header-wa-btn" id="header-wa-btn">
-        <i class="fa-brands fa-whatsapp"></i>
-        Book on WhatsApp
-      </a>
-
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
     </div>
 
     <!-- Fairy Lights Garland -->
@@ -134,69 +123,9 @@
     </div>
   </header>
 
+
   <!-- ========== HERO SECTION ========== -->
   <section class="hero" id="home">
-    <div class="hero-bg-rangoli" aria-hidden="true"></div>
-
-    <!-- Hanging Festive Lanterns (Akasdeep / Kandils) -->
-    <div class="hero-lantern lantern-left" aria-hidden="true">
-      <div class="lantern-cord"></div>
-      <svg class="lantern-svg" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="30" cy="8" r="5" stroke="#f5c453" stroke-width="2" fill="none"/>
-        <path d="M22 13 L38 13 L42 22 L18 22 Z" fill="#9a3412" stroke="#f5c453" stroke-width="1.2"/>
-        <path d="M18 22 L42 22 L50 48 L10 48 Z" fill="url(#lanternL1)" stroke="#f5c453" stroke-width="1.5"/>
-        <path d="M10 48 L50 48 L42 74 L18 74 Z" fill="url(#lanternL2)" stroke="#f5c453" stroke-width="1.5"/>
-        <polygon points="30,28 44,48 30,68 16,48" fill="#fef08a" opacity="0.85" filter="drop-shadow(0 0 8px #f59e0b)"/>
-        <path d="M22 74 L38 74 L35 80 L25 80 Z" fill="#9a3412" stroke="#f5c453" stroke-width="1.2"/>
-        <line x1="25" y1="80" x2="22" y2="108" stroke="#f5c453" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="28" y1="80" x2="27" y2="102" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="30" y1="80" x2="30" y2="110" stroke="#fef08a" stroke-width="2" stroke-linecap="round"/>
-        <line x1="32" y1="80" x2="33" y2="102" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="35" y1="80" x2="38" y2="108" stroke="#f5c453" stroke-width="1.5" stroke-linecap="round"/>
-        <defs>
-          <linearGradient id="lanternL1" x1="10" y1="22" x2="50" y2="48" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#b91c1c"/>
-            <stop offset="50%" stop-color="#dc2626"/>
-            <stop offset="100%" stop-color="#991b1b"/>
-          </linearGradient>
-          <linearGradient id="lanternL2" x1="10" y1="48" x2="50" y2="74" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#7c2d12"/>
-            <stop offset="50%" stop-color="#ea580c"/>
-            <stop offset="100%" stop-color="#9a3412"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-
-    <div class="hero-lantern lantern-right" aria-hidden="true">
-      <div class="lantern-cord"></div>
-      <svg class="lantern-svg" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="30" cy="8" r="5" stroke="#f5c453" stroke-width="2" fill="none"/>
-        <path d="M22 13 L38 13 L42 22 L18 22 Z" fill="#9a3412" stroke="#f5c453" stroke-width="1.2"/>
-        <path d="M18 22 L42 22 L50 48 L10 48 Z" fill="url(#lanternR1)" stroke="#f5c453" stroke-width="1.5"/>
-        <path d="M10 48 L50 48 L42 74 L18 74 Z" fill="url(#lanternR2)" stroke="#f5c453" stroke-width="1.5"/>
-        <polygon points="30,28 44,48 30,68 16,48" fill="#fef08a" opacity="0.85" filter="drop-shadow(0 0 8px #f59e0b)"/>
-        <path d="M22 74 L38 74 L35 80 L25 80 Z" fill="#9a3412" stroke="#f5c453" stroke-width="1.2"/>
-        <line x1="25" y1="80" x2="22" y2="108" stroke="#f5c453" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="28" y1="80" x2="27" y2="102" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="30" y1="80" x2="30" y2="110" stroke="#fef08a" stroke-width="2" stroke-linecap="round"/>
-        <line x1="32" y1="80" x2="33" y2="102" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="35" y1="80" x2="38" y2="108" stroke="#f5c453" stroke-width="1.5" stroke-linecap="round"/>
-        <defs>
-          <linearGradient id="lanternR1" x1="10" y1="22" x2="50" y2="48" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#4c1d95"/>
-            <stop offset="50%" stop-color="#7c3aed"/>
-            <stop offset="100%" stop-color="#5b21b6"/>
-          </linearGradient>
-          <linearGradient id="lanternR2" x1="10" y1="48" x2="50" y2="74" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#831843"/>
-            <stop offset="50%" stop-color="#db2777"/>
-            <stop offset="100%" stop-color="#9d174d"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-
     <!-- Rotating Rangoli Mandala SVG (Diwali Theme) -->
     <svg class="hero-rangoli-mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true">
@@ -205,7 +134,6 @@
       <circle cx="200" cy="200" r="120" stroke="#f5c453" stroke-width="1.5" />
       <circle cx="200" cy="200" r="80" stroke="#f5c453" stroke-width="1.2" />
       <circle cx="200" cy="200" r="40" stroke="#f5c453" stroke-width="1.5" />
-      <!-- 8-petal sacred lotus mandala symmetry -->
       <g stroke="#f5c453" stroke-width="1.5" fill="none">
         <path d="M200 40 Q240 120 200 200 Q160 120 200 40Z" />
         <path d="M200 360 Q240 280 200 200 Q160 280 200 360Z" />
@@ -219,132 +147,69 @@
       <circle cx="200" cy="200" r="14" fill="#f5c453" opacity="0.3" />
     </svg>
 
-    <div class="hero-bg-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-    </div>
-    <div class="container hero-inner">
-      <div class="hero-content reveal">
-        <!-- Authentic Earthen Clay Diya Badge with 3-Layer Animated Flame -->
-        <div class="traditional-diya-hero" id="traditional-diya-hero" title="Tap Diya to celebrate Diwali!">
-          <svg class="clay-diya-svg" viewBox="0 0 50 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="25" cy="14" rx="18" ry="12" fill="url(#haloGlow)" />
-            <!-- Earthen Clay Diya Body -->
-            <path d="M7 26 C8 34 16 38 25 38 C34 38 42 34 43 26 C43 23 37 21 25 21 C13 21 7 23 7 26 Z"
-              fill="url(#clayGrad)" stroke="#7c2d12" stroke-width="1" />
-            <!-- Golden Trimmed Oil Rim -->
-            <ellipse cx="25" cy="22" rx="18" ry="4" fill="url(#oilGrad)" stroke="#f5c453" stroke-width="0.8" />
-            <path d="M22 21 C24 19 26 19 28 21 Z" fill="#9a3412" />
-            <!-- Realistic 3-layer Flame -->
-            <g class="diya-animated-flame">
-              <!-- Outer Saffron Flame -->
-              <path d="M25 7 C21 14 20 18 25 21 C30 18 29 14 25 7 Z" fill="#ea580c" />
-              <!-- Mid Radiant Gold Flame -->
-              <path d="M25 10 C22.5 15 22 17.5 25 20 C28 17.5 27.5 15 25 10 Z" fill="#fbbf24" />
-              <!-- Sacred White Core Flame -->
-              <path d="M25 13 C23.8 16 23.5 17.5 25 19 C26.5 17.5 26.2 16 25 13 Z" fill="#ffffff" />
-            </g>
-            <defs>
-              <linearGradient id="clayGrad" x1="7" y1="21" x2="43" y2="38" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#c2410c" />
-                <stop offset="50%" stop-color="#9a3412" />
-                <stop offset="100%" stop-color="#7c2d12" />
-              </linearGradient>
-              <radialGradient id="oilGrad" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#d97706" />
-                <stop offset="70%" stop-color="#78350f" />
-                <stop offset="100%" stop-color="#451a03" />
-              </radialGradient>
-              <radialGradient id="haloGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="rgba(254, 240, 138, 0.45)" />
-                <stop offset="60%" stop-color="rgba(245, 196, 83, 0.15)" />
-                <stop offset="100%" stop-color="transparent" />
-              </radialGradient>
-            </defs>
-          </svg>
-          <div class="diya-badge-text">
-            <span class="diya-badge-main"><span class="sparkle-star">✦</span> Shubh Deepavali 2026</span>
-            <span class="diya-badge-sub">Kanpur ki Vishesh Festive Laundry Seva</span>
+    <div class="container">
+      <div class="hero-grid">
+        <!-- LEFT COLUMN: Typography & CTAs (Matches Reference Image) -->
+        <div class="hero-left">
+          <div class="reference-kicker" id="hero-kicker-tag">
+            <span class="kicker-dot"></span>
+            <span>Kanpur's Trusted Laundry Atelier</span>
+          </div>
+
+          <h1 class="hero-headline" id="hero-headline">
+            Your clothes,<br />
+            <em>our care,</em><br />
+            at your doorstep.
+          </h1>
+
+          <div class="subtitle-pill-wrapper">
+            <div class="subtitle-icon-box" aria-hidden="true">
+              <i class="fa-regular fa-folder-closed" id="subtitle-icon"></i>
+            </div>
+            <p class="subtitle-text" id="hero-subtitle">
+              Convenient, reliable, and fabric-safe laundry services, delivered with quiet craftsmanship across Kanpur. Free pickup &amp; delivery.
+            </p>
+          </div>
+
+          <div class="hero-ctas-row">
+            <a href="#booking" class="btn-pill" id="hero-schedule-btn">
+              <span>Schedule your pickup</span>
+              <span class="arrow-icon">↗</span>
+            </a>
+
+            <a href="https://wa.me/917860462268?text=Hello%20Diwakar%20Ji%20Laundry%2C%20I%20would%20like%20to%20inquire%20about%20laundry%20pickup%20in%20Kanpur."
+              target="_blank" rel="noopener noreferrer" class="btn-pill" id="hero-wa-btn"
+              style="border-color: #25D366; color: #25D366;">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Chat on WhatsApp</span>
+            </a>
+          </div>
+
+          <div class="hero-areas-strip">
+            <span>Trusted across Kanpur:</span>
+            <span class="hero-area-tag">Kalyanpur</span>
+            <span class="hero-area-tag">IIT Kanpur Gate</span>
+            <span class="hero-area-tag">Kakadeo</span>
+            <span class="hero-area-tag">Swaroop Nagar</span>
+            <span class="hero-area-tag">Civil Lines</span>
           </div>
         </div>
 
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          Serving Kanpur Since 2010
-        </div>
-        <h1 class="hero-title" id="hero-title">
-          Fresh Clothes.<br />
-          <span class="gradient-text">Fresh Feel.</span>
-        </h1>
-        <p class="hero-subtitle" id="hero-subtitle">
-          Professional laundry &amp; dry cleaning with <strong>free doorstep pickup &amp; delivery</strong> across
-          Kanpur. Cleaner clothes, happier homes.
-        </p>
-        <div class="hero-trust">
-          <div class="trust-item">
-            <i class="fa-solid fa-truck-fast"></i>
-            Free Pickup &amp; Delivery
-          </div>
-          <div class="trust-item">
-            <i class="fa-solid fa-flask-vial"></i>
-            Premium Detergents
-          </div>
-          <div class="trust-item">
-            <i class="fa-solid fa-shield-halved"></i>
-            Safe for All Fabrics
-          </div>
-        </div>
-        <div class="hero-ctas">
-          <a href="#booking" class="btn btn-primary btn-lg" id="hero-book-btn">
-            <i class="fa-solid fa-calendar-check"></i>
-            Book a Pickup
-          </a>
-          <a href="#services" class="btn btn-outline btn-lg" id="hero-services-btn">
-            View Services
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-num">500+</span>
-            <span class="stat-label">Happy Customers</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num">6</span>
-            <span class="stat-label">Services</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-num">IIT</span>
-            <span class="stat-label">Kanpur Area</span>
+        <!-- RIGHT COLUMN: Framed Showcase Card (Matches Reference Image) -->
+        <div class="hero-right">
+          <div class="hero-showcase-container">
+            <img src="hero_laundry.png" alt="Diwakar Ji Laundry Atelier — Modern Laundry Room"
+              class="hero-showcase-image" loading="eager" />
+            <div class="hero-image-overlay-badge">
+              <i class="fa-solid fa-star" style="color: #f5c453;"></i>
+              <span>4.9 / 5 • 500+ Kanpur Families</span>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="hero-image-wrap reveal reveal-right">
-        <div class="hero-img-glow"></div>
-        <img src="hero_laundry.png"
-          alt="Diwakar Ji Laundry Service — Professional laundry pickup and delivery in Kanpur" class="hero-img"
-          loading="eager" />
-        <div class="hero-badge-float badge-float-1">
-          <i class="fa-solid fa-star"></i>
-          4.9 Rating
-        </div>
-        <div class="hero-badge-float badge-float-2">
-          <i class="fa-solid fa-bolt"></i>
-          Same Day Express
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-wave">
-      <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-        <path d="M0 40 Q360 80 720 40 Q1080 0 1440 40 L1440 80 L0 80 Z" fill="#f8faff" />
-      </svg>
     </div>
   </section>
+
 
   <!-- ========== SERVICES SECTION ========== -->
   <section class="services section-pad" id="services">
@@ -787,62 +652,14 @@
                 <label for="area">Area / PIN Code <span class="required">*</span></label>
                 <input type="text" id="area" name="area" placeholder="e.g. Kidwai Nagar - 208011" required />
                 <span class="field-error" id="error-area">Please enter your area or PIN code.</span>
-
-                <!-- Fast Kanpur Area Chips -->
-                <div class="area-fast-chips" id="area-fast-chips">
-                  <span class="area-fast-label"><i class="fa-solid fa-location-dot"></i> Quick:</span>
-                  <button type="button" class="area-chip" data-area="Kakadeo, Kanpur">Kakadeo</button>
-                  <button type="button" class="area-chip" data-area="Swaroop Nagar, Kanpur">Swaroop Nagar</button>
-                  <button type="button" class="area-chip" data-area="Kidwai Nagar, Kanpur">Kidwai Nagar</button>
-                  <button type="button" class="area-chip" data-area="Kalyanpur, Kanpur">Kalyanpur</button>
-                  <button type="button" class="area-chip" data-area="Civil Lines, Kanpur">Civil Lines</button>
-                  <button type="button" class="area-chip" data-area="Govind Nagar, Kanpur">Govind Nagar</button>
-                  <button type="button" class="area-chip" data-area="IIT Kanpur Campus">IIT Kanpur</button>
-                </div>
               </div>
-
               <div class="form-group" id="group-service">
                 <label for="service">Laundry Service <span class="required">*</span></label>
-                <!-- Visual 1-Click Service Selector Cards -->
-                <div class="service-selector-grid" id="service-chips-grid">
-                  <button type="button" class="service-chip" data-service="Wash & Fold">
-                    <span class="chip-icon">👕</span>
-                    <span class="chip-name">Wash &amp; Fold</span>
-                    <span class="chip-rate">From ₹40/kg</span>
-                  </button>
-                  <button type="button" class="service-chip active" data-service="Wash & Iron">
-                    <span class="chip-badge">Popular</span>
-                    <span class="chip-icon">✨</span>
-                    <span class="chip-name">Wash &amp; Iron</span>
-                    <span class="chip-rate">From ₹60/kg</span>
-                  </button>
-                  <button type="button" class="service-chip" data-service="Dry Cleaning">
-                    <span class="chip-icon">👔</span>
-                    <span class="chip-name">Dry Cleaning</span>
-                    <span class="chip-rate">From ₹120/pc</span>
-                  </button>
-                  <button type="button" class="service-chip" data-service="Steam Ironing">
-                    <span class="chip-icon">💨</span>
-                    <span class="chip-name">Steam Iron</span>
-                    <span class="chip-rate">From ₹30/pc</span>
-                  </button>
-                  <button type="button" class="service-chip" data-service="Blankets & Bedsheets">
-                    <span class="chip-icon">🛏️</span>
-                    <span class="chip-name">Blankets</span>
-                    <span class="chip-rate">From ₹80/pc</span>
-                  </button>
-                  <button type="button" class="service-chip" data-service="Express Laundry">
-                    <span class="chip-icon">⚡</span>
-                    <span class="chip-name">Express</span>
-                    <span class="chip-rate">From ₹70/kg</span>
-                  </button>
-                </div>
-
-                <div class="select-wrap" style="display:none;">
+                <div class="select-wrap">
                   <select id="service" name="service" required>
                     <option value="">Select Service</option>
                     <option value="Wash & Fold">Wash &amp; Fold</option>
-                    <option value="Wash & Iron" selected>Wash &amp; Iron</option>
+                    <option value="Wash & Iron">Wash &amp; Iron</option>
                     <option value="Dry Cleaning">Dry Cleaning</option>
                     <option value="Steam Ironing">Steam Ironing</option>
                     <option value="Blankets & Bedsheets">Blankets &amp; Bedsheets</option>
@@ -861,8 +678,9 @@
                 <label for="quantity">Approx. Clothes Quantity <span class="required">*</span></label>
                 <div class="select-wrap">
                   <select id="quantity" name="quantity" required>
+                    <option value="">Select Quantity</option>
                     <option value="1–3 kg (Small load)">1–3 kg (Small load)</option>
-                    <option value="4–6 kg (Medium load)" selected>4–6 kg (Medium load)</option>
+                    <option value="4–6 kg (Medium load)">4–6 kg (Medium load)</option>
                     <option value="7–10 kg (Large load)">7–10 kg (Large load)</option>
                     <option value="10+ kg (Bulk load)">10+ kg (Bulk load)</option>
                     <option value="Not sure yet">Not sure yet (Weigh at pickup)</option>
@@ -875,18 +693,13 @@
               </div>
               <div class="form-group" id="group-date">
                 <label for="pickup-date">Pickup Date <span class="required">*</span></label>
-                <div class="quick-date-row" id="quick-date-row">
-                  <button type="button" class="date-quick-btn active" data-offset="0">Today</button>
-                  <button type="button" class="date-quick-btn" data-offset="1">Tomorrow</button>
-                  <button type="button" class="date-quick-btn" data-offset="2">Day After</button>
-                </div>
                 <input type="date" id="pickup-date" name="pickup_date" required />
                 <span class="field-error" id="error-date">Please select a pickup date.</span>
               </div>
             </div>
 
             <!-- Live Transparent Price Estimate Card -->
-            <div id="live-price-estimate" class="price-estimate-box" aria-live="polite">
+            <div id="live-price-estimate" class="price-estimate-box" style="display: none;" aria-live="polite">
               <div class="estimate-header">
                 <span class="estimate-title">
                   <i class="fa-solid fa-calculator"></i> Estimated Pricing
@@ -900,18 +713,11 @@
 
             <div class="form-group" id="group-time">
               <label for="pickup-time">Preferred Pickup Time <span class="required">*</span></label>
-              <div class="time-chips-grid" id="time-chips-grid">
-                <button type="button" class="time-chip" data-time="7:00 AM – 9:00 AM">🌅 7–9 AM</button>
-                <button type="button" class="time-chip active" data-time="9:00 AM – 11:00 AM">🌅 9–11 AM</button>
-                <button type="button" class="time-chip" data-time="11:00 AM – 1:00 PM">☀️ 11–1 PM</button>
-                <button type="button" class="time-chip" data-time="2:00 PM – 4:00 PM">🌤️ 2–4 PM</button>
-                <button type="button" class="time-chip" data-time="4:00 PM – 6:00 PM">🌙 4–6 PM</button>
-                <button type="button" class="time-chip" data-time="6:00 PM – 8:00 PM">🌙 6–8 PM</button>
-              </div>
-              <div class="select-wrap" style="display:none;">
+              <div class="select-wrap">
                 <select id="pickup-time" name="pickup_time" required>
+                  <option value="">Select Time Slot</option>
                   <option value="7:00 AM – 9:00 AM">7:00 AM – 9:00 AM (Morning)</option>
-                  <option value="9:00 AM – 11:00 AM" selected>9:00 AM – 11:00 AM (Morning)</option>
+                  <option value="9:00 AM – 11:00 AM">9:00 AM – 11:00 AM (Morning)</option>
                   <option value="11:00 AM – 1:00 PM">11:00 AM – 1:00 PM (Midday)</option>
                   <option value="2:00 PM – 4:00 PM">2:00 PM – 4:00 PM (Afternoon)</option>
                   <option value="4:00 PM – 6:00 PM">4:00 PM – 6:00 PM (Evening)</option>
@@ -927,7 +733,7 @@
             <div class="form-group" id="group-instructions">
               <label for="instructions">Special Instructions <span class="optional">(Optional)</span></label>
               <textarea id="instructions" name="instructions"
-                placeholder="Any special care instructions, fragile items, or notes for us..." rows="2"></textarea>
+                placeholder="Any special care instructions, fragile items, or notes for us..." rows="3"></textarea>
             </div>
 
             <button type="submit" class="btn btn-whatsapp btn-submit" id="submit-btn">
@@ -937,38 +743,6 @@
               </svg>
               <span id="submit-text">Submit &amp; Continue to WhatsApp</span>
             </button>
-
-            <!-- Diwakar Ji Quality & Hygiene Trust Strip -->
-            <div class="booking-trust-strip">
-              <div class="trust-badge-card">
-                <span class="trust-icon">🧼</span>
-                <div>
-                  <strong>100% Separate Wash</strong>
-                  <p>Never mixed with other clothes</p>
-                </div>
-              </div>
-              <div class="trust-badge-card">
-                <span class="trust-icon">⚖️</span>
-                <div>
-                  <strong>Digital Weighing</strong>
-                  <p>Accurate digital scale at pickup</p>
-                </div>
-              </div>
-              <div class="trust-badge-card">
-                <span class="trust-icon">🚚</span>
-                <div>
-                  <strong>Free Pickup &amp; Delivery</strong>
-                  <p>Direct to your doorstep in Kanpur</p>
-                </div>
-              </div>
-              <div class="trust-badge-card">
-                <span class="trust-icon">🛡️</span>
-                <div>
-                  <strong>Safe Fabric Promise</strong>
-                  <p>Zero shrinkage or color bleed</p>
-                </div>
-              </div>
-            </div>
 
             <p class="form-note">
               <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">

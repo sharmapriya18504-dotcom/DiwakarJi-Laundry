@@ -14,7 +14,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -25,23 +25,17 @@ export default function Header() {
   return (
     <header id="header" className={`header ${scrolled ? 'scrolled' : ''}`}>
       <div className="container header-inner">
+        {/* Atelier Logo — Matches Reference ("Launy" style) */}
         <Link to="/" className="logo" onClick={closeMenu}>
-          <div className="logo-icon">
-            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
-              <circle cx="26" cy="26" r="26" fill="url(#logoGrad)"/>
-              <path d="M26 10 C26 10 26 8 28 7 C30 6 32 7.5 32 9.5 C32 11 30.5 12 29 12" stroke="white" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-              <line x1="26" y1="10" x2="26" y2="18" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              <path d="M26 18 C20 20 12 25 10 30" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M26 18 C32 20 40 25 42 30" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M10 30 Q26 34 42 30" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M29 12 C31 10 35 10 35 13 C35 16 31 17 29 15 C27 13 29 12 29 12Z" fill="#4ade80"/>
-              <path d="M29 12 C32 13.5 29 15 29 15" stroke="#22c55e" strokeWidth="0.8" strokeLinecap="round"/>
-              <defs>
-                <linearGradient id="logoGrad" x1="0" y1="0" x2="52" y2="52" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#1a3a5c"/>
-                  <stop offset="100%" stopColor="#10243A"/>
-                </linearGradient>
-              </defs>
+          <div className="logo-icon-svg" aria-hidden="true">
+            <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" width="42" height="42">
+              <rect width="42" height="42" rx="10" fill={theme === 'diwali' ? '#2d144d' : '#0f172a'} />
+              <rect x="1" y="1" width="40" height="40" rx="9" stroke={theme === 'diwali' ? '#f5c453' : '#334155'} strokeWidth="1.2" />
+              <path d="M21 11 C21 11 21 9 22.8 8 C24.5 7 26 8.5 26 10.2 C26 11.5 24.8 12.5 23.5 12.5" stroke={theme === 'diwali' ? '#f5c453' : '#ffffff'} strokeWidth="1.6" strokeLinecap="round" fill="none"/>
+              <line x1="21" y1="11" x2="21" y2="17" stroke={theme === 'diwali' ? '#f5c453' : '#ffffff'} strokeWidth="1.8" strokeLinecap="round"/>
+              <path d="M21 17 C16 19 11 23 9 27" stroke={theme === 'diwali' ? '#f5c453' : '#ffffff'} strokeWidth="2" strokeLinecap="round" fill="none"/>
+              <path d="M21 17 C26 19 31 23 33 27" stroke={theme === 'diwali' ? '#f5c453' : '#ffffff'} strokeWidth="2" strokeLinecap="round" fill="none"/>
+              <path d="M9 27 Q21 30.5 33 27" stroke={theme === 'diwali' ? '#f5c453' : '#ffffff'} strokeWidth="2" strokeLinecap="round" fill="none"/>
             </svg>
           </div>
           <div className="logo-text">
@@ -50,53 +44,53 @@ export default function Header() {
           </div>
         </Link>
 
+        {/* Center Nav Links (Inspired by Reference: Home, About, Services, How It Works, Contact) */}
         <nav className={`nav-links ${menuOpen ? 'open' : ''}`} id="nav-links">
+          <a href="#home" className="nav-link active-link" onClick={closeMenu}>Home</a>
+          <a href="#about" className="nav-link" onClick={closeMenu}>About</a>
           <a href="#services" className="nav-link" onClick={closeMenu}>Services</a>
-          <a href="#pricing" className="nav-link" onClick={closeMenu}>Pricing</a>
           <a href="#how-it-works" className="nav-link" onClick={closeMenu}>How It Works</a>
-          <a href="#reviews" className="nav-link" onClick={closeMenu}>Reviews</a>
-          <a href="#faq" className="nav-link" onClick={closeMenu}>FAQ</a>
+          <a href="#pricing" className="nav-link" onClick={closeMenu}>Pricing</a>
+          <a href="#contact" className="nav-link" onClick={closeMenu}>Contact</a>
         </nav>
 
-        {/* Live Theme Switcher Dropdown Badge */}
-        <div className="header-theme-selector" title="Preview Theme">
-          <i className="fa-solid fa-palette theme-icon"></i>
-          <select
-            value={theme}
-            onChange={(e) => switchTheme(e.target.value)}
-            aria-label="Switch Theme Preview"
+        {/* Header Action Group: Theme Switcher Pill + Pill CTA Book Pickup ↗ */}
+        <div className="header-actions-group">
+          {/* Theme Switcher Pill */}
+          <div className="theme-switch-pill" title="Switch Website Theme">
+            <i className={theme === 'diwali' ? 'fa-solid fa-fire-flame-curved' : 'fa-regular fa-sun'} style={{ color: theme === 'diwali' ? '#f5c453' : '#2563eb', fontSize: '13px' }}></i>
+            <select
+              value={theme === 'diwali' ? 'diwali' : 'classic'}
+              onChange={(e) => switchTheme(e.target.value)}
+              aria-label="Switch Website Theme"
+            >
+              <option value="classic">Normal Daily</option>
+              <option value="diwali">Special Diwali</option>
+            </select>
+          </div>
+
+          {/* Reference Pill CTA Button (Book Pickup ↗) */}
+          <a href="#booking" className="btn-pill" id="nav-book-pickup-btn">
+            <span>Book Pickup</span>
+            <span className="arrow-icon">↗</span>
+          </a>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            className={`hamburger ${menuOpen ? 'open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
           >
-            <option value="diwali">🪔 Shubh Diwali</option>
-            <option value="classic">🌊 Classic Ocean</option>
-            <option value="royal_gold">👑 Royal Gold</option>
-            <option value="fresh_mint">🍃 Fresh Mint</option>
-          </select>
+            <span></span><span></span><span></span>
+          </button>
         </div>
-
-        <a
-          href={`https://wa.me/${ownerPhone}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-whatsapp header-wa-btn"
-        >
-          <i className="fa-brands fa-whatsapp"></i>
-          Book on WhatsApp
-        </a>
-
-        <button
-          className={`hamburger ${menuOpen ? 'open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-          aria-expanded={menuOpen}
-        >
-          <span></span><span></span><span></span>
-        </button>
       </div>
 
-      {/* Fairy Lights Garland */}
+      {/* Hanging Indian Fairy Lights Garland for Diwali */}
       {showDiwaliDecor && (
         <div className="fairy-lights-garland" id="fairy-lights" aria-hidden="true">
-          {Array.from({ length: 20 }).map((_, i) => (
+          {Array.from({ length: 24 }).map((_, i) => (
             <span key={i} className="fairy-bulb"></span>
           ))}
         </div>
@@ -104,3 +98,4 @@ export default function Header() {
     </header>
   );
 }
+

@@ -6,8 +6,8 @@ import { AuthProvider } from './context/AuthContext';
 import HomePage from './pages/HomePage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
-import './styles/main.css';
 import './styles/themes.css';
+import './styles/main.css';
 import './styles/admin.css';
 
 export default function App() {
