@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import FestiveBanner from '../components/FestiveBanner';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import ServicesSection from '../components/ServicesSection';
+import MidSection from '../components/MidSection';
 import PricingSection from '../components/PricingSection';
 import HowItWorks from '../components/HowItWorks';
-import WhyChooseUs from '../components/WhyChooseUs';
-import BookingForm from '../components/BookingForm';
 import ReviewsSection from '../components/ReviewsSection';
 import FaqSection from '../components/FaqSection';
 import Footer from '../components/Footer';
@@ -26,19 +24,20 @@ export default function HomePage() {
   return (
     <div className="home-page-wrap">
       <WhatsAppFloat />
-      <FestiveBanner />
       <Header />
       <main>
         <Hero />
         <ServicesSection onSelectService={handleSelectService} />
-        <PricingSection onSelectService={handleSelectService} />
-        <HowItWorks />
-        <WhyChooseUs />
-        <BookingForm selectedServiceFromParent={selectedService} />
+        {/* 3-Column Mid Section: Why Choose Us | This Diwali Banner | Book Your Pickup */}
+        <MidSection selectedServiceFromParent={selectedService} />
+        {/* Customer Trust Section: 4 Stat Badges + Pooja Sharma Review Card */}
         <ReviewsSection />
+        <HowItWorks />
+        <PricingSection onSelectService={handleSelectService} />
         <FaqSection />
       </main>
       <Footer />
     </div>
   );
 }
+

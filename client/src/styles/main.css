@@ -1520,3 +1520,1120 @@ html {
   .form-row.two-col { grid-template-columns: 1fr; }
   .why-features { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   DIWAKAR JI LAUNDRY — EXACT REFERENCE SCREENSHOT DESIGN STYLES
+   ============================================================ */
+
+/* 1. Header Styling matching screenshot */
+.header {
+  background: #061a33;
+  border-bottom: 1px solid rgba(246, 198, 74, 0.2);
+}
+
+.logo-badge-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text .logo-name {
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.logo-text .logo-sub {
+  color: #f6c64a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.nav-link {
+  color: #e2e8f0;
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+.nav-link:hover,
+.nav-link.active-link {
+  color: #f6c64a;
+}
+
+.nav-link.active-link::after {
+  background: #f6c64a;
+  height: 2.5px;
+}
+
+.header-wa-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.header-wa-pill:hover {
+  background: rgba(37, 211, 102, 0.15);
+  border-color: #25D366;
+}
+
+.wa-icon-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.wa-text-col {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.wa-label {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.wa-number {
+  font-size: 0.78rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btn-gold-pill {
+  background: #f6c64a;
+  color: #061a33;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 10px 22px;
+  border-radius: 50px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(246, 198, 74, 0.35);
+  transition: all 0.25s ease;
+}
+
+.btn-gold-pill:hover {
+  background: #ffd700;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(246, 198, 74, 0.5);
+}
+
+.theme-toggle-switch {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  color: #cbd5e1;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn.active {
+  background: #f6c64a;
+  color: #061a33;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* 2. Hero Section */
+.marigold-garland {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.garland-cord {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #b45309, #d97706, #b45309);
+}
+
+.marigold-flower {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: relative;
+  margin-top: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  animation: marigoldSway 3s ease-in-out infinite alternate;
+}
+
+.marigold-flower.flower-orange {
+  background: radial-gradient(circle, #ea580c 40%, #c2410c 100%);
+  border: 1px solid #9a3412;
+}
+
+.marigold-flower.flower-yellow {
+  background: radial-gradient(circle, #facc15 40%, #eab308 100%);
+  border: 1px solid #ca8a04;
+}
+
+@keyframes marigoldSway {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+.hero-grid-screenshot {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: 50px;
+  position: relative;
+  z-index: 3;
+}
+
+.hero-festive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(246, 198, 74, 0.15);
+  border: 1px solid rgba(246, 198, 74, 0.4);
+  color: #f6c64a;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 50px;
+  margin-bottom: 14px;
+  letter-spacing: 0.05em;
+}
+
+.hero-normal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 50px;
+  margin-bottom: 14px;
+}
+
+.hero-tagline-sub {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.hero-headline-screenshot {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 4.8vw, 4.2rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+.hero-headline-screenshot .gold-text {
+  color: #f6c64a;
+}
+
+.hero-desc-screenshot {
+  font-size: 1.05rem;
+  color: #cbd5e1;
+  max-width: 520px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.hero-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.hero-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.badge-icon-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f6c64a;
+  color: #061a33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.hero-ctas-screenshot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-lg-hero {
+  padding: 13px 30px;
+  font-size: 0.95rem;
+}
+
+.btn-outline-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 50px;
+  background: rgba(6, 26, 51, 0.4);
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-outline-pill:hover {
+  background: #ffffff;
+  color: #061a33;
+}
+
+.hero-showcase-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: visible;
+}
+
+.hero-main-photo {
+  width: 100%;
+  height: 440px;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(246, 198, 74, 0.3);
+}
+
+.diwali-special-seal {
+  position: absolute;
+  top: 24px;
+  right: -20px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #7a1222 0%, #4a0913 100%);
+  border: 3px dashed #f6c64a;
+  outline: 4px solid #7a1222;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(246, 198, 74, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  color: #ffffff;
+  z-index: 5;
+  animation: sealFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes sealFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+.seal-diya-top { font-size: 16px; margin-bottom: 2px; }
+.seal-title {
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f6c64a;
+  line-height: 1.1;
+}
+.seal-subtitle {
+  font-size: 0.58rem;
+  color: #fce7f3;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+/* 3. Services Section matching screenshot */
+.services-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.services-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gold-crest-icon {
+  font-size: 22px;
+}
+
+.services-section-title {
+  font-family: var(--font-sans);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #061a33;
+}
+
+.services-section-sub {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.services-view-all-link {
+  color: #061a33;
+  font-weight: 700;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.services-grid-screenshot {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+}
+
+.service-card-screenshot {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 10px rgba(6, 26, 51, 0.04);
+}
+
+.service-card-screenshot:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px rgba(6, 26, 51, 0.09);
+}
+
+.svc-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1.5px solid #0b3b70;
+  color: #0b3b70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+.svc-card-name {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #061a33;
+  margin-bottom: 8px;
+}
+
+.svc-card-desc {
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.45;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.svc-price-pill {
+  background: #fff9ef;
+  color: #854d0e;
+  border: 1px solid #fef08a;
+  border-radius: 50px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 12px;
+}
+
+/* 4. Middle 3-Column Section */
+.mid-three-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.why-us-header-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.why-us-title {
+  font-family: var(--font-sans);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #061a33;
+}
+
+.why-us-image-container {
+  width: 100%;
+  height: 200px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.why-us-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.why-us-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.why-feature-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.why-gold-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff9ef;
+  border: 1px solid #f6c64a;
+  color: #d97706;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.why-feature-heading {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #061a33;
+  margin: 0;
+}
+
+.why-feature-sub {
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Center Diwali Card */
+.diwali-promo-card-screenshot {
+  background: radial-gradient(circle at 50% 30%, #7c1224 0%, #4a0913 80%, #30040a 100%);
+  border: 2px solid #f6c64a;
+  border-radius: 14px;
+  padding: 32px 24px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(74, 9, 19, 0.4);
+}
+
+.diwali-promo-tag {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-style: italic;
+  color: #f6c64a;
+  margin-bottom: 8px;
+}
+
+.diwali-promo-headline {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.diwali-promo-desc {
+  font-size: 0.82rem;
+  color: #fce7f3;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.diwali-promo-diya-glow {
+  margin-top: auto;
+}
+
+.diya-glow-svg {
+  width: 120px;
+  height: 84px;
+  filter: drop-shadow(0 0 12px rgba(246, 198, 74, 0.8));
+}
+
+.diya-flame-animation {
+  animation: flameFlicker 1.8s ease-in-out infinite;
+  transform-origin: 50px 35px;
+}
+
+/* Right Booking Card */
+.booking-card-screenshot {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 6px 24px rgba(6, 26, 51, 0.06);
+}
+
+.booking-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.booking-main-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #061a33;
+}
+
+.booking-sub-title {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 4px 0 16px 0;
+}
+
+.form-field-group {
+  margin-bottom: 12px;
+}
+
+.form-field-group label {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.form-field-group label .req {
+  color: #dc2626;
+}
+
+.form-field-group input,
+.form-field-group select,
+.form-field-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  color: #0f172a;
+  outline: none;
+  background: #ffffff;
+}
+
+.form-field-group input:focus,
+.form-field-group select:focus,
+.form-field-group textarea:focus {
+  border-color: #0b3b70;
+  box-shadow: 0 0 0 2px rgba(11, 59, 112, 0.12);
+}
+
+.phone-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.phone-prefix {
+  background: #f1f5f9;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #475569;
+  border-right: 1px solid #cbd5e1;
+}
+
+.phone-input-wrap input {
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.form-field-row-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.estimated-price-strip {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 14px 0;
+}
+
+.estimate-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.estimate-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #166534;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.estimate-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #166534;
+}
+
+.estimate-disclaimer {
+  font-size: 0.68rem;
+  color: #15803d;
+  margin-top: 2px;
+}
+
+.btn-send-whatsapp {
+  width: 100%;
+  background: #0b3b70;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(11, 59, 112, 0.3);
+}
+
+.btn-send-whatsapp:hover {
+  background: #061a33;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(11, 59, 112, 0.45);
+}
+
+/* 5. Customer Trust Section */
+.trust-header-wrap {
+  margin-bottom: 32px;
+}
+
+.trust-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trust-main-heading {
+  font-family: var(--font-sans);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #061a33;
+}
+
+.trust-sub-heading {
+  font-size: 0.92rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.trust-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.trust-stats-quad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.trust-stat-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(6, 26, 51, 0.04);
+}
+
+.stat-icon-crimson {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffe4e6;
+  color: #e11d48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.stat-number-bold {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #061a33;
+  line-height: 1.1;
+}
+
+.stat-label-muted {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.testimonial-card-screenshot {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow: 0 6px 25px rgba(6, 26, 51, 0.06);
+  position: relative;
+}
+
+.quote-mark-icon {
+  font-size: 24px;
+  color: #f6c64a;
+  margin-bottom: 12px;
+}
+
+.testimonial-quote-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #334155;
+  font-style: italic;
+  margin-bottom: 24px;
+}
+
+.testimonial-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.author-name-tag {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #061a33;
+}
+
+.author-gold-stars {
+  color: #f6c64a;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.testimonial-nav-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.review-arrow-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #061a33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.review-arrow-btn:hover {
+  background: #061a33;
+  color: #ffffff;
+}
+
+.carousel-dots-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  cursor: pointer;
+}
+
+.carousel-dot.active {
+  background: #061a33;
+  width: 20px;
+  border-radius: 10px;
+}
+
+/* 6. Footer matching screenshot */
+.footer-screenshot {
+  background: #061a33;
+  color: #cbd5e1;
+  padding-top: 60px;
+}
+
+.footer-grid-screenshot {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr 1fr 1.2fr 1.3fr;
+  gap: 32px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.footer-brand-title {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.footer-brand-sub {
+  font-size: 0.72rem;
+  color: #f6c64a;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.footer-tagline-text {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.footer-heading {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.footer-list,
+.footer-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-list a,
+.footer-contact-list a,
+.footer-contact-list span {
+  color: #94a3b8;
+  font-size: 0.82rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease;
+}
+
+.footer-list a:hover,
+.footer-contact-list a:hover {
+  color: #f6c64a;
+}
+
+.footer-social-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.footer-social-row a {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.footer-social-row a:hover {
+  background: #f6c64a;
+  color: #061a33;
+}
+
+.diwali-blessing-box {
+  text-align: right;
+}
+
+.blessing-calligraphy {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #f6c64a;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.blessing-diyas-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  font-size: 22px;
+}
+
+.footer-bottom-screenshot {
+  padding: 20px 0;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.footer-bottom-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-legal-links a {
+  color: #64748b;
+  text-decoration: none;
+}
+
+.footer-legal-links a:hover {
+  color: #cbd5e1;
+}
+
+@media (max-width: 1024px) {
+  .services-grid-screenshot {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .mid-three-column-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid-screenshot {
+    grid-template-columns: 1fr 1fr;
+  }
+  .diwali-blessing-box {
+    text-align: left;
+  }
+  .blessing-diyas-row {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-grid-screenshot {
+    grid-template-columns: 1fr;
+  }
+  .services-grid-screenshot {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .trust-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid-screenshot {
+    grid-template-columns: 1fr;
+  }
+  .header-wa-pill {
+    display: none;
+  }
+}
+

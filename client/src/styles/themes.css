@@ -1,27 +1,24 @@
 /* ============================================================
-   DIWAKAR JI LAUNDRY — EDITORIAL ATELIER DESIGN SYSTEM
-   Inspired by Reference Atelier Aesthetic ("Your clothes, our care, at your doorstep.")
-   Themes: 
-     1. Normal Daily Theme (White / Soft Fog Canvas, Deep Navy, Sky Blue, Crisp Atelier Minimal)
-     2. Special Diwali Theme (Royal Plum / Velvet Night, Warm Ivory, Champagne Gold, Sacred Diya)
+   DIWAKAR JI LAUNDRY — OFFICIAL DESIGN SYSTEM
+   Normal Theme: Deep Navy #061A33 | Primary Blue #0B3B70 | White #FFFFFF | Warm Gold #F6C64A | Light Cream #FFF9EF
+   Diwali Theme: Deep Navy #061A33 | Cinematic Dark Night #070e1c | Golden Glow #F6C64A | Festive Maroon #5c0d18
    ============================================================ */
 
-/* ---- BASE THEME TOKENS ---- */
+/* ---- BASE TOKENS ---- */
 :root {
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Outfit', var(--font-sans);
 
   --radius-pill: 50px;
-  --radius-card: 20px;
-  --radius-inner: 12px;
-  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-card: 16px;
+  --radius-inner: 10px;
+  --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ============================================================
-   1. NORMAL DAILY THEME (ATELIER MINIMALIST)
-   Reference Image Match: Soft airy mist/ivory canvas, deep ink navy,
-   pill buttons with thin borders and arrows (↗), generous whitespace.
+   1. NORMAL DAILY THEME
+   Deep navy, primary blue, warm gold buttons, light cream & white cards.
    ============================================================ */
 [data-theme="classic"],
 [data-theme="normal"] {
@@ -29,85 +26,77 @@
   --bg-surface: #ffffff;
   --bg-card: #ffffff;
   --bg-subtle: #f1f5f9;
-  --bg-pill: #ffffff;
+  --bg-cream: #fff9ef;
 
-  --text-headline: #0f172a;
-  --text-body: #475569;
+  --navy-dark: #061a33;
+  --blue-primary: #0b3b70;
+  --gold-warm: #f6c64a;
+  --gold-hover: #e5b336;
+
+  --text-headline: #061a33;
+  --text-body: #334155;
   --text-muted: #64748b;
-  --text-accent: #1e3a8a;
+  --text-accent: #0b3b70;
 
   --border-subtle: #e2e8f0;
   --border-medium: #cbd5e1;
-  --border-pill: #0f172a;
 
-  --btn-primary-bg: #0f172a;
-  --btn-primary-text: #ffffff;
-  --btn-primary-hover: #1e293b;
+  --btn-gold-bg: #f6c64a;
+  --btn-gold-text: #061a33;
+  --btn-gold-hover: #e5b336;
 
-  --btn-pill-border: #0f172a;
-  --btn-pill-text: #0f172a;
-  --btn-pill-hover-bg: #0f172a;
-  --btn-pill-hover-text: #ffffff;
+  --header-bg: #061a33;
+  --header-text: #ffffff;
+  --hero-bg: linear-gradient(180deg, #061a33 0%, #0b2548 100%);
 
-  --accent-blue: #2563eb;
-  --accent-sky: #e0f2fe;
-  --accent-wa: #25D366;
-
-  --hero-kicker-color: #64748b;
-  --hero-bg: #f8fafc;
-  --header-bg: rgba(248, 250, 252, 0.85);
-
-  --shadow-subtle: 0 4px 20px rgba(15, 23, 42, 0.04);
-  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.06);
-  --shadow-hover: 0 16px 40px rgba(15, 23, 42, 0.1);
+  --shadow-subtle: 0 2px 12px rgba(6, 26, 51, 0.05);
+  --shadow-card: 0 8px 25px rgba(6, 26, 51, 0.08);
+  --shadow-hover: 0 14px 35px rgba(6, 26, 51, 0.14);
 
   --festive-decor-display: none !important;
 }
 
 /* ============================================================
-   2. SPECIAL DIWALI THEME (ROYAL PLUM & CHAMPAGNE GOLD)
-   Deep regal plum canvas, warm ivory highlights, champagne gold accents,
-   warm diya lighting aura, sacred rangoli geometry, glowing pill CTAs.
+   2. SPECIAL DIWALI THEME (MATCHES SCREENSHOT)
+   Deep navy header/footer, dark cinematic hero, glowing marigolds,
+   hanging lanterns, brass thali folded clothes, festive maroon accents.
    ============================================================ */
 [data-theme="diwali"] {
-  --bg-page: #10081d;
-  --bg-surface: #170d2b;
-  --bg-card: rgba(26, 15, 46, 0.85);
-  --bg-subtle: #1f1238;
-  --bg-pill: rgba(255, 255, 255, 0.08);
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --bg-cream: #fff9ef;
 
-  --text-headline: #faf7f2;
-  --text-body: #e2d9ec;
-  --text-muted: #ad9ebf;
-  --text-accent: #f5c453;
+  --navy-dark: #061a33;
+  --blue-primary: #0b3b70;
+  --gold-warm: #f6c64a;
+  --gold-hover: #ffd700;
+  --festive-maroon: #5c0d18;
 
-  --border-subtle: rgba(245, 196, 83, 0.2);
-  --border-medium: rgba(245, 196, 83, 0.4);
-  --border-pill: #f5c453;
+  --text-headline: #061a33;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --text-accent: #f6c64a;
 
-  --btn-primary-bg: linear-gradient(135deg, #f5c453 0%, #d4a34b 100%);
-  --btn-primary-text: #170d2b;
-  --btn-primary-hover: linear-gradient(135deg, #fde047 0%, #f5c453 100%);
+  --border-subtle: #e2e8f0;
+  --border-medium: #cbd5e1;
 
-  --btn-pill-border: #f5c453;
-  --btn-pill-text: #f5c453;
-  --btn-pill-hover-bg: #f5c453;
-  --btn-pill-hover-text: #170d2b;
+  --btn-gold-bg: #f6c64a;
+  --btn-gold-text: #061a33;
+  --btn-gold-hover: #ffd700;
 
-  --accent-gold: #f5c453;
-  --accent-amber: #f59e0b;
-  --accent-wa: #25D366;
+  --header-bg: #061a33;
+  --header-text: #ffffff;
+  --hero-bg: radial-gradient(circle at 65% 40%, #1e1135 0%, #0c0817 60%, #04020a 100%);
 
-  --hero-kicker-color: #f5c453;
-  --hero-bg: radial-gradient(circle at 70% 30%, #261245 0%, #150929 50%, #0c0517 100%);
-  --header-bg: rgba(16, 8, 29, 0.88);
-
-  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.3);
-  --shadow-card: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 196, 83, 0.1);
-  --shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(245, 196, 83, 0.25);
+  --shadow-subtle: 0 2px 12px rgba(6, 26, 51, 0.06);
+  --shadow-card: 0 8px 25px rgba(6, 26, 51, 0.09);
+  --shadow-hover: 0 14px 35px rgba(6, 26, 51, 0.16);
 
   --festive-decor-display: block !important;
 }
+
 
 /* ============================================================
    GLOBAL BODY & THEME WRAPPER

@@ -697,14 +697,13 @@
   }
 
   /* ---- 14. DUAL THEME SWITCHER (NORMAL DAILY & SPECIAL DIWALI) ---- */
+  /* ---- 10. THEME SWITCHER & REVIEW CAROUSEL (SCREENSHOT REDESIGN) ---- */
   const themeSelector = document.getElementById('theme-selector');
-  const heroHeadline = document.getElementById('hero-headline');
-  const heroSubtitle = document.getElementById('hero-subtitle');
-  const heroScheduleBtn = document.getElementById('hero-schedule-btn');
-  const heroKickerTag = document.getElementById('hero-kicker-tag');
-  const festiveBanner = document.getElementById('festive-banner');
-  const fairyLights = document.getElementById('fairy-lights');
-  const rangoliSvg = document.querySelector('.hero-rangoli-mandala');
+  const heroBadge = document.getElementById('hero-badge');
+  const heroShowcaseImg = document.getElementById('hero-showcase-img');
+  const diwaliSeal = document.getElementById('diwali-seal');
+  const marigoldGarland = document.getElementById('marigold-garland');
+  const centerFestiveCard = document.getElementById('center-festive-card');
 
   function applyTheme(themeName) {
     const isDiwali = themeName === 'diwali';
@@ -715,51 +714,129 @@
       themeSelector.value = isDiwali ? 'diwali' : 'classic';
     }
 
-    if (heroHeadline) {
-      heroHeadline.innerHTML = isDiwali
-        ? 'Celebrate Diwali,<br /><em>we\'ll take care</em><br />of your laundry.'
-        : 'Your clothes,<br /><em>our care,</em><br />at your doorstep.';
+    if (heroBadge) {
+      heroBadge.innerHTML = isDiwali
+        ? '<span>🪔 Happy Diwali 🪔</span>'
+        : '<span>🧺 Premium Laundry Care</span>';
+      heroBadge.className = isDiwali ? 'hero-festive-badge' : 'hero-normal-badge';
     }
 
-    if (heroSubtitle) {
-      heroSubtitle.innerHTML = isDiwali
-        ? 'Enjoy the festivities while we take care of your laundry needs. Free doorstep pickup &amp; prompt delivery across Kanpur.'
-        : 'Convenient, reliable, and fabric-safe laundry services, delivered with quiet craftsmanship across Kanpur. Free pickup &amp; delivery.';
+    if (heroShowcaseImg) {
+      heroShowcaseImg.src = isDiwali ? 'diwali_hero_stack.jpg' : 'hero_laundry.png';
     }
 
-    if (heroScheduleBtn) {
-      heroScheduleBtn.innerHTML = isDiwali
-        ? '<span>Book a Pickup</span><span class="arrow-icon">↗</span>'
-        : '<span>Schedule your pickup</span><span class="arrow-icon">↗</span>';
+    if (diwaliSeal) {
+      diwaliSeal.style.display = isDiwali ? 'flex' : 'none';
     }
 
-    if (heroKickerTag) {
-      heroKickerTag.innerHTML = isDiwali
-        ? '<span class="kicker-dot" style="background:#f5c453;"></span><span style="color:#f5c453;">✦ SHUBH DIWALI 2026 FESTIVE SEVA</span>'
-        : '<span class="kicker-dot"></span><span>Kanpur\'s Trusted Laundry Atelier</span>';
+    if (marigoldGarland) {
+      marigoldGarland.style.display = isDiwali ? 'flex' : 'none';
     }
 
-    if (fairyLights) {
-      fairyLights.style.display = isDiwali ? 'flex' : 'none';
-    }
-
-    if (rangoliSvg) {
-      rangoliSvg.style.display = isDiwali ? 'block' : 'none';
-    }
-
-    if (festiveBanner) {
-      festiveBanner.style.display = isDiwali ? 'block' : 'none';
+    if (centerFestiveCard) {
+      if (isDiwali) {
+        centerFestiveCard.className = 'diwali-promo-card-screenshot';
+        centerFestiveCard.innerHTML = `
+          <div class="promo-lantern-ornament left" aria-hidden="true">🪔</div>
+          <div class="promo-lantern-ornament right" aria-hidden="true">🪔</div>
+          <span class="diwali-promo-tag">This Diwali</span>
+          <h3 class="diwali-promo-headline">Keep Your Clothes Fresh and Your Moments Bright</h3>
+          <p class="diwali-promo-desc">Special festive offers on selected services. Book now and enjoy the festive care!</p>
+          <div class="diwali-promo-diya-glow">
+            <svg class="diya-glow-svg" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="38" stroke="#F6C64A" stroke-width="1" stroke-dasharray="3 3"/>
+              <circle cx="50" cy="50" r="28" stroke="#F6C64A" stroke-width="0.8"/>
+              <path d="M20 48 C22 60 36 65 50 65 C64 65 78 60 80 48 C80 42 70 38 50 38 C30 38 20 42 20 48 Z" fill="#9a3412" stroke="#F6C64A" stroke-width="1"/>
+              <ellipse cx="50" cy="42" rx="30" ry="7" fill="#d97706" stroke="#F6C64A" stroke-width="0.8"/>
+              <g class="diya-flame-animation">
+                <path d="M50 14 C43 26 42 33 50 38 C58 33 57 26 50 14 Z" fill="#ea580c"/>
+                <path d="M50 18 C45 28 44 32 50 36 C56 32 55 28 50 18 Z" fill="#fbbf24"/>
+                <path d="M50 22 C48 30 47 32 50 34 C53 32 52 30 50 22 Z" fill="#ffffff"/>
+              </g>
+            </svg>
+          </div>
+        `;
+      } else {
+        centerFestiveCard.className = 'diwali-promo-card-screenshot';
+        centerFestiveCard.style.background = 'linear-gradient(135deg, #061a33 0%, #0b3b70 100%)';
+        centerFestiveCard.innerHTML = `
+          <span class="diwali-promo-tag" style="color:#f6c64a; font-style:normal; font-weight:700;">Our Promise</span>
+          <h3 class="diwali-promo-headline">Fabric-Safe, Hygienic &amp; On-Time Delivery</h3>
+          <p class="diwali-promo-desc">Every order is washed individually in fresh softened water with eco-friendly sanitizing detergents.</p>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px; font-size:0.85rem; color:#e2e8f0; text-align:left;">
+            <div><i class="fa-solid fa-circle-check" style="color:#22c55e;"></i> 100% Separate Individual Wash</div>
+            <div><i class="fa-solid fa-circle-check" style="color:#22c55e;"></i> Zero Color Bleed Guarantee</div>
+            <div><i class="fa-solid fa-circle-check" style="color:#22c55e;"></i> Digital Doorstep Weighing</div>
+          </div>
+        `;
+      }
     }
   }
 
-  // Load saved theme or default to classic
-  const savedTheme = localStorage.getItem('diwakar_theme') || 'classic';
+  // Load saved theme (default to diwali matching user screenshot request)
+  const savedTheme = localStorage.getItem('diwakar_theme') || 'diwali';
   applyTheme(savedTheme);
 
   if (themeSelector) {
     themeSelector.addEventListener('change', function (e) {
       applyTheme(e.target.value);
       showToast(e.target.value === 'diwali' ? '🪔 Shubh Diwali Theme Activated!' : '☀️ Normal Daily Theme Activated!');
+    });
+  }
+
+  /* ---- 11. REVIEWS CAROUSEL ---- */
+  const reviewsData = [
+    {
+      text: '"Excellent service! My clothes came back fresh, clean and perfectly folded. On-time delivery and very professional team."',
+      author: '— Pooja Sharma'
+    },
+    {
+      text: '"Best dry cleaning service in Kanpur! My heavy festive sherwani and blankets were cleaned with extraordinary care."',
+      author: '— Rohit Verma'
+    },
+    {
+      text: '"Prompt doorstep pickup and delivery near IIT Kanpur. Very reasonable prices and great hygienic packaging."',
+      author: '— Dr. Amit Tiwari'
+    }
+  ];
+
+  let currentReviewIdx = 0;
+  const quoteEl = document.getElementById('active-review-quote');
+  const authorEl = document.getElementById('active-review-author');
+  const dots = document.querySelectorAll('.carousel-dot');
+
+  function updateReview(idx) {
+    currentReviewIdx = (idx + reviewsData.length) % reviewsData.length;
+    if (quoteEl) quoteEl.textContent = reviewsData[currentReviewIdx].text;
+    if (authorEl) authorEl.textContent = reviewsData[currentReviewIdx].author;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentReviewIdx);
+    });
+  }
+
+  const prevReviewBtn = document.getElementById('prev-review-btn');
+  const nextReviewBtn = document.getElementById('next-review-btn');
+  if (prevReviewBtn) prevReviewBtn.addEventListener('click', () => updateReview(currentReviewIdx - 1));
+  if (nextReviewBtn) nextReviewBtn.addEventListener('click', () => updateReview(currentReviewIdx + 1));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => updateReview(i)));
+
+  /* ---- 12. LIVE PRICE ESTIMATE ON SERVICE CHANGE ---- */
+  const serviceSelect = document.getElementById('service');
+  const estimateDisplay = document.getElementById('estimate-amount-text');
+
+  const priceMap = {
+    'Wash & Fold': '~₹160',
+    'Wash & Iron': '~₹240',
+    'Dry Cleaning': '~₹480',
+    'Steam Ironing': '~₹120',
+    'Bedding & Home Linen': '~₹320',
+    'Express Laundry': '~₹280'
+  };
+
+  if (serviceSelect && estimateDisplay) {
+    serviceSelect.addEventListener('change', function () {
+      const selected = serviceSelect.value;
+      estimateDisplay.textContent = priceMap[selected] || '~₹240';
     });
   }
 
