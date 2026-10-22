@@ -88,6 +88,17 @@
         <a href="#faq" class="nav-link">FAQ</a>
       </nav>
 
+      <!-- Theme Switcher Dropdown Pill -->
+      <div class="header-theme-selector" id="header-theme-wrap" title="Switch Theme Preview">
+        <i class="fa-solid fa-palette theme-icon"></i>
+        <select id="frontend-theme-picker" aria-label="Switch Theme Preview">
+          <option value="diwali">🪔 Shubh Diwali</option>
+          <option value="classic">🌊 Classic Ocean</option>
+          <option value="royal_gold">👑 Royal Gold</option>
+          <option value="fresh_mint">🍃 Fresh Mint</option>
+        </select>
+      </div>
+
       <a href="#booking" class="btn btn-whatsapp header-wa-btn" id="header-wa-btn">
         <i class="fa-brands fa-whatsapp"></i>
         Book on WhatsApp
@@ -127,6 +138,65 @@
   <section class="hero" id="home">
     <div class="hero-bg-rangoli" aria-hidden="true"></div>
 
+    <!-- Hanging Festive Lanterns (Akasdeep / Kandils) -->
+    <div class="hero-lantern lantern-left" aria-hidden="true">
+      <div class="lantern-cord"></div>
+      <svg class="lantern-svg" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="8" r="5" stroke="#f5c453" stroke-width="2" fill="none"/>
+        <path d="M22 13 L38 13 L42 22 L18 22 Z" fill="#9a3412" stroke="#f5c453" stroke-width="1.2"/>
+        <path d="M18 22 L42 22 L50 48 L10 48 Z" fill="url(#lanternL1)" stroke="#f5c453" stroke-width="1.5"/>
+        <path d="M10 48 L50 48 L42 74 L18 74 Z" fill="url(#lanternL2)" stroke="#f5c453" stroke-width="1.5"/>
+        <polygon points="30,28 44,48 30,68 16,48" fill="#fef08a" opacity="0.85" filter="drop-shadow(0 0 8px #f59e0b)"/>
+        <path d="M22 74 L38 74 L35 80 L25 80 Z" fill="#9a3412" stroke="#f5c453" stroke-width="1.2"/>
+        <line x1="25" y1="80" x2="22" y2="108" stroke="#f5c453" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="28" y1="80" x2="27" y2="102" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="80" x2="30" y2="110" stroke="#fef08a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="32" y1="80" x2="33" y2="102" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="35" y1="80" x2="38" y2="108" stroke="#f5c453" stroke-width="1.5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="lanternL1" x1="10" y1="22" x2="50" y2="48" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#b91c1c"/>
+            <stop offset="50%" stop-color="#dc2626"/>
+            <stop offset="100%" stop-color="#991b1b"/>
+          </linearGradient>
+          <linearGradient id="lanternL2" x1="10" y1="48" x2="50" y2="74" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#7c2d12"/>
+            <stop offset="50%" stop-color="#ea580c"/>
+            <stop offset="100%" stop-color="#9a3412"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="hero-lantern lantern-right" aria-hidden="true">
+      <div class="lantern-cord"></div>
+      <svg class="lantern-svg" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="8" r="5" stroke="#f5c453" stroke-width="2" fill="none"/>
+        <path d="M22 13 L38 13 L42 22 L18 22 Z" fill="#9a3412" stroke="#f5c453" stroke-width="1.2"/>
+        <path d="M18 22 L42 22 L50 48 L10 48 Z" fill="url(#lanternR1)" stroke="#f5c453" stroke-width="1.5"/>
+        <path d="M10 48 L50 48 L42 74 L18 74 Z" fill="url(#lanternR2)" stroke="#f5c453" stroke-width="1.5"/>
+        <polygon points="30,28 44,48 30,68 16,48" fill="#fef08a" opacity="0.85" filter="drop-shadow(0 0 8px #f59e0b)"/>
+        <path d="M22 74 L38 74 L35 80 L25 80 Z" fill="#9a3412" stroke="#f5c453" stroke-width="1.2"/>
+        <line x1="25" y1="80" x2="22" y2="108" stroke="#f5c453" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="28" y1="80" x2="27" y2="102" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="80" x2="30" y2="110" stroke="#fef08a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="32" y1="80" x2="33" y2="102" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="35" y1="80" x2="38" y2="108" stroke="#f5c453" stroke-width="1.5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="lanternR1" x1="10" y1="22" x2="50" y2="48" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#4c1d95"/>
+            <stop offset="50%" stop-color="#7c3aed"/>
+            <stop offset="100%" stop-color="#5b21b6"/>
+          </linearGradient>
+          <linearGradient id="lanternR2" x1="10" y1="48" x2="50" y2="74" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#831843"/>
+            <stop offset="50%" stop-color="#db2777"/>
+            <stop offset="100%" stop-color="#9d174d"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
     <!-- Rotating Rangoli Mandala SVG (Diwali Theme) -->
     <svg class="hero-rangoli-mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true">
@@ -157,7 +227,7 @@
     <div class="container hero-inner">
       <div class="hero-content reveal">
         <!-- Authentic Earthen Clay Diya Badge with 3-Layer Animated Flame -->
-        <div class="traditional-diya-hero" id="traditional-diya-hero">
+        <div class="traditional-diya-hero" id="traditional-diya-hero" title="Tap Diya to celebrate Diwali!">
           <svg class="clay-diya-svg" viewBox="0 0 50 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="25" cy="14" rx="18" ry="12" fill="url(#haloGlow)" />
             <!-- Earthen Clay Diya Body -->
@@ -717,14 +787,62 @@
                 <label for="area">Area / PIN Code <span class="required">*</span></label>
                 <input type="text" id="area" name="area" placeholder="e.g. Kidwai Nagar - 208011" required />
                 <span class="field-error" id="error-area">Please enter your area or PIN code.</span>
+
+                <!-- Fast Kanpur Area Chips -->
+                <div class="area-fast-chips" id="area-fast-chips">
+                  <span class="area-fast-label"><i class="fa-solid fa-location-dot"></i> Quick:</span>
+                  <button type="button" class="area-chip" data-area="Kakadeo, Kanpur">Kakadeo</button>
+                  <button type="button" class="area-chip" data-area="Swaroop Nagar, Kanpur">Swaroop Nagar</button>
+                  <button type="button" class="area-chip" data-area="Kidwai Nagar, Kanpur">Kidwai Nagar</button>
+                  <button type="button" class="area-chip" data-area="Kalyanpur, Kanpur">Kalyanpur</button>
+                  <button type="button" class="area-chip" data-area="Civil Lines, Kanpur">Civil Lines</button>
+                  <button type="button" class="area-chip" data-area="Govind Nagar, Kanpur">Govind Nagar</button>
+                  <button type="button" class="area-chip" data-area="IIT Kanpur Campus">IIT Kanpur</button>
+                </div>
               </div>
+
               <div class="form-group" id="group-service">
                 <label for="service">Laundry Service <span class="required">*</span></label>
-                <div class="select-wrap">
+                <!-- Visual 1-Click Service Selector Cards -->
+                <div class="service-selector-grid" id="service-chips-grid">
+                  <button type="button" class="service-chip" data-service="Wash & Fold">
+                    <span class="chip-icon">👕</span>
+                    <span class="chip-name">Wash &amp; Fold</span>
+                    <span class="chip-rate">From ₹40/kg</span>
+                  </button>
+                  <button type="button" class="service-chip active" data-service="Wash & Iron">
+                    <span class="chip-badge">Popular</span>
+                    <span class="chip-icon">✨</span>
+                    <span class="chip-name">Wash &amp; Iron</span>
+                    <span class="chip-rate">From ₹60/kg</span>
+                  </button>
+                  <button type="button" class="service-chip" data-service="Dry Cleaning">
+                    <span class="chip-icon">👔</span>
+                    <span class="chip-name">Dry Cleaning</span>
+                    <span class="chip-rate">From ₹120/pc</span>
+                  </button>
+                  <button type="button" class="service-chip" data-service="Steam Ironing">
+                    <span class="chip-icon">💨</span>
+                    <span class="chip-name">Steam Iron</span>
+                    <span class="chip-rate">From ₹30/pc</span>
+                  </button>
+                  <button type="button" class="service-chip" data-service="Blankets & Bedsheets">
+                    <span class="chip-icon">🛏️</span>
+                    <span class="chip-name">Blankets</span>
+                    <span class="chip-rate">From ₹80/pc</span>
+                  </button>
+                  <button type="button" class="service-chip" data-service="Express Laundry">
+                    <span class="chip-icon">⚡</span>
+                    <span class="chip-name">Express</span>
+                    <span class="chip-rate">From ₹70/kg</span>
+                  </button>
+                </div>
+
+                <div class="select-wrap" style="display:none;">
                   <select id="service" name="service" required>
                     <option value="">Select Service</option>
                     <option value="Wash & Fold">Wash &amp; Fold</option>
-                    <option value="Wash & Iron">Wash &amp; Iron</option>
+                    <option value="Wash & Iron" selected>Wash &amp; Iron</option>
                     <option value="Dry Cleaning">Dry Cleaning</option>
                     <option value="Steam Ironing">Steam Ironing</option>
                     <option value="Blankets & Bedsheets">Blankets &amp; Bedsheets</option>
@@ -743,9 +861,8 @@
                 <label for="quantity">Approx. Clothes Quantity <span class="required">*</span></label>
                 <div class="select-wrap">
                   <select id="quantity" name="quantity" required>
-                    <option value="">Select Quantity</option>
                     <option value="1–3 kg (Small load)">1–3 kg (Small load)</option>
-                    <option value="4–6 kg (Medium load)">4–6 kg (Medium load)</option>
+                    <option value="4–6 kg (Medium load)" selected>4–6 kg (Medium load)</option>
                     <option value="7–10 kg (Large load)">7–10 kg (Large load)</option>
                     <option value="10+ kg (Bulk load)">10+ kg (Bulk load)</option>
                     <option value="Not sure yet">Not sure yet (Weigh at pickup)</option>
@@ -758,13 +875,18 @@
               </div>
               <div class="form-group" id="group-date">
                 <label for="pickup-date">Pickup Date <span class="required">*</span></label>
+                <div class="quick-date-row" id="quick-date-row">
+                  <button type="button" class="date-quick-btn active" data-offset="0">Today</button>
+                  <button type="button" class="date-quick-btn" data-offset="1">Tomorrow</button>
+                  <button type="button" class="date-quick-btn" data-offset="2">Day After</button>
+                </div>
                 <input type="date" id="pickup-date" name="pickup_date" required />
                 <span class="field-error" id="error-date">Please select a pickup date.</span>
               </div>
             </div>
 
             <!-- Live Transparent Price Estimate Card -->
-            <div id="live-price-estimate" class="price-estimate-box" style="display: none;" aria-live="polite">
+            <div id="live-price-estimate" class="price-estimate-box" aria-live="polite">
               <div class="estimate-header">
                 <span class="estimate-title">
                   <i class="fa-solid fa-calculator"></i> Estimated Pricing
@@ -778,11 +900,18 @@
 
             <div class="form-group" id="group-time">
               <label for="pickup-time">Preferred Pickup Time <span class="required">*</span></label>
-              <div class="select-wrap">
+              <div class="time-chips-grid" id="time-chips-grid">
+                <button type="button" class="time-chip" data-time="7:00 AM – 9:00 AM">🌅 7–9 AM</button>
+                <button type="button" class="time-chip active" data-time="9:00 AM – 11:00 AM">🌅 9–11 AM</button>
+                <button type="button" class="time-chip" data-time="11:00 AM – 1:00 PM">☀️ 11–1 PM</button>
+                <button type="button" class="time-chip" data-time="2:00 PM – 4:00 PM">🌤️ 2–4 PM</button>
+                <button type="button" class="time-chip" data-time="4:00 PM – 6:00 PM">🌙 4–6 PM</button>
+                <button type="button" class="time-chip" data-time="6:00 PM – 8:00 PM">🌙 6–8 PM</button>
+              </div>
+              <div class="select-wrap" style="display:none;">
                 <select id="pickup-time" name="pickup_time" required>
-                  <option value="">Select Time Slot</option>
                   <option value="7:00 AM – 9:00 AM">7:00 AM – 9:00 AM (Morning)</option>
-                  <option value="9:00 AM – 11:00 AM">9:00 AM – 11:00 AM (Morning)</option>
+                  <option value="9:00 AM – 11:00 AM" selected>9:00 AM – 11:00 AM (Morning)</option>
                   <option value="11:00 AM – 1:00 PM">11:00 AM – 1:00 PM (Midday)</option>
                   <option value="2:00 PM – 4:00 PM">2:00 PM – 4:00 PM (Afternoon)</option>
                   <option value="4:00 PM – 6:00 PM">4:00 PM – 6:00 PM (Evening)</option>
@@ -798,7 +927,7 @@
             <div class="form-group" id="group-instructions">
               <label for="instructions">Special Instructions <span class="optional">(Optional)</span></label>
               <textarea id="instructions" name="instructions"
-                placeholder="Any special care instructions, fragile items, or notes for us..." rows="3"></textarea>
+                placeholder="Any special care instructions, fragile items, or notes for us..." rows="2"></textarea>
             </div>
 
             <button type="submit" class="btn btn-whatsapp btn-submit" id="submit-btn">
@@ -808,6 +937,38 @@
               </svg>
               <span id="submit-text">Submit &amp; Continue to WhatsApp</span>
             </button>
+
+            <!-- Diwakar Ji Quality & Hygiene Trust Strip -->
+            <div class="booking-trust-strip">
+              <div class="trust-badge-card">
+                <span class="trust-icon">🧼</span>
+                <div>
+                  <strong>100% Separate Wash</strong>
+                  <p>Never mixed with other clothes</p>
+                </div>
+              </div>
+              <div class="trust-badge-card">
+                <span class="trust-icon">⚖️</span>
+                <div>
+                  <strong>Digital Weighing</strong>
+                  <p>Accurate digital scale at pickup</p>
+                </div>
+              </div>
+              <div class="trust-badge-card">
+                <span class="trust-icon">🚚</span>
+                <div>
+                  <strong>Free Pickup &amp; Delivery</strong>
+                  <p>Direct to your doorstep in Kanpur</p>
+                </div>
+              </div>
+              <div class="trust-badge-card">
+                <span class="trust-icon">🛡️</span>
+                <div>
+                  <strong>Safe Fabric Promise</strong>
+                  <p>Zero shrinkage or color bleed</p>
+                </div>
+              </div>
+            </div>
 
             <p class="form-note">
               <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">

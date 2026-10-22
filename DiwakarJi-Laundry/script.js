@@ -696,9 +696,110 @@
     statNums.forEach(function (el) { statObserver.observe(el); });
   }
 
+  /* ---- 14. INTERACTIVE VISUAL BOOKING CHIPS & THEME SWITCHER ---- */
+
+  // 1. Live Theme Picker in Header
+  const themePicker = document.getElementById('frontend-theme-picker');
+  if (themePicker) {
+    const savedTheme = localStorage.getItem('diwakar_theme_preference');
+    if (savedTheme) {
+      themePicker.value = savedTheme;
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.body.setAttribute('data-theme', savedTheme);
+    }
+    themePicker.addEventListener('change', function () {
+      const selected = this.value;
+      document.documentElement.setAttribute('data-theme', selected);
+      document.body.setAttribute('data-theme', selected);
+      localStorage.setItem('diwakar_theme_preference', selected);
+      showToast(`Active Theme: ${selected.replace('_', ' ').toUpperCase()}`);
+    });
+  }
+
+  // 2. Visual 1-Click Service Selector Cards
+  const serviceChips = document.querySelectorAll('.service-chip');
+  serviceChips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      serviceChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const svcName = chip.getAttribute('data-service');
+      if (serviceEl) {
+        serviceEl.value = svcName;
+        validateField(fields.find(f => f.id === 'service'));
+        updateLivePrice();
+      }
+    });
+  });
+
+  // 3. Fast Kanpur Area Chips
+  const areaChips = document.querySelectorAll('.area-chip');
+  const areaInput = document.getElementById('area');
+  areaChips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      const val = chip.getAttribute('data-area');
+      if (areaInput) {
+        areaInput.value = val;
+        validateField(fields.find(f => f.id === 'area'));
+      }
+    });
+  });
+
+  // 4. Quick Date Buttons
+  const dateQuickBtns = document.querySelectorAll('.date-quick-btn');
+  dateQuickBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      dateQuickBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const offset = parseInt(btn.getAttribute('data-offset') || '0', 10);
+      const targetDate = new Date();
+      targetDate.setDate(targetDate.getDate() + offset);
+      if (dateInput) {
+        const y = targetDate.getFullYear();
+        const m = String(targetDate.getMonth() + 1).padStart(2, '0');
+        const d = String(targetDate.getDate()).padStart(2, '0');
+        dateInput.value = `${y}-${m}-${d}`;
+        validateField(fields.find(f => f.id === 'pickup-date'));
+      }
+    });
+  });
+
+  if (dateInput) {
+    dateInput.addEventListener('change', function () {
+      dateQuickBtns.forEach(b => b.classList.remove('active'));
+    });
+  }
+
+  // 5. Visual Time Slot Chips
+  const timeChips = document.querySelectorAll('.time-chip');
+  const timeSelect = document.getElementById('pickup-time');
+  timeChips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      timeChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const slotVal = chip.getAttribute('data-time');
+      if (timeSelect) {
+        timeSelect.value = slotVal;
+        validateField(fields.find(f => f.id === 'pickup-time'));
+      }
+    });
+  });
+
+  // 6. Interactive Clay Diya Celebration
+  const diyaHero = document.getElementById('traditional-diya-hero');
+  if (diyaHero) {
+    diyaHero.style.cursor = 'pointer';
+    diyaHero.addEventListener('click', function () {
+      showToast('✨ Shubh Deepawali ki Hardik Shubhkamnayein! 🪔✨', 4000);
+      diyaHero.classList.add('celebrating');
+      setTimeout(() => diyaHero.classList.remove('celebrating'), 3000);
+    });
+  }
+
   /* ---- INIT ---- */
   loadPublicConfig();
+  updateLivePrice();
   console.log('%c Diwakar Ji Laundry 🧺 ', 'background:#0c1424;color:#f5c453;font-size:16px;font-weight:bold;border-radius:4px;padding:4px 10px;');
   console.log('%c Diwali Theme Active • WhatsApp: +91 7860462268 ', 'color:#25D366;font-weight:bold;');
 
 })();
+
