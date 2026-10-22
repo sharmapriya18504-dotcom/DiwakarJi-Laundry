@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Diwakar Ji Laundry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- ==================== LOGIN VIEW ==================== -->
+  <div id="login-container" class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo-icon">🪔</div>
+        <h2>Diwakar Ji Admin</h2>
+        <p>Sign in to manage laundry bookings, services &amp; Diwali offers</p>
+      </div>
+
+      <form id="login-form" class="login-form" novalidate>
+        <div id="login-error" class="login-error-msg" style="display: none;"></div>
+
+        <div class="form-group">
+          <label for="admin-username">Username</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="admin-username" name="username" placeholder="admin" required autocomplete="username" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="admin-password">Password</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="admin-password" name="password" placeholder="••••••••" required autocomplete="current-password" />
+            <button type="button" id="toggle-pwd-btn" class="pwd-toggle" aria-label="Toggle password visibility">
+              <i class="fa-solid fa-eye" id="pwd-eye-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="login-btn" class="btn-primary-admin">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          <span>Sign In to Dashboard</span>
+        </button>
+
+        <div class="login-footer">
+          <a href="/" target="_blank"><i class="fa-solid fa-arrow-left"></i> Back to Public Website</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== DASHBOARD VIEW ==================== -->
+  <div id="dashboard-container" class="dashboard-wrapper" style="display: none;">
+    <!-- Top Nav -->
+    <header class="admin-topbar">
+      <div class="admin-brand">
+        <span class="admin-brand-icon">🧺</span>
+        <div>
+          <h1 class="admin-brand-title">Diwakar Ji Laundry</h1>
+          <span class="admin-badge-diwali">🪔 Diwali Edition Admin</span>
+        </div>
+      </div>
+
+      <div class="admin-topbar-actions">
+        <a href="/" target="_blank" class="topbar-btn outline">
+          <i class="fa-solid fa-external-link"></i>
+          <span>View Live Site</span>
+        </a>
+        <div class="admin-user-pill">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span id="display-admin-name">admin</span>
+        </div>
+        <button type="button" id="logout-btn" class="topbar-btn logout">
+          <i class="fa-solid fa-power-off"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="admin-nav-tabs">
+      <div class="container admin-nav-inner">
+        <button class="nav-tab active" data-tab="tab-overview">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Overview</span>
+        </button>
+        <button class="nav-tab" data-tab="tab-bookings">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span>Bookings</span>
+          <span id="tab-badge-pending" class="tab-badge">0</span>
+        </button>
+        <button class="nav-tab" data-tab="tab-services">
+          <i class="fa-solid fa-shirt"></i>
+          <span>Services &amp; Pricing</span>
+        </button>
+        <button class="nav-tab" data-tab="tab-settings">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Diwali &amp; Site Settings</span>
+        </button>
+        <button class="nav-tab" data-tab="tab-security">
+          <i class="fa-solid fa-key"></i>
+          <span>Security</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="container admin-main">
+
+      <!-- ==================== TAB 1: OVERVIEW ==================== -->
+      <section id="tab-overview" class="tab-pane active">
+        <div class="pane-header">
+          <h2>Dashboard Overview</h2>
+          <p>Real-time summary of laundry pickup orders &amp; active operations</p>
+        </div>
+
+        <!-- Metric KPI Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon blue"><i class="fa-solid fa-box-archive"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-num" id="kpi-total">0</span>
+              <span class="kpi-label">Total Bookings</span>
+            </div>
+          </div>
+
+          <div class="kpi-card highlight">
+            <div class="kpi-icon amber"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-num" id="kpi-pending">0</span>
+              <span class="kpi-label">Pending Pickups</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon indigo"><i class="fa-solid fa-truck"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-num" id="kpi-today">0</span>
+              <span class="kpi-label">Today's Pickups</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-num" id="kpi-completed">0</span>
+              <span class="kpi-label">Completed Orders</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon gold"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div class="kpi-details">
+              <span class="kpi-num" id="kpi-services">6</span>
+              <span class="kpi-label">Active Services</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions & Recent Bookings -->
+        <div class="overview-section">
+          <div class="section-card">
+            <div class="card-header-flex">
+              <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Bookings</h3>
+              <button type="button" class="btn-sm-action" onclick="document.querySelector('[data-tab=tab-bookings]').click()">
+                View All Bookings <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+            <div id="recent-bookings-list" class="recent-list">
+              <div class="empty-state">Loading recent bookings…</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: BOOKINGS ==================== -->
+      <section id="tab-bookings" class="tab-pane">
+        <div class="pane-header-flex">
+          <div>
+            <h2>Bookings Manager</h2>
+            <p>Search, filter, update statuses, and contact customers directly via WhatsApp</p>
+          </div>
+          <button type="button" id="refresh-bookings-btn" class="btn-refresh">
+            <i class="fa-solid fa-rotate-right"></i> Refresh
+          </button>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-bar">
+          <div class="search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="booking-search" placeholder="Search reference, customer name, mobile, area…" />
+          </div>
+
+          <div class="filter-dropdowns">
+            <select id="filter-status">
+              <option value="all">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+
+            <input type="date" id="filter-date" title="Filter by pickup date" />
+            <button type="button" id="clear-filters-btn" class="btn-clear-filter">Clear</button>
+          </div>
+        </div>
+
+        <!-- Bookings Table / Cards -->
+        <div class="bookings-table-wrapper">
+          <table class="bookings-table">
+            <thead>
+              <tr>
+                <th>Reference</th>
+                <th>Customer &amp; Mobile</th>
+                <th>Address &amp; Locality</th>
+                <th>Service &amp; Qty</th>
+                <th>Pickup Schedule</th>
+                <th>Estimate</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bookings-tbody">
+              <tr>
+                <td colspan="8" class="text-center py-4">Loading bookings…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: SERVICES & PRICING ==================== -->
+      <section id="tab-services" class="tab-pane">
+        <div class="pane-header-flex">
+          <div>
+            <h2>Laundry Services &amp; Pricing</h2>
+            <p>Update live prices, units, and descriptions. Changes reflect immediately on public site!</p>
+          </div>
+          <button type="button" id="btn-add-service" class="btn-primary-admin sm">
+            <i class="fa-solid fa-plus"></i> Add Service
+          </button>
+        </div>
+
+        <!-- Service Cards Grid -->
+        <div id="admin-services-grid" class="admin-services-grid">
+          <!-- Loaded dynamically -->
+        </div>
+
+        <!-- Add/Edit Service Modal -->
+        <div id="service-modal" class="admin-modal" style="display: none;">
+          <div class="admin-modal-card">
+            <div class="admin-modal-header">
+              <h3 id="service-modal-title">Edit Service</h3>
+              <button type="button" id="service-modal-close" class="modal-close-x">&times;</button>
+            </div>
+            <form id="service-form" class="service-modal-form">
+              <input type="hidden" id="edit-service-id" />
+              <div class="form-group">
+                <label for="service-modal-name">Service Name <span class="required">*</span></label>
+                <input type="text" id="service-modal-name" required />
+              </div>
+              <div class="form-row two-col">
+                <div class="form-group">
+                  <label for="service-modal-price">Price (₹) <span class="required">*</span></label>
+                  <input type="number" id="service-modal-price" step="0.5" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label for="service-modal-unit">Unit <span class="required">*</span></label>
+                  <select id="service-modal-unit" required>
+                    <option value="/kg">/kg</option>
+                    <option value="/piece">/piece</option>
+                    <option value="/pair">/pair</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="service-modal-desc">Description</label>
+                <textarea id="service-modal-desc" rows="2"></textarea>
+              </div>
+              <div class="form-group-checkbox">
+                <label>
+                  <input type="checkbox" id="service-modal-popular" />
+                  <span>Highlight as "Most Popular / Diwali Choice"</span>
+                </label>
+              </div>
+              <div class="form-group-checkbox">
+                <label>
+                  <input type="checkbox" id="service-modal-active" checked />
+                  <span>Active &amp; Available for Booking</span>
+                </label>
+              </div>
+              <div class="modal-btn-row">
+                <button type="button" id="service-modal-cancel" class="btn-cancel">Cancel</button>
+                <button type="submit" class="btn-primary-admin">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 4: DIWALI & SITE SETTINGS ==================== -->
+      <section id="tab-settings" class="tab-pane">
+        <div class="pane-header">
+          <h2>Diwali &amp; Website Settings</h2>
+          <p>Control festive decorations, announcement banner, contact numbers, and public copy dynamically</p>
+        </div>
+
+        <form id="settings-form" class="settings-form">
+          <!-- Festive Diwali Controls -->
+          <div class="settings-box festive-box">
+            <div class="box-title">
+              <span>🪔</span>
+              <h3>Diwali Festive Controls</h3>
+            </div>
+
+            <div class="form-group-switch">
+              <div>
+                <strong>Diwali Theme Decorations</strong>
+                <p>Toggle glowing diyas, hanging fairy lights garland &amp; festive badges</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-diwali-decorations" />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="form-group-switch">
+              <div>
+                <strong>Top Announcement Offer Banner</strong>
+                <p>Show/hide the golden Diwali banner at the top of the public website</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-banner-enabled" />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="setting-banner-text">Festive Offer Banner Text</label>
+              <textarea id="setting-banner-text" rows="2" placeholder="🪔 Shubh Diwali Offer: 15% OFF on Blankets & Dry Cleaning..."></textarea>
+            </div>
+          </div>
+
+          <!-- Business Contact Information -->
+          <div class="settings-box">
+            <div class="box-title">
+              <i class="fa-solid fa-address-book"></i>
+              <h3>Owner Contact &amp; Notification Destination</h3>
+            </div>
+
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="setting-whatsapp-num">Owner WhatsApp Number (without + or spaces)</label>
+                <input type="text" id="setting-whatsapp-num" placeholder="917860462268" />
+                <small class="helper-text">Used for all customer booking notifications.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="setting-phone">Display Phone Number</label>
+                <input type="text" id="setting-phone" placeholder="+91 7860462268" />
+              </div>
+            </div>
+
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="setting-owner-name">Owner / Business Display Name</label>
+                <input type="text" id="setting-owner-name" placeholder="Diwakar Ji" />
+              </div>
+              <div class="form-group">
+                <label for="setting-hours">Opening Hours</label>
+                <input type="text" id="setting-hours" placeholder="7:00 AM – 8:00 PM (All 7 Days)" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Public Content Text -->
+          <div class="settings-box">
+            <div class="box-title">
+              <i class="fa-solid fa-pen-nib"></i>
+              <h3>Homepage Content &amp; Service Areas</h3>
+            </div>
+
+            <div class="form-group">
+              <label for="setting-hero-headline">Hero Headline (HTML supported)</label>
+              <input type="text" id="setting-hero-headline" placeholder="Fresh Clothes.<br/><span class='gradient-text'>Fresh Feel.</span>" />
+            </div>
+
+            <div class="form-group">
+              <label for="setting-hero-subtitle">Hero Subtitle</label>
+              <textarea id="setting-hero-subtitle" rows="2"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="setting-service-areas">Service Areas Covered in Kanpur</label>
+              <textarea id="setting-service-areas" rows="2" placeholder="IIT Kanpur Area, Kalyanpur, Kidwai Nagar, Govind Nagar, Civil Lines..."></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary-admin lg">
+            <i class="fa-solid fa-floppy-disk"></i> Save Settings
+          </button>
+        </form>
+      </section>
+
+      <!-- ==================== TAB 5: SECURITY ==================== -->
+      <section id="tab-security" class="tab-pane">
+        <div class="pane-header">
+          <h2>Security &amp; Password</h2>
+          <p>Update administrator credentials to keep your dashboard protected</p>
+        </div>
+
+        <div class="settings-box max-w-md">
+          <div class="box-title">
+            <i class="fa-solid fa-lock"></i>
+            <h3>Change Admin Password</h3>
+          </div>
+
+          <form id="change-pwd-form" class="settings-form">
+            <div class="form-group">
+              <label for="curr-password">Current Password <span class="required">*</span></label>
+              <input type="password" id="curr-password" required autocomplete="current-password" />
+            </div>
+
+            <div class="form-group">
+              <label for="new-password">New Password <span class="required">*</span></label>
+              <input type="password" id="new-password" minlength="6" required autocomplete="new-password" />
+              <small class="helper-text">Minimum 6 characters long.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="confirm-password">Confirm New Password <span class="required">*</span></label>
+              <input type="password" id="confirm-password" minlength="6" required autocomplete="new-password" />
+            </div>
+
+            <button type="submit" class="btn-primary-admin">
+              <i class="fa-solid fa-key"></i> Update Password
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Admin Toast -->
+  <div id="admin-toast" class="admin-toast" role="status" aria-live="polite"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

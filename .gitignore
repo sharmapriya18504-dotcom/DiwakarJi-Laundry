@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.db
+*.sqlite
+diwakar_laundry.db
+diwakar_laundry.db-wal
+diwakar_laundry.db-shm
+.env
+venv/
+env/
+.DS_Store
+Thumbs.db

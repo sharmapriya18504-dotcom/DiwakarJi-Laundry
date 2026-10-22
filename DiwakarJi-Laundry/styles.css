@@ -8,30 +8,45 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --navy:      #10243A;
-  --blue:      #2878F0;
-  --blue-dark: #1a5ecf;
-  --blue-light:#4a93f5;
-  --sky:       #EAF4FF;
-  --sky-deep:  #d4eaff;
-  --white:     #ffffff;
-  --gray-50:   #f8faff;
-  --gray-100:  #f0f4f8;
-  --gray-200:  #e2e8f0;
-  --gray-400:  #94a3b8;
-  --gray-600:  #64748b;
-  --gray-800:  #1e293b;
-  --green:     #25D366;
-  --green-dark:#128C7E;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-  --shadow-md: 0 4px 16px rgba(16,36,58,.10);
-  --shadow-lg: 0 10px 40px rgba(16,36,58,.15);
-  --shadow-xl: 0 20px 60px rgba(16,36,58,.20);
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --transition: .3s cubic-bezier(.4,0,.2,1);
+  --navy:         #0c1424;
+  --navy-deep:    #070d18;
+  --royal-purple: #1e1338;
+  --blue:         #2878F0;
+  --blue-dark:    #1a5ecf;
+  --blue-light:   #4a93f5;
+  --sky:          #EAF4FF;
+  --sky-deep:     #d4eaff;
+  --white:        #ffffff;
+  --gray-50:      #f8faff;
+  --gray-100:     #f0f4f8;
+  --gray-200:     #e2e8f0;
+  --gray-400:     #94a3b8;
+  --gray-600:     #64748b;
+  --gray-800:     #1e293b;
+  --green:        #25D366;
+  --green-dark:   #128C7E;
+  
+  /* Diwali Festive Palette */
+  --gold:         #d4a34b;
+  --gold-bright:  #f5c453;
+  --gold-dark:    #b88228;
+  --gold-light:   #fef3c7;
+  --gold-glow:    rgba(245, 196, 83, 0.4);
+  --gold-gradient:linear-gradient(135deg, #d4a34b 0%, #f5c453 50%, #b88228 100%);
+  --saffron-diya: #ff8c2b;
+  --festive-maroon:#6b1220;
+  --festive-bg:   linear-gradient(135deg, #0c1424 0%, #1e1338 50%, #0c1424 100%);
+  
+  --shadow-sm:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:    0 4px 16px rgba(12,20,36,.12);
+  --shadow-lg:    0 10px 40px rgba(12,20,36,.18);
+  --shadow-xl:    0 20px 60px rgba(12,20,36,.25);
+  --shadow-gold:  0 8px 30px rgba(212,163,75,.35);
+  --radius-sm:    8px;
+  --radius-md:    14px;
+  --radius-lg:    20px;
+  --radius-xl:    28px;
+  --transition:   .3s cubic-bezier(.4,0,.2,1);
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -1300,3 +1315,598 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .hero-trust { animation-delay: .4s; }
 .hero-ctas { animation-delay: .5s; }
 .hero-stats { animation-delay: .6s; }
+
+/* ============================================================
+   DIWALI FESTIVE THEME ENHANCEMENTS
+   Colors: Royal Navy #0c1424 | Gold #d4a34b | Amber Glow #fbbf24
+   ============================================================ */
+
+/* ---- TOP FESTIVE ANNOUNCEMENT BANNER ---- */
+.festive-banner {
+  background: linear-gradient(90deg, #160d2b 0%, #4a1525 35%, #831843 65%, #1e1338 100%);
+  border-bottom: 1.5px solid rgba(245, 196, 83, 0.45);
+  color: #fff;
+  padding: 10px 16px;
+  position: relative;
+  z-index: 1002;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.88rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+.festive-banner-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.festive-diya-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 6px rgba(245, 196, 83, 0.8));
+  animation: diyaGlow 2.5s ease-in-out infinite alternate;
+}
+
+.festive-tag-pill {
+  background: linear-gradient(135deg, #d4a34b 0%, #f5c453 100%);
+  color: #0c1424;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 50px;
+  box-shadow: 0 2px 8px rgba(212, 163, 75, 0.4);
+}
+
+.festive-banner-text {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fef3c7;
+}
+
+.festive-banner-text strong {
+  color: #ffffff;
+}
+
+.festive-cta-link {
+  color: #f5c453;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-left: 6px;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.festive-cta-link:hover {
+  color: #ffffff;
+}
+
+.festive-banner-close {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  padding: 4px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.festive-banner-close:hover {
+  color: #fff;
+}
+
+body.has-festive-banner .header {
+  top: 42px;
+}
+
+/* ---- FAIRY LIGHTS GARLAND ---- */
+.fairy-lights-garland {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 18px;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 998;
+}
+
+.fairy-bulb {
+  width: 9px;
+  height: 14px;
+  border-radius: 50% 50% 35% 35%;
+  position: relative;
+  animation: bulbTwinkle 2s ease-in-out infinite alternate;
+}
+
+.fairy-bulb:nth-child(3n+1) {
+  background: #f59e0b;
+  box-shadow: 0 3px 12px #f59e0b, 0 0 4px #fbbf24;
+  animation-delay: 0.2s;
+}
+
+.fairy-bulb:nth-child(3n+2) {
+  background: #ef4444;
+  box-shadow: 0 3px 12px #ef4444, 0 0 4px #f87171;
+  animation-delay: 0.6s;
+}
+
+.fairy-bulb:nth-child(3n) {
+  background: #fbbf24;
+  box-shadow: 0 3px 12px #fbbf24, 0 0 4px #fef08a;
+  animation-delay: 1.1s;
+}
+
+.fairy-bulb::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 3px;
+  width: 3px;
+  height: 3px;
+  background: #374151;
+  border-radius: 1px;
+}
+
+@keyframes bulbTwinkle {
+  0% { opacity: 0.45; filter: brightness(0.85); }
+  50% { opacity: 0.85; filter: brightness(1.2); }
+  100% { opacity: 1; filter: brightness(1.4); }
+}
+
+/* ---- FESTIVE HERO ENHANCEMENTS ---- */
+.hero {
+  background: var(--festive-bg) !important;
+}
+
+.hero-bg-rangoli {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(212, 163, 75, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 85% 20%, rgba(239, 68, 68, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 15% 80%, rgba(245, 196, 83, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.festive-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245, 196, 83, 0.12);
+  border: 1px solid rgba(245, 196, 83, 0.35);
+  border-radius: 50px;
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fef08a;
+  margin-bottom: 22px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(212, 163, 75, 0.2);
+}
+
+.diya-flame-mini {
+  display: inline-block;
+  width: 10px;
+  height: 14px;
+  background: radial-gradient(circle at 50% 70%, #ffedd5 0%, #fbbf24 40%, #ea580c 100%);
+  border-radius: 50% 50% 20% 20%;
+  animation: flameFlicker 1.8s ease-in-out infinite alternate;
+  box-shadow: 0 0 10px #f59e0b;
+}
+
+@keyframes flameFlicker {
+  0% { transform: scale(1) rotate(-2deg); }
+  50% { transform: scale(1.15) rotate(2deg); filter: brightness(1.2); }
+  100% { transform: scale(0.95) rotate(-1deg); }
+}
+
+@keyframes diyaGlow {
+  0% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(245, 196, 83, 0.6)); }
+  100% { transform: scale(1.08); filter: drop-shadow(0 0 12px rgba(245, 196, 83, 0.9)); }
+}
+
+/* ---- FESTIVE SERVICE CARDS & PRICING ---- */
+.service-card:hover {
+  border-color: rgba(212, 163, 75, 0.6) !important;
+  box-shadow: 0 14px 40px rgba(12, 20, 36, 0.15), 0 0 20px rgba(212, 163, 75, 0.12);
+}
+
+.festive-card-ribbon {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: linear-gradient(135deg, #b88228 0%, #f5c453 100%);
+  color: #0c1424;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 50px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.price-card.featured {
+  background: linear-gradient(135deg, #0c1424 0%, #1e1338 60%, #2a154c 100%) !important;
+  border: 2px solid #d4a34b !important;
+  box-shadow: 0 12px 40px rgba(12, 20, 36, 0.3), 0 0 25px rgba(212, 163, 75, 0.25) !important;
+}
+
+.price-card.featured .price-amount {
+  color: #f5c453 !important;
+}
+
+.price-card:hover {
+  border-color: #d4a34b;
+}
+
+/* ---- LIVE PRICE ESTIMATE BOX IN BOOKING FORM ---- */
+.price-estimate-box {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1.5px solid #fcd34d;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-top: 4px;
+  box-shadow: 0 4px 14px rgba(245, 196, 83, 0.15);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.estimate-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.estimate-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #92400e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.estimate-badge {
+  background: #f59e0b;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 50px;
+}
+
+.estimate-amount-display {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #78350f;
+  margin-bottom: 2px;
+}
+
+.estimate-note {
+  font-size: 0.78rem;
+  color: #a16207;
+  line-height: 1.4;
+}
+
+/* ---- BOOKING REVIEW & CONFIRMATION MODAL ---- */
+.booking-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 20, 36, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.booking-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.booking-modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(212, 163, 75, 0.5);
+  transform: translateY(20px) scale(0.97);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.booking-modal-overlay.active .booking-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header-festive {
+  background: linear-gradient(135deg, #0c1424 0%, #1e1338 100%);
+  color: #ffffff;
+  padding: 24px 28px 20px;
+  border-top-left-radius: calc(var(--radius-xl) - 2px);
+  border-top-right-radius: calc(var(--radius-xl) - 2px);
+  position: relative;
+  border-bottom: 2px solid #d4a34b;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.modal-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.modal-subtitle {
+  font-size: 0.85rem;
+  color: #fef08a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-body {
+  padding: 24px 28px;
+}
+
+.booking-ref-banner {
+  background: #f8faff;
+  border: 1.5px dashed #2878F0;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.ref-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ref-code {
+  font-family: 'Manrope', monospace, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #2878F0;
+  letter-spacing: 0.05em;
+}
+
+.status-saved-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.modal-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.summary-item {
+  background: #f8faff;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.summary-item.full-width {
+  grid-column: span 2;
+}
+
+.summary-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.summary-val {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0c1424;
+  word-break: break-word;
+}
+
+.modal-notice {
+  background: #eff6ff;
+  border-left: 4px solid #2878F0;
+  padding: 12px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.82rem;
+  color: #1e40af;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-modal-wa {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 800;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+}
+
+.btn-modal-wa:hover {
+  box-shadow: 0 6px 26px rgba(37, 211, 102, 0.6);
+  transform: translateY(-2px);
+}
+
+.modal-alt-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-copy-wa, .btn-call-wa {
+  flex: 1;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btn-copy-wa:hover, .btn-call-wa:hover {
+  background: #e2e8f0;
+  color: #0c1424;
+}
+
+/* Toast Notification */
+.toast-msg {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #0c1424;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  border: 1px solid #d4a34b;
+  z-index: 10001;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast-msg.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---- ACCESSIBILITY: FOCUS STYLES ---- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2.5px solid #d4a34b !important;
+  outline-offset: 2px !important;
+}
+
+/* Mobile responsive fixes for modal and banner */
+@media (max-width: 600px) {
+  .festive-banner { padding: 8px 12px; font-size: 0.8rem; }
+  .festive-banner-inner { justify-content: flex-start; text-align: left; }
+  .festive-tag-pill { font-size: 0.65rem; padding: 2px 7px; }
+  .festive-banner-close { display: none; }
+  body.has-festive-banner .header { top: 56px; }
+  
+  .booking-modal-card { max-height: 94vh; margin: 10px; }
+  .modal-header-festive { padding: 18px 20px; }
+  .modal-title { font-size: 1.15rem; }
+  .modal-body { padding: 18px 20px; }
+  .modal-summary-grid { grid-template-columns: 1fr; gap: 8px; }
+  .summary-item.full-width { grid-column: span 1; }
+  .modal-alt-actions { flex-direction: column; }
+}
+
+@media (max-width: 360px) {
+  .btn-submit { font-size: 0.88rem; padding: 14px 18px; }
+  .hero-title { font-size: 2.1rem; }
+  .service-price { font-size: 1rem; }
+}
+

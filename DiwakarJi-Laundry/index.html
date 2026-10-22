@@ -23,6 +23,17 @@
     <span>Chat on WhatsApp</span>
   </a>
 
+  <!-- ========== DIWALI FESTIVE ANNOUNCEMENT BANNER ========== -->
+  <aside id="festive-banner" class="festive-banner" aria-label="Festive Announcement">
+    <div class="festive-banner-inner">
+      <span class="festive-diya-icon">🪔</span>
+      <span class="festive-tag-pill" id="festive-pill">Diwali Special</span>
+      <span class="festive-banner-text" id="festive-banner-text">Shubh Diwali Offer: 15% OFF on Blankets &amp; Dry Cleaning! Free Doorstep Pickup &amp; Delivery across Kanpur.</span>
+      <a href="#booking" class="festive-cta-link">Book Pickup <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <button class="festive-banner-close" id="festive-banner-close" aria-label="Dismiss banner">&times;</button>
+  </aside>
+
   <!-- ========== HEADER / NAVIGATION ========== -->
   <header id="header" class="header">
     <div class="container header-inner">
@@ -59,6 +70,7 @@
 
       <nav class="nav-links" id="nav-links">
         <a href="#services" class="nav-link">Services</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
         <a href="#how-it-works" class="nav-link">How It Works</a>
         <a href="#reviews" class="nav-link">Reviews</a>
         <a href="#faq" class="nav-link">FAQ</a>
@@ -73,10 +85,35 @@
         <span></span><span></span><span></span>
       </button>
     </div>
+
+    <!-- Fairy Lights Garland -->
+    <div class="fairy-lights-garland" id="fairy-lights" aria-hidden="true">
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+      <span class="fairy-bulb"></span>
+    </div>
   </header>
 
   <!-- ========== HERO SECTION ========== -->
   <section class="hero" id="home">
+    <div class="hero-bg-rangoli" aria-hidden="true"></div>
     <div class="hero-bg-shapes">
       <div class="shape shape-1"></div>
       <div class="shape shape-2"></div>
@@ -84,15 +121,19 @@
     </div>
     <div class="container hero-inner">
       <div class="hero-content reveal">
+        <div class="festive-hero-badge" id="festive-hero-badge">
+          <span class="diya-flame-mini"></span>
+          <span>Festive Laundry Special • Kanpur</span>
+        </div>
         <div class="hero-badge">
           <span class="badge-dot"></span>
           Serving Kanpur Since 2010
         </div>
-        <h1 class="hero-title">
+        <h1 class="hero-title" id="hero-title">
           Fresh Clothes.<br/>
           <span class="gradient-text">Fresh Feel.</span>
         </h1>
-        <p class="hero-subtitle">
+        <p class="hero-subtitle" id="hero-subtitle">
           Professional laundry &amp; dry cleaning with <strong>free doorstep pickup &amp; delivery</strong> across Kanpur. Cleaner clothes, happier homes.
         </p>
         <div class="hero-trust">
@@ -614,7 +655,7 @@
                     <option value="4–6 kg (Medium load)">4–6 kg (Medium load)</option>
                     <option value="7–10 kg (Large load)">7–10 kg (Large load)</option>
                     <option value="10+ kg (Bulk load)">10+ kg (Bulk load)</option>
-                    <option value="Not sure yet">Not sure yet</option>
+                    <option value="Not sure yet">Not sure yet (Weigh at pickup)</option>
                   </select>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
@@ -625,6 +666,18 @@
                 <input type="date" id="pickup-date" name="pickup_date" required />
                 <span class="field-error" id="error-date">Please select a pickup date.</span>
               </div>
+            </div>
+
+            <!-- Live Transparent Price Estimate Card -->
+            <div id="live-price-estimate" class="price-estimate-box" style="display: none;" aria-live="polite">
+              <div class="estimate-header">
+                <span class="estimate-title">
+                  <i class="fa-solid fa-calculator"></i> Estimated Pricing
+                </span>
+                <span class="estimate-badge" id="estimate-service-tag">Wash &amp; Iron</span>
+              </div>
+              <div class="estimate-amount-display" id="estimate-amount-text">~₹300</div>
+              <p class="estimate-note" id="estimate-note-text">Calculated starting estimate. Final price confirmed at pickup based on weight/pieces. No advance payment required.</p>
             </div>
 
             <div class="form-group" id="group-time">
@@ -867,14 +920,106 @@
 
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <p>© 2025 Diwakar Ji Laundry Service. All rights reserved.</p>
+        <p>© 2026 Diwakar Ji Laundry Service. All rights reserved.</p>
         <div class="footer-legal-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms &amp; Conditions</a>
+          <a href="/admin" id="footer-admin-link" style="color: #f5c453; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+            <i class="fa-solid fa-lock" style="font-size: 11px;"></i> Owner Admin
+          </a>
         </div>
       </div>
     </div>
   </footer>
+
+  <!-- ========== BOOKING REVIEW & CONFIRMATION MODAL ========== -->
+  <div id="booking-modal" class="booking-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="booking-modal-card">
+      <div class="modal-header-festive">
+        <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+        <h3 class="modal-title" id="modal-title">
+          <span>🪔</span> Confirm Your Booking
+        </h3>
+        <p class="modal-subtitle">
+          <span class="diya-flame-mini"></span> Diwakar Ji Laundry • Free Doorstep Pickup Kanpur
+        </p>
+      </div>
+
+      <div class="modal-body">
+        <div class="booking-ref-banner">
+          <div>
+            <div class="ref-label">Booking Reference</div>
+            <div class="ref-code" id="modal-booking-ref">DWK-2610-8A2F</div>
+          </div>
+          <span class="status-saved-pill">
+            <i class="fa-solid fa-circle-check"></i> Saved in System
+          </span>
+        </div>
+
+        <div class="modal-summary-grid">
+          <div class="summary-item">
+            <div class="summary-label">Customer Name</div>
+            <div class="summary-val" id="modal-cust-name">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Mobile Number</div>
+            <div class="summary-val" id="modal-cust-mobile">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Service</div>
+            <div class="summary-val" id="modal-cust-service">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Estimated Quantity</div>
+            <div class="summary-val" id="modal-cust-quantity">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Pickup Schedule</div>
+            <div class="summary-val" id="modal-cust-schedule">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Estimated Price</div>
+            <div class="summary-val" id="modal-cust-estimate" style="color: #b45309;">-</div>
+          </div>
+          <div class="summary-item full-width">
+            <div class="summary-label">Pickup Address &amp; Area</div>
+            <div class="summary-val" id="modal-cust-address">-</div>
+          </div>
+          <div class="summary-item full-width" id="modal-instructions-row">
+            <div class="summary-label">Special Instructions</div>
+            <div class="summary-val" id="modal-cust-instructions">—</div>
+          </div>
+        </div>
+
+        <div class="modal-notice">
+          <strong><i class="fa-solid fa-bell"></i> Owner Notification Workflow:</strong>
+          Your booking is securely recorded in our database. Click the green button below to notify Diwakar Ji directly on WhatsApp with all your pickup details pre-filled.
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-modal-wa" id="modal-open-wa-btn">
+            <i class="fa-brands fa-whatsapp" style="font-size:22px;"></i>
+            <span>Continue to WhatsApp &amp; Notify Owner</span>
+          </button>
+          
+          <div class="modal-alt-actions">
+            <button type="button" class="btn-copy-wa" id="modal-copy-btn">
+              <i class="fa-solid fa-copy"></i> Copy Booking Details
+            </button>
+            <a href="tel:+917860462268" class="btn-call-wa" id="modal-call-btn">
+              <i class="fa-solid fa-phone"></i> Call Diwakar Ji
+            </a>
+            <button type="button" class="btn-copy-wa" id="modal-retry-btn" style="display:none;">
+              <i class="fa-solid fa-rotate-right"></i> Retry WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast-msg" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>
