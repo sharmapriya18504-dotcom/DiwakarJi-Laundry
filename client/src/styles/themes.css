@@ -1,0 +1,206 @@
+/* ============================================================
+   DIWAKAR JI LAUNDRY — DUAL & MULTI-THEME ENGINE
+   Themes: Shubh Diwali, Classic Ocean (Everyday), Royal Gold, Fresh Mint
+   ============================================================ */
+
+/* 1. SHUBH DIWALI THEME (Sacred Purple, Night Sky, Warm Clay Diya, Gold Sparkles) */
+[data-theme="diwali"] {
+  --bg-primary: #0c1424;
+  --bg-secondary: #140d28;
+  --bg-card: rgba(20, 13, 40, 0.75);
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-heading: #fef08a;
+  
+  --theme-hero-bg: radial-gradient(circle at 50% 30%, #22123d 0%, #110920 60%, #080312 100%);
+  --theme-accent: #f5c453;
+  --theme-accent-bright: #fde047;
+  --theme-accent-dark: #b45309;
+  --theme-gold-glow: rgba(245, 196, 83, 0.4);
+  --theme-card-border: rgba(245, 196, 83, 0.3);
+  --theme-card-hover: #f5c453;
+  --theme-badge-bg: linear-gradient(135deg, #d4a34b 0%, #f5c453 100%);
+  --theme-badge-text: #1a0e05;
+  --theme-garland-display: flex;
+  --theme-rangoli-display: block;
+  --theme-diya-display: inline-flex;
+  --theme-lantern-display: block;
+}
+
+[data-theme="diwali"] .hero {
+  background: var(--theme-hero-bg) !important;
+}
+
+[data-theme="diwali"] .section-title {
+  color: #fef08a;
+}
+
+[data-theme="diwali"] .service-card,
+[data-theme="diwali"] .price-card,
+[data-theme="diwali"] .booking-form-wrap,
+[data-theme="diwali"] .booking-info,
+[data-theme="diwali"] .review-card,
+[data-theme="diwali"] .why-inner,
+[data-theme="diwali"] .step-card {
+  border-color: rgba(245, 196, 83, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(245, 196, 83, 0.08);
+}
+
+[data-theme="diwali"] .service-card:hover {
+  border-color: #f5c453 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), 0 0 25px rgba(245, 196, 83, 0.25) !important;
+}
+
+/* 2. CLASSIC OCEAN THEME (Everyday Default: White / Ivory + Navy #10243A + Royal Blue #2878F0) */
+[data-theme="classic"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8faff;
+  --bg-card: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --text-heading: #10243A;
+
+  --theme-hero-bg: linear-gradient(135deg, #0f243d 0%, #173b64 50%, #0d1e33 100%);
+  --theme-accent: #2878F0;
+  --theme-accent-bright: #60a5fa;
+  --theme-accent-dark: #1d4ed8;
+  --theme-gold-glow: rgba(40, 120, 240, 0.3);
+  --theme-card-border: #e2e8f0;
+  --theme-card-hover: #2878F0;
+  --theme-badge-bg: linear-gradient(135deg, #1d4ed8 0%, #2878F0 100%);
+  --theme-badge-text: #ffffff;
+  --theme-garland-display: none;
+  --theme-rangoli-display: none;
+  --theme-diya-display: none;
+  --theme-lantern-display: none;
+}
+
+[data-theme="classic"] .hero {
+  background: var(--theme-hero-bg) !important;
+}
+
+[data-theme="classic"] .fairy-lights-garland,
+[data-theme="classic"] .hero-rangoli-mandala,
+[data-theme="classic"] .traditional-diya-hero,
+[data-theme="classic"] .hero-lantern,
+[data-theme="classic"] .whatsapp-diya-companion {
+  display: none !important;
+}
+
+/* 3. ROYAL GOLD THEME (Onyx & Imperial Champagne Gold) */
+[data-theme="royal_gold"] {
+  --bg-primary: #090d16;
+  --bg-secondary: #131722;
+  --bg-card: rgba(19, 23, 34, 0.85);
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-heading: #fae8b4;
+
+  --theme-hero-bg: linear-gradient(135deg, #090d16 0%, #1c1d28 50%, #090d16 100%);
+  --theme-accent: #e2b866;
+  --theme-accent-bright: #fae8b4;
+  --theme-accent-dark: #9e7529;
+  --theme-gold-glow: rgba(226, 184, 102, 0.35);
+  --theme-card-border: rgba(226, 184, 102, 0.3);
+  --theme-card-hover: #e2b866;
+  --theme-badge-bg: linear-gradient(135deg, #c49746 0%, #e2b866 100%);
+  --theme-badge-text: #090d16;
+  --theme-garland-display: none;
+  --theme-rangoli-display: none;
+  --theme-diya-display: none;
+  --theme-lantern-display: none;
+}
+
+[data-theme="royal_gold"] .hero {
+  background: var(--theme-hero-bg) !important;
+}
+
+[data-theme="royal_gold"] .fairy-lights-garland,
+[data-theme="royal_gold"] .hero-rangoli-mandala,
+[data-theme="royal_gold"] .traditional-diya-hero,
+[data-theme="royal_gold"] .hero-lantern,
+[data-theme="royal_gold"] .whatsapp-diya-companion {
+  display: none !important;
+}
+
+/* 4. FRESH MINT THEME (Eco-Friendly Emerald & Sage) */
+[data-theme="fresh_mint"] {
+  --bg-primary: #fcfdfd;
+  --bg-secondary: #f0fdf4;
+  --bg-card: #ffffff;
+  --text-main: #14532d;
+  --text-muted: #4b5563;
+  --text-heading: #064e3b;
+
+  --theme-hero-bg: linear-gradient(135deg, #064e3b 0%, #047857 50%, #064e3b 100%);
+  --theme-accent: #10b981;
+  --theme-accent-bright: #34d399;
+  --theme-accent-dark: #047857;
+  --theme-gold-glow: rgba(16, 185, 129, 0.35);
+  --theme-card-border: rgba(16, 185, 129, 0.25);
+  --theme-card-hover: #10b981;
+  --theme-badge-bg: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --theme-badge-text: #ffffff;
+  --theme-garland-display: none;
+  --theme-rangoli-display: none;
+  --theme-diya-display: none;
+  --theme-lantern-display: none;
+}
+
+[data-theme="fresh_mint"] .hero {
+  background: var(--theme-hero-bg) !important;
+}
+
+[data-theme="fresh_mint"] .fairy-lights-garland,
+[data-theme="fresh_mint"] .hero-rangoli-mandala,
+[data-theme="fresh_mint"] .traditional-diya-hero,
+[data-theme="fresh_mint"] .hero-lantern,
+[data-theme="fresh_mint"] .whatsapp-diya-companion {
+  display: none !important;
+}
+
+/* Hanging Lanterns Keyframe Animations */
+@keyframes lanternSwingLeft {
+  0% { transform: rotate(-3deg); }
+  100% { transform: rotate(3deg); }
+}
+
+@keyframes lanternSwingRight {
+  0% { transform: rotate(3deg); }
+  100% { transform: rotate(-3deg); }
+}
+
+.hero-lantern {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  pointer-events: none;
+  transform-origin: top center;
+}
+
+.hero-lantern.lantern-left {
+  left: 36px;
+  animation: lanternSwingLeft 5s ease-in-out infinite alternate;
+}
+
+.hero-lantern.lantern-right {
+  right: 36px;
+  animation: lanternSwingRight 5.5s ease-in-out infinite alternate;
+}
+
+.lantern-cord {
+  width: 2px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(245, 196, 83, 0.7), #d4a34b);
+  margin: 0 auto;
+}
+
+.lantern-svg {
+  width: 58px;
+  height: 105px;
+  filter: drop-shadow(0 0 12px rgba(245, 196, 83, 0.6));
+}
+
+@media (max-width: 768px) {
+  .hero-lantern { display: none !important; }
+}

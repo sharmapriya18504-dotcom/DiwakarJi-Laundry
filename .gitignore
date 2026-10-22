@@ -7,7 +7,14 @@ diwakar_laundry.db
 diwakar_laundry.db-wal
 diwakar_laundry.db-shm
 .env
+*.env
+node_modules/
+client/node_modules/
+server/node_modules/
+client/dist/
+server/data/
 venv/
 env/
 .DS_Store
 Thumbs.db
+
