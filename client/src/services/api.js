@@ -152,3 +152,97 @@ export async function changeAdminPassword(currentPassword, newPassword) {
   if (!res.ok) throw new Error(data.message || 'Failed to change password');
   return data;
 }
+
+export async function fetchActiveOffer() {
+  const res = await fetch(`${API_BASE}/offers/active`);
+  if (!res.ok) throw new Error('Failed to fetch active offer');
+  return res.json();
+}
+
+export async function fetchThemeSettings() {
+  const res = await fetch(`${API_BASE}/theme`);
+  if (!res.ok) throw new Error('Failed to fetch theme settings');
+  return res.json();
+}
+
+export async function fetchAdminOffers() {
+  const res = await fetch(`${API_BASE}/admin/offers`, {
+    headers: { ...getAuthHeader() }
+  });
+  if (!res.ok) throw new Error('Failed to fetch offers');
+  return res.json();
+}
+
+export async function createAdminOffer(offerData) {
+  const res = await fetch(`${API_BASE}/admin/offers`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthHeader()
+    },
+    body: JSON.stringify(offerData)
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to create offer');
+  return data;
+}
+
+export async function updateAdminOffer(id, offerData) {
+  const res = await fetch(`${API_BASE}/admin/offers/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthHeader()
+    },
+    body: JSON.stringify(offerData)
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to update offer');
+  return data;
+}
+
+export async function updateAdminOfferStatus(id, is_active) {
+  const res = await fetch(`${API_BASE}/admin/offers/${id}/status`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthHeader()
+    },
+    body: JSON.stringify({ is_active })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to update offer status');
+  return data;
+}
+
+export async function deleteAdminOffer(id) {
+  const res = await fetch(`${API_BASE}/admin/offers/${id}`, {
+    method: 'DELETE',
+    headers: { ...getAuthHeader() }
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to delete offer');
+  return data;
+}
+
+export async function fetchAdminTheme() {
+  const res = await fetch(`${API_BASE}/admin/theme`, {
+    headers: { ...getAuthHeader() }
+  });
+  if (!res.ok) throw new Error('Failed to fetch theme configuration');
+  return res.json();
+}
+
+export async function updateAdminTheme(themeData) {
+  const res = await fetch(`${API_BASE}/admin/theme`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthHeader()
+    },
+    body: JSON.stringify(themeData)
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to update theme configuration');
+  return data;
+}

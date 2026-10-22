@@ -26,6 +26,19 @@ router.get('/services', adminController.getAdminServices);
 router.post('/services', adminController.createService);
 router.patch('/services/:id', adminController.updateService);
 
+// Offers & Dynamic Diwali Campaigns Management
+router.get('/offers', adminController.getOffers);
+router.get('/offers/:id', adminController.getOfferById);
+router.post('/offers', adminController.createOffer);
+router.put('/offers/:id', adminController.updateOffer);
+router.patch('/offers/:id/status', adminController.updateOfferStatus);
+router.delete('/offers/:id', adminController.deleteOffer);
+
+// Theme Configuration & Scheduling
+router.get('/theme', adminController.getTheme);
+router.put('/theme', adminController.updateTheme);
+router.patch('/theme', adminController.updateTheme);
+
 // Website Settings & Dynamic Theme Engine
 router.get('/settings', adminController.getSettings);
 router.patch('/settings', adminController.updateSettings);

@@ -6,7 +6,7 @@ import BookingModal from './BookingModal';
 
 export default function MidSection({ selectedServiceFromParent }) {
   const { theme } = useTheme();
-  const { config } = useConfig();
+  const { config, activeOffer } = useConfig();
   const isDiwali = theme === 'diwali';
 
   const services = config?.services || [
@@ -35,7 +35,8 @@ export default function MidSection({ selectedServiceFromParent }) {
     pickup_time: '9:00 AM – 11:00 AM',
     address: '',
     area: 'Kanpur',
-    instructions: ''
+    instructions: '',
+    coupon_code: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -44,13 +45,30 @@ export default function MidSection({ selectedServiceFromParent }) {
   const [whatsappUrl, setWhatsappUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Live price estimate calculation
-  const getSelectedPriceEstimate = () => {
+  // Live price estimate calculation with dynamic offer coupon support
+  const calculatePriceEstimate = () => {
     const svc = services.find(s => s.name.toLowerCase() === formData.service.toLowerCase())
       || services.find(s => formData.service.toLowerCase().includes(s.name.toLowerCase()));
-    if (!svc) return '₹0';
-    return `~₹${svc.price * 4}`; // Average batch estimate (4 kg/items)
+    if (!svc) return { original: 0, final: 0, discount: 0, hasDiscount: false };
+    const original = svc.price * 4; // Average 4 units load
+    let final = original;
+    let discount = 0;
+    let hasDiscount = false;
+
+    const code = (formData.coupon_code || '').trim().toUpperCase();
+    if (activeOffer && code && (code === (activeOffer.discount_code || '').toUpperCase())) {
+      if (activeOffer.discount_type === 'percentage') {
+        discount = Math.round((original * (activeOffer.discount_value || 0)) / 100);
+      } else {
+        discount = Math.min(original, activeOffer.discount_value || 0);
+      }
+      final = Math.max(0, original - discount);
+      hasDiscount = discount > 0;
+    }
+    return { original, final, discount, hasDiscount };
   };
+
+  const priceEstimate = calculatePriceEstimate();
 
   const validate = () => {
     const errs = {};
@@ -100,7 +118,8 @@ export default function MidSection({ selectedServiceFromParent }) {
         quantity: '4–6 kg (Medium load)',
         pickup_date: formData.pickup_date,
         pickup_time: formData.pickup_time,
-        instructions: formData.instructions ? formData.instructions.trim() : ''
+        instructions: formData.instructions ? formData.instructions.trim() : '',
+        discount_code: (formData.coupon_code || '').trim()
       };
 
       const res = await submitBooking(payload);
@@ -114,7 +133,7 @@ export default function MidSection({ selectedServiceFromParent }) {
           pickup_date: payload.pickup_date,
           pickup_time: payload.pickup_time,
           pickup_address: payload.address,
-          estimated_price: getSelectedPriceEstimate(),
+          estimated_price: priceEstimate.hasDiscount ? `₹${priceEstimate.final}` : `~₹${priceEstimate.original}`,
           special_instructions: payload.instructions
         });
 
@@ -198,7 +217,7 @@ export default function MidSection({ selectedServiceFromParent }) {
             </div>
           </div>
 
-          {/* COLUMN 2: This Diwali Festive Card (Matches Screenshot) */}
+          {/* COLUMN 2: This Diwali Festive Card (Matches Screenshot & Dynamically Managed) */}
           <div className="mid-col-festive-banner">
             {isDiwali ? (
               <div className="diwali-promo-card-screenshot">
@@ -208,13 +227,43 @@ export default function MidSection({ selectedServiceFromParent }) {
                 <div className="promo-lantern-ornament left" aria-hidden="true">🪔</div>
                 <div className="promo-lantern-ornament right" aria-hidden="true">🪔</div>
 
-                <span className="diwali-promo-tag">This Diwali</span>
+                <span className="diwali-promo-tag">{activeOffer?.badge_text || 'This Diwali'}</span>
                 <h3 className="diwali-promo-headline">
-                  Keep Your Clothes Fresh and Your Moments Bright
+                  {activeOffer?.title || 'Keep Your Clothes Fresh and Your Moments Bright'}
                 </h3>
                 <p className="diwali-promo-desc">
-                  Special festive offers on selected services. Book now and enjoy the festive care!
+                  {activeOffer?.description || activeOffer?.subtitle || 'Special festive offers on selected services. Book now and enjoy the festive care!'}
                 </p>
+
+                {activeOffer?.discount_code && (
+                  <button
+                    type="button"
+                    className="promo-coupon-pill"
+                    onClick={() => setFormData({ ...formData, coupon_code: activeOffer.discount_code })}
+                    title="Click to apply coupon code in booking form"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      background: 'rgba(245, 196, 83, 0.15)',
+                      border: '1px dashed #F6C64A',
+                      padding: '6px 14px',
+                      borderRadius: '50px',
+                      margin: '12px auto',
+                      color: '#F6C64A',
+                      cursor: 'pointer',
+                      fontSize: '0.82rem',
+                      fontWeight: 700
+                    }}
+                  >
+                    <span>🏷️ Code: <strong>{activeOffer.discount_code}</strong></span>
+                    {activeOffer.discount_value > 0 && (
+                      <span style={{ background: '#F6C64A', color: '#1a0d2e', padding: '2px 8px', borderRadius: '12px', fontSize: '0.74rem' }}>
+                        {activeOffer.discount_type === 'percentage' ? `${activeOffer.discount_value}% OFF` : `₹${activeOffer.discount_value} OFF`}
+                      </span>
+                    )}
+                  </button>
+                )}
 
                 <div className="diwali-promo-diya-glow">
                   <div className="flame-halo"></div>
@@ -382,16 +431,68 @@ export default function MidSection({ selectedServiceFromParent }) {
                   />
                 </div>
 
+                {/* Coupon Code Field */}
+                <div className="form-field-group">
+                  <label htmlFor="form-coupon">Coupon Code (Optional)</label>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input
+                      type="text"
+                      id="form-coupon"
+                      value={formData.coupon_code || ''}
+                      onChange={(e) => setFormData({ ...formData, coupon_code: e.target.value.toUpperCase() })}
+                      placeholder={activeOffer?.discount_code ? `e.g. ${activeOffer.discount_code}` : 'Enter promo code'}
+                      style={{ textTransform: 'uppercase' }}
+                    />
+                    {activeOffer?.discount_code && (formData.coupon_code || '').toUpperCase() !== activeOffer.discount_code.toUpperCase() && (
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, coupon_code: activeOffer.discount_code })}
+                        style={{
+                          background: 'rgba(245, 196, 83, 0.2)',
+                          border: '1px solid #F6C64A',
+                          color: '#F6C64A',
+                          borderRadius: '8px',
+                          padding: '0 12px',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        Apply {activeOffer.discount_code}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
                 {/* Live Estimated Price Strip matching screenshot */}
                 <div className="estimated-price-strip">
                   <div className="estimate-row-top">
                     <span className="estimate-label">
                       <i className="fa-brands fa-whatsapp" style={{ color: '#25D366' }}></i> Estimated Price
                     </span>
-                    <span className="estimate-value">{getSelectedPriceEstimate()}</span>
+                    <span className="estimate-value">
+                      {priceEstimate.hasDiscount ? (
+                        <>
+                          <span style={{ textDecoration: 'line-through', opacity: 0.6, marginRight: '8px', fontSize: '0.85em' }}>
+                            ₹{priceEstimate.original}
+                          </span>
+                          <span style={{ color: '#25D366', fontWeight: 800 }}>
+                            ₹{priceEstimate.final}
+                          </span>
+                        </>
+                      ) : (
+                        `~₹${priceEstimate.original}`
+                      )}
+                    </span>
                   </div>
+                  {priceEstimate.hasDiscount && (
+                    <div style={{ color: '#F6C64A', fontSize: '0.78rem', fontWeight: 600, marginTop: '2px' }}>
+                      🎉 ₹{priceEstimate.discount} festive savings applied!
+                    </div>
+                  )}
                   <p className="estimate-disclaimer">
-                    Final price may vary based on actual weight.
+                    Estimated price. Final charge depends on laundry weight and inspection at doorstep.
                   </p>
                 </div>
 

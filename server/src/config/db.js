@@ -18,6 +18,10 @@ const DEFAULT_SERVICES = [
 
 const DEFAULT_SETTINGS = {
   active_theme: 'diwali',
+  theme_mode: 'manual', // 'manual' or 'scheduled'
+  campaign_start: '2026-10-01T00:00:00',
+  campaign_end: '2026-11-15T23:59:59',
+  fireworks_enabled: 'true',
   business_name: 'Diwakar Ji Laundry',
   owner_name: 'Diwakar Ji',
   whatsapp_number: '917860462268',
@@ -66,7 +70,27 @@ function initFallbackStore() {
       booking_status_history: [],
       faqs: [...DEFAULT_FAQS],
       offers: [
-        { id: 1, title: 'Diwali Festive Discount', description: '15% discount on Blankets and Dry Cleaning orders during the festival season.', discount_code: 'SHUBHDIWALI', discount_percent: 15, is_active: 1 }
+        {
+          id: 1,
+          title: 'Diwali Special',
+          subtitle: 'Fresh Clothes for a Brighter Tomorrow',
+          description: 'Celebrate Diwali with fresh clothes and special laundry savings.',
+          discount_type: 'percentage',
+          discount_value: 15,
+          promotional_price: null,
+          applicable_services: 'all',
+          min_amount: 100,
+          discount_code: 'SHUBHDIWALI',
+          badge_text: 'Festive Offer',
+          image_url: null,
+          terms: 'Valid on all standard laundry and dry cleaning orders throughout the festive campaign.',
+          cta_text: 'Book Pickup',
+          fireworks_enabled: 1,
+          is_active: 1,
+          start_date: '2026-10-01T00:00:00',
+          end_date: '2026-11-15T23:59:59',
+          created_at: new Date().toISOString()
+        }
       ],
       reviews: [...DEFAULT_REVIEWS]
     };
@@ -505,17 +529,252 @@ const db = {
     return (data.reviews || []).filter(r => r.is_verified === 1 || r.is_verified === true);
   },
 
-  // Offers
-  getOffers: async (activeOnly = true) => {
+  // Offer Status Evaluation Helper
+  computeOfferStatus: (offer) => {
+    if (!offer.is_active || offer.is_active === 0 || offer.is_active === '0') {
+      return 'inactive';
+    }
+    const now = new Date();
+    if (offer.start_date) {
+      const start = new Date(offer.start_date);
+      if (!isNaN(start.getTime()) && now < start) return 'scheduled';
+    }
+    if (offer.end_date) {
+      const end = new Date(offer.end_date);
+      if (!isNaN(end.getTime()) && now > end) return 'expired';
+    }
+    return 'active';
+  },
+
+  // Offers Management
+  getOffers: async () => {
+    let offersList = [];
     if (!useFallback && pool) {
-      const sql = activeOnly ? 'SELECT * FROM offers WHERE is_active = 1' : 'SELECT * FROM offers';
-      const [rows] = await pool.query(sql);
-      return rows;
+      const [rows] = await pool.query('SELECT * FROM offers ORDER BY id DESC');
+      offersList = rows;
+    } else {
+      const data = readFallbackData();
+      offersList = data.offers || [];
+    }
+
+    return offersList.map(o => ({
+      ...o,
+      status: db.computeOfferStatus(o)
+    }));
+  },
+
+  getActiveOffer: async () => {
+    const all = await db.getOffers();
+    return all.find(o => o.status === 'active') || null;
+  },
+
+  getOfferById: async (id) => {
+    const offerId = parseInt(id, 10);
+    if (!useFallback && pool) {
+      const [rows] = await pool.query('SELECT * FROM offers WHERE id = ? LIMIT 1', [offerId]);
+      if (!rows[0]) return null;
+      return { ...rows[0], status: db.computeOfferStatus(rows[0]) };
     }
     const data = readFallbackData();
-    let offers = data.offers || [];
-    if (activeOnly) offers = offers.filter(o => o.is_active === 1 || o.is_active === true);
-    return offers;
+    const offer = (data.offers || []).find(o => o.id === offerId);
+    if (!offer) return null;
+    return { ...offer, status: db.computeOfferStatus(offer) };
+  },
+
+  createOffer: async (offerData) => {
+    const {
+      title,
+      subtitle = '',
+      description,
+      discount_type = 'percentage',
+      discount_value = 0,
+      promotional_price = null,
+      applicable_services = 'all',
+      min_amount = 0,
+      discount_code = '',
+      badge_text = 'Festive Offer',
+      image_url = null,
+      terms = '',
+      cta_text = 'Book Pickup',
+      fireworks_enabled = 1,
+      is_active = 1,
+      start_date = null,
+      end_date = null
+    } = offerData;
+
+    if (!useFallback && pool) {
+      const [result] = await pool.query(
+        `INSERT INTO offers (
+          title, subtitle, description, discount_type, discount_value,
+          promotional_price, applicable_services, min_amount, discount_code,
+          badge_text, image_url, terms, cta_text, fireworks_enabled,
+          is_active, start_date, end_date
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          title, subtitle, description, discount_type, discount_value,
+          promotional_price, applicable_services, min_amount, discount_code,
+          badge_text, image_url, terms, cta_text, fireworks_enabled ? 1 : 0,
+          is_active ? 1 : 0, start_date || null, end_date || null
+        ]
+      );
+      return result.insertId;
+    }
+
+    const data = readFallbackData();
+    data.offers = data.offers || [];
+    const nextId = (data.offers.reduce((max, o) => Math.max(max, o.id || 0), 0) || 0) + 1;
+    const newOffer = {
+      id: nextId,
+      title,
+      subtitle,
+      description,
+      discount_type,
+      discount_value: parseFloat(discount_value) || 0,
+      promotional_price: promotional_price ? parseFloat(promotional_price) : null,
+      applicable_services,
+      min_amount: parseFloat(min_amount) || 0,
+      discount_code,
+      badge_text,
+      image_url,
+      terms,
+      cta_text,
+      fireworks_enabled: fireworks_enabled ? 1 : 0,
+      is_active: is_active ? 1 : 0,
+      start_date: start_date || null,
+      end_date: end_date || null,
+      created_at: new Date().toISOString()
+    };
+    data.offers.unshift(newOffer);
+    writeFallbackData(data);
+    return nextId;
+  },
+
+  updateOffer: async (id, offerData) => {
+    const offerId = parseInt(id, 10);
+    const {
+      title,
+      subtitle = '',
+      description,
+      discount_type = 'percentage',
+      discount_value = 0,
+      promotional_price = null,
+      applicable_services = 'all',
+      min_amount = 0,
+      discount_code = '',
+      badge_text = 'Festive Offer',
+      image_url = null,
+      terms = '',
+      cta_text = 'Book Pickup',
+      fireworks_enabled = 1,
+      is_active = 1,
+      start_date = null,
+      end_date = null
+    } = offerData;
+
+    if (!useFallback && pool) {
+      await pool.query(
+        `UPDATE offers SET
+          title = ?, subtitle = ?, description = ?, discount_type = ?, discount_value = ?,
+          promotional_price = ?, applicable_services = ?, min_amount = ?, discount_code = ?,
+          badge_text = ?, image_url = ?, terms = ?, cta_text = ?, fireworks_enabled = ?,
+          is_active = ?, start_date = ?, end_date = ?, updated_at = NOW()
+        WHERE id = ?`,
+        [
+          title, subtitle, description, discount_type, discount_value,
+          promotional_price, applicable_services, min_amount, discount_code,
+          badge_text, image_url, terms, cta_text, fireworks_enabled ? 1 : 0,
+          is_active ? 1 : 0, start_date || null, end_date || null, offerId
+        ]
+      );
+      return;
+    }
+
+    const data = readFallbackData();
+    data.offers = data.offers || [];
+    const idx = data.offers.findIndex(o => o.id === offerId);
+    if (idx !== -1) {
+      data.offers[idx] = {
+        ...data.offers[idx],
+        title,
+        subtitle,
+        description,
+        discount_type,
+        discount_value: parseFloat(discount_value) || 0,
+        promotional_price: promotional_price ? parseFloat(promotional_price) : null,
+        applicable_services,
+        min_amount: parseFloat(min_amount) || 0,
+        discount_code,
+        badge_text,
+        image_url,
+        terms,
+        cta_text,
+        fireworks_enabled: fireworks_enabled ? 1 : 0,
+        is_active: is_active ? 1 : 0,
+        start_date: start_date || null,
+        end_date: end_date || null,
+        updated_at: new Date().toISOString()
+      };
+      writeFallbackData(data);
+    }
+  },
+
+  updateOfferStatus: async (id, isActive) => {
+    const offerId = parseInt(id, 10);
+    const flag = isActive ? 1 : 0;
+    if (!useFallback && pool) {
+      await pool.query('UPDATE offers SET is_active = ?, updated_at = NOW() WHERE id = ?', [flag, offerId]);
+      return;
+    }
+    const data = readFallbackData();
+    const offer = (data.offers || []).find(o => o.id === offerId);
+    if (offer) {
+      offer.is_active = flag;
+      offer.updated_at = new Date().toISOString();
+      writeFallbackData(data);
+    }
+  },
+
+  deleteOffer: async (id) => {
+    const offerId = parseInt(id, 10);
+    if (!useFallback && pool) {
+      await pool.query('DELETE FROM offers WHERE id = ?', [offerId]);
+      return;
+    }
+    const data = readFallbackData();
+    data.offers = (data.offers || []).filter(o => o.id !== offerId);
+    writeFallbackData(data);
+  },
+
+  // Dynamic Theme & Campaign Scheduling Engine
+  getThemeSettings: async () => {
+    const settings = await db.getSettings();
+    const mode = settings.theme_mode || 'manual';
+    let computedTheme = settings.active_theme || 'diwali';
+
+    if (mode === 'scheduled') {
+      const now = new Date();
+      const start = settings.campaign_start ? new Date(settings.campaign_start) : null;
+      const end = settings.campaign_end ? new Date(settings.campaign_end) : null;
+
+      const isWithinCampaign = (!start || now >= start) && (!end || now <= end);
+      computedTheme = isWithinCampaign ? 'diwali' : 'classic';
+    }
+
+    const activeOffer = await db.getActiveOffer();
+    const fireworksAllowed = activeOffer
+      ? (activeOffer.fireworks_enabled === 1 || activeOffer.fireworks_enabled === true)
+      : (settings.fireworks_enabled === 'true' || settings.fireworks_enabled === true || settings.fireworks_enabled === 1);
+
+    return {
+      active_theme: computedTheme,
+      configured_theme: settings.active_theme || 'diwali',
+      theme_mode: mode,
+      campaign_start: settings.campaign_start || '2026-10-01T00:00:00',
+      campaign_end: settings.campaign_end || '2026-11-15T23:59:59',
+      fireworks_enabled: fireworksAllowed && computedTheme === 'diwali',
+      festive_banner_enabled: settings.festive_banner_enabled === 'true',
+      festive_banner_text: settings.festive_banner_text || ''
+    };
   }
 };
 

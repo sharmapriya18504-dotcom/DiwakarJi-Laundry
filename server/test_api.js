@@ -93,11 +93,12 @@ async function runTests() {
     assert(badPhoneBooking.status === 400, 'POST /api/bookings rejects invalid mobile number');
 
     // 5. Successful booking creation
+    const testPhone = '98' + String(Date.now()).slice(-8);
     const validBooking = await makeRequest('/api/bookings', {
       method: 'POST',
       body: {
         full_name: 'Priya Sharma',
-        mobile: '9876543210',
+        mobile: testPhone,
         address: 'House 42, Block C, Swaroop Nagar',
         area: 'Swaroop Nagar, Kanpur',
         service: 'Wash & Iron',
@@ -121,7 +122,7 @@ async function runTests() {
       method: 'POST',
       body: {
         full_name: 'Priya Sharma',
-        mobile: '9876543210',
+        mobile: testPhone,
         address: 'House 42, Block C, Swaroop Nagar',
         area: 'Swaroop Nagar, Kanpur',
         service: 'Wash & Iron',
@@ -187,11 +188,82 @@ async function runTests() {
     const verifyConfig = await makeRequest('/api/public/config');
     assert(verifyConfig.body.settings.active_theme === 'royal_gold', 'Public config dynamically reflects updated royal_gold theme');
 
-    // Reset back to diwali
-    await makeRequest('/api/admin/settings', {
+    // 14. Public Offers & Theme Endpoints
+    const publicOfferRes = await makeRequest('/api/offers/active');
+    assert(publicOfferRes.status === 200, 'GET /api/offers/active returns 200');
+    assert(publicOfferRes.body.offer && typeof publicOfferRes.body.offer === 'object', 'Active offer exists with dynamic fields');
+
+    const publicThemeRes = await makeRequest('/api/theme');
+    assert(publicThemeRes.status === 200, 'GET /api/theme returns 200');
+    assert(publicThemeRes.body.active_theme !== undefined, 'Returns computed active_theme');
+    assert(typeof publicThemeRes.body.fireworks_enabled === 'boolean', 'Returns fireworks_enabled flag');
+
+    // 15. Admin Offer CRUD
+    const adminOffersList = await makeRequest('/api/admin/offers', {
+      headers: { Authorization: `Bearer ${adminToken}` }
+    });
+    assert(adminOffersList.status === 200 && Array.isArray(adminOffersList.body.offers), 'Admin can list all offers');
+
+    // Create test offer
+    const createOfferRes = await makeRequest('/api/admin/offers', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${adminToken}` },
+      body: {
+        title: 'Diwali Special 2026',
+        subtitle: 'Fresh Clothes for a Brighter Tomorrow',
+        description: 'Celebrate Diwali with fresh clothes and special laundry savings.',
+        discount_type: 'percentage',
+        discount_value: 20,
+        discount_code: 'DIWALI20',
+        badge_text: 'Festive Offer',
+        applicable_services: 'all',
+        min_amount: 300,
+        fireworks_enabled: 1,
+        is_active: 1
+      }
+    });
+    assert(createOfferRes.status === 201 && createOfferRes.body.offer.id, 'Admin can create a new dynamic offer');
+    const createdOfferId = createOfferRes.body.offer.id;
+
+    // Toggle offer status
+    const toggleOfferRes = await makeRequest(`/api/admin/offers/${createdOfferId}/status`, {
       method: 'PATCH',
       headers: { Authorization: `Bearer ${adminToken}` },
-      body: { active_theme: 'diwali' }
+      body: { is_active: false }
+    });
+    assert(toggleOfferRes.status === 200 && toggleOfferRes.body.offer.is_active === 0, 'Admin can deactivate offer via PATCH status');
+
+    // Delete test offer
+    const deleteOfferRes = await makeRequest(`/api/admin/offers/${createdOfferId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${adminToken}` }
+    });
+    assert(deleteOfferRes.status === 200, 'Admin can delete an offer');
+
+    // 16. Admin Theme Scheduling & Mode
+    const updateThemeRes = await makeRequest('/api/admin/theme', {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${adminToken}` },
+      body: {
+        active_theme: 'diwali',
+        theme_mode: 'scheduled',
+        campaign_start: '2026-10-01T00:00:00',
+        campaign_end: '2026-11-15T23:59:59',
+        fireworks_enabled: true
+      }
+    });
+    assert(updateThemeRes.status === 200, 'Admin can update theme scheduling and fireworks toggle');
+    assert(updateThemeRes.body.theme.active_theme === 'diwali', 'Theme scheduling dynamically computes diwali inside campaign window');
+
+    // Reset back to diwali manual
+    await makeRequest('/api/admin/theme', {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${adminToken}` },
+      body: {
+        active_theme: 'diwali',
+        theme_mode: 'manual',
+        fireworks_enabled: true
+      }
     });
 
   } catch (err) {

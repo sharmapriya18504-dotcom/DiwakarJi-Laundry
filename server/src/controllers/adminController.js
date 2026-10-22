@@ -230,6 +230,121 @@ async function changePassword(req, res) {
   }
 }
 
+// GET /api/admin/offers
+async function getOffers(req, res) {
+  try {
+    const offers = await db.getOffers();
+    return res.json({ success: true, offers });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to retrieve offers.' });
+  }
+}
+
+// GET /api/admin/offers/:id
+async function getOfferById(req, res) {
+  try {
+    const offer = await db.getOfferById(req.params.id);
+    if (!offer) return res.status(404).json({ success: false, message: 'Offer not found.' });
+    return res.json({ success: true, offer });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to fetch offer.' });
+  }
+}
+
+// POST /api/admin/offers
+async function createOffer(req, res) {
+  try {
+    const { title, description } = req.body;
+    if (!title || !description) {
+      return res.status(400).json({ success: false, message: 'Offer title and description are required.' });
+    }
+
+    const newId = await db.createOffer(req.body);
+    const created = await db.getOfferById(newId);
+    return res.status(201).json({ success: true, message: 'Offer created successfully.', offer: created });
+  } catch (err) {
+    console.error('Create offer error:', err);
+    return res.status(500).json({ success: false, message: 'Failed to create offer.' });
+  }
+}
+
+// PUT /api/admin/offers/:id
+async function updateOffer(req, res) {
+  try {
+    const { id } = req.params;
+    const { title, description } = req.body;
+    if (!title || !description) {
+      return res.status(400).json({ success: false, message: 'Offer title and description are required.' });
+    }
+
+    await db.updateOffer(id, req.body);
+    const updated = await db.getOfferById(id);
+    return res.json({ success: true, message: 'Offer updated successfully.', offer: updated });
+  } catch (err) {
+    console.error('Update offer error:', err);
+    return res.status(500).json({ success: false, message: 'Failed to update offer.' });
+  }
+}
+
+// PATCH /api/admin/offers/:id/status
+async function updateOfferStatus(req, res) {
+  try {
+    const { id } = req.params;
+    const { is_active } = req.body;
+    await db.updateOfferStatus(id, !!is_active);
+    const updated = await db.getOfferById(id);
+    return res.json({ success: true, message: `Offer ${is_active ? 'activated' : 'deactivated'} successfully.`, offer: updated });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to update offer status.' });
+  }
+}
+
+// DELETE /api/admin/offers/:id
+async function deleteOffer(req, res) {
+  try {
+    const { id } = req.params;
+    await db.deleteOffer(id);
+    return res.json({ success: true, message: 'Offer deleted successfully.' });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to delete offer.' });
+  }
+}
+
+// GET /api/admin/theme
+async function getTheme(req, res) {
+  try {
+    const theme = await db.getThemeSettings();
+    return res.json({ success: true, ...theme });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to load theme settings.' });
+  }
+}
+
+// PUT /api/admin/theme
+async function updateTheme(req, res) {
+  try {
+    const { active_theme, theme_mode, campaign_start, campaign_end, fireworks_enabled } = req.body;
+    const updateBatch = {};
+
+    if (active_theme) updateBatch.active_theme = active_theme;
+    if (theme_mode) updateBatch.theme_mode = theme_mode;
+    if (campaign_start) updateBatch.campaign_start = campaign_start;
+    if (campaign_end) updateBatch.campaign_end = campaign_end;
+    if (fireworks_enabled !== undefined) updateBatch.fireworks_enabled = String(fireworks_enabled);
+
+    await db.updateSettingsBatch(updateBatch);
+    const updatedTheme = await db.getThemeSettings();
+
+    return res.json({
+      success: true,
+      message: 'Theme and campaign configuration updated successfully.',
+      theme: updatedTheme
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to update theme configuration.' });
+  }
+}
+
 module.exports = {
   login,
   logout,
@@ -242,5 +357,13 @@ module.exports = {
   createService,
   getSettings,
   updateSettings,
-  changePassword
+  changePassword,
+  getOffers,
+  getOfferById,
+  createOffer,
+  updateOffer,
+  updateOfferStatus,
+  deleteOffer,
+  getTheme,
+  updateTheme
 };

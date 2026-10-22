@@ -15,6 +15,8 @@ router.get('/health', (req, res) => {
 // Website Public Configuration & Services
 router.get('/public/config', publicController.getPublicConfig);
 router.get('/services', publicController.getActiveServices);
+router.get('/offers/active', publicController.getActiveOffer);
+router.get('/theme', publicController.getThemeSettings);
 
 // Customer Booking Submission (Rate Limited)
 router.post('/bookings', bookingLimiter, publicController.createBooking);

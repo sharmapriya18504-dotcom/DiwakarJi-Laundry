@@ -1,12 +1,19 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
+import { useConfig } from '../context/ConfigContext';
+import FireworksCanvas from './FireworksCanvas';
 
 export default function Hero() {
   const { theme } = useTheme();
+  const { config, activeOffer, themeSettings } = useConfig();
   const isDiwali = theme === 'diwali';
+  const showFireworks = isDiwali && (themeSettings ? themeSettings.fireworks_enabled : true);
 
   return (
     <section className="hero" id="home">
+      {/* Background Fireworks (Subtle, Canvas-based, Zero Audio, Pointer-Events None) */}
+      <FireworksCanvas enabled={showFireworks} />
+
       {/* Decorative Marigold Garlands Draped Across Top (Diwali Theme) */}
       {isDiwali && (
         <div className="marigold-garland" aria-hidden="true">
@@ -87,7 +94,7 @@ export default function Hero() {
             {isDiwali ? (
               <div className="hero-festive-badge">
                 <span className="badge-flame">🪔</span>
-                <span>Happy Diwali</span>
+                <span>{activeOffer?.badge_text || 'Happy Diwali'}</span>
                 <span className="badge-flame">🪔</span>
               </div>
             ) : (
@@ -99,7 +106,7 @@ export default function Hero() {
 
             <p className="hero-tagline-sub">
               {isDiwali
-                ? 'This Festival, Give Your Clothes the Care They Deserve'
+                ? (activeOffer?.subtitle || 'This Festival, Give Your Clothes the Care They Deserve')
                 : "Kanpur's Trusted Fabric Care & Dry Cleaning"}
             </p>
 
@@ -163,8 +170,10 @@ export default function Hero() {
               {isDiwali && (
                 <div className="diwali-special-seal" aria-label="Diwali Special Seal">
                   <div className="seal-diya-top">🪔</div>
-                  <div className="seal-title">✦ Diwali Special ✦</div>
-                  <div className="seal-subtitle">Freshness for a brighter tomorrow</div>
+                  <div className="seal-title">{activeOffer?.title || '✦ Diwali Special ✦'}</div>
+                  <div className="seal-subtitle">
+                    {activeOffer?.discount_value ? `${activeOffer.discount_value}% OFF` : (activeOffer?.subtitle || 'Freshness for a brighter tomorrow')}
+                  </div>
                 </div>
               )}
             </div>

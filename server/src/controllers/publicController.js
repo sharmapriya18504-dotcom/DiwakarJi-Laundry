@@ -10,6 +10,8 @@ async function getPublicConfig(req, res) {
     const faqs = await db.getFaqs(true);
     const reviews = await db.getReviews();
     const offers = await db.getOffers(true);
+    const active_offer = await db.getActiveOffer();
+    const theme_settings = await db.getThemeSettings();
 
     return res.json({
       success: true,
@@ -17,7 +19,9 @@ async function getPublicConfig(req, res) {
       services,
       faqs,
       reviews,
-      offers
+      offers,
+      active_offer,
+      theme_settings
     });
   } catch (err) {
     console.error('Error fetching public config:', err);
@@ -25,7 +29,27 @@ async function getPublicConfig(req, res) {
   }
 }
 
-// 2. GET /api/services
+// 2. GET /api/offers/active
+async function getActiveOffer(req, res) {
+  try {
+    const offer = await db.getActiveOffer();
+    return res.json({ success: true, offer });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to retrieve active offer.' });
+  }
+}
+
+// 3. GET /api/theme
+async function getThemeSettings(req, res) {
+  try {
+    const theme = await db.getThemeSettings();
+    return res.json({ success: true, ...theme });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to retrieve theme settings.' });
+  }
+}
+
+// 4. GET /api/services
 async function getActiveServices(req, res) {
   try {
     const services = await db.getServices(true);
@@ -201,6 +225,8 @@ async function updateNotificationStatus(req, res) {
 module.exports = {
   getPublicConfig,
   getActiveServices,
+  getActiveOffer,
+  getThemeSettings,
   createBooking,
   updateNotificationStatus
 };

@@ -32,7 +32,137 @@
     festive_banner_text: '🪔 Shubh Diwali Offer: 15% OFF on Blankets & Dry Cleaning! Free Pickup & Delivery across Kanpur.',
     diwali_decorations_enabled: 'true'
   };
+  let activeOffer = null;
+  let themeSettings = {
+    active_theme: 'diwali',
+    theme_mode: 'manual',
+    fireworks_enabled: true
+  };
   let lastBookingData = null;
+
+  /* ---- FIREWORKS CANVAS ANIMATION ---- */
+  let fireworksAnimId = null;
+  let fireworksPaused = false;
+
+  function initFireworksCanvas(enabled) {
+    const canvas = document.getElementById('fireworks-canvas');
+    if (!canvas) return;
+
+    if (fireworksAnimId) {
+      cancelAnimationFrame(fireworksAnimId);
+      fireworksAnimId = null;
+    }
+
+    if (!enabled) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = canvas.width = canvas.parentElement ? canvas.parentElement.clientWidth : window.innerWidth;
+    let height = canvas.height = canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
+    const isMobile = width < 768;
+    const maxParticles = isMobile ? 35 : 70;
+
+    const particles = [];
+    const colorPalette = ['#FFD700', '#FFB703', '#FB8500', '#FF9E00', '#E63946', '#FFF3B0'];
+
+    function Particle(x, y, color) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 2.8 + 0.8;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.gravity = 0.035;
+      this.friction = 0.982;
+      this.alpha = 1;
+      this.decay = Math.random() * 0.012 + 0.01;
+      this.size = Math.random() * 2 + 1.2;
+    }
+
+    Particle.prototype.update = function () {
+      this.vx *= this.friction;
+      this.vy *= this.friction;
+      this.vy += this.gravity;
+      this.x += this.vx;
+      this.y += this.vy;
+      this.alpha -= this.decay;
+    };
+
+    Particle.prototype.draw = function (c) {
+      c.save();
+      c.globalAlpha = Math.max(0, this.alpha);
+      c.fillStyle = this.color;
+      c.shadowBlur = 6;
+      c.shadowColor = this.color;
+      c.beginPath();
+      c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      c.fill();
+      c.restore();
+    };
+
+    function createBurst(x, y) {
+      const count = isMobile ? 18 : 34;
+      const baseColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      for (let i = 0; i < count; i++) {
+        if (particles.length > maxParticles) particles.shift();
+        const color = Math.random() > 0.3 ? baseColor : colorPalette[Math.floor(Math.random() * colorPalette.length)];
+        particles.push(new Particle(x, y, color));
+      }
+    }
+
+    let lastBurstTime = Date.now();
+    let nextBurstDelay = 1200;
+
+    function loop() {
+      if (fireworksPaused) return;
+      ctx.clearRect(0, 0, width, height);
+
+      const now = Date.now();
+      if (now - lastBurstTime > nextBurstDelay) {
+        const bx = width * 0.15 + Math.random() * (width * 0.7);
+        const by = height * 0.12 + Math.random() * (height * 0.45);
+        createBurst(bx, by);
+        lastBurstTime = now;
+        nextBurstDelay = 1600 + Math.random() * 1600;
+      }
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+        } else {
+          p.draw(ctx);
+        }
+      }
+
+      fireworksAnimId = requestAnimationFrame(loop);
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        fireworksPaused = true;
+        if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
+      } else {
+        fireworksPaused = false;
+        lastBurstTime = Date.now();
+        fireworksAnimId = requestAnimationFrame(loop);
+      }
+    });
+
+    createBurst(width * 0.35, height * 0.25);
+    fireworksAnimId = requestAnimationFrame(loop);
+  }
 
   /* ---- 1. TOAST HELPER ---- */
   function showToast(msg, duration) {
@@ -163,6 +293,13 @@
       const res = await fetch(`${API_BASE}/api/public/config`);
       if (!res.ok) return;
       const data = await res.json();
+
+      if (data.active_offer) {
+        activeOffer = data.active_offer;
+      }
+      if (data.theme_settings) {
+        themeSettings = data.theme_settings;
+      }
 
       if (data.settings) {
         currentSettings = Object.assign(currentSettings, data.settings);
@@ -716,7 +853,7 @@
 
     if (heroBadge) {
       heroBadge.innerHTML = isDiwali
-        ? '<span>🪔 Happy Diwali 🪔</span>'
+        ? `<span>🪔 ${activeOffer?.badge_text || 'Happy Diwali'} 🪔</span>`
         : '<span>🧺 Premium Laundry Care</span>';
       heroBadge.className = isDiwali ? 'hero-festive-badge' : 'hero-normal-badge';
     }
@@ -727,11 +864,21 @@
 
     if (diwaliSeal) {
       diwaliSeal.style.display = isDiwali ? 'flex' : 'none';
+      if (isDiwali && activeOffer) {
+        const sealTitle = diwaliSeal.querySelector('.seal-title');
+        const sealSub = diwaliSeal.querySelector('.seal-subtitle');
+        if (sealTitle) sealTitle.textContent = activeOffer.title || '✦ Diwali Special ✦';
+        if (sealSub) sealSub.textContent = activeOffer.discount_value ? `${activeOffer.discount_value}% OFF` : (activeOffer.subtitle || 'Freshness for a brighter tomorrow');
+      }
     }
 
     if (marigoldGarland) {
       marigoldGarland.style.display = isDiwali ? 'flex' : 'none';
     }
+
+    // Toggle Fireworks Canvas
+    const allowSparks = isDiwali && (themeSettings ? themeSettings.fireworks_enabled : true);
+    initFireworksCanvas(allowSparks);
 
     if (centerFestiveCard) {
       if (isDiwali) {
@@ -739,9 +886,15 @@
         centerFestiveCard.innerHTML = `
           <div class="promo-lantern-ornament left" aria-hidden="true">🪔</div>
           <div class="promo-lantern-ornament right" aria-hidden="true">🪔</div>
-          <span class="diwali-promo-tag">This Diwali</span>
-          <h3 class="diwali-promo-headline">Keep Your Clothes Fresh and Your Moments Bright</h3>
-          <p class="diwali-promo-desc">Special festive offers on selected services. Book now and enjoy the festive care!</p>
+          <span class="diwali-promo-tag">${activeOffer?.badge_text || 'This Diwali'}</span>
+          <h3 class="diwali-promo-headline">${activeOffer?.title || 'Keep Your Clothes Fresh and Your Moments Bright'}</h3>
+          <p class="diwali-promo-desc">${activeOffer?.description || activeOffer?.subtitle || 'Special festive offers on selected services. Book now and enjoy the festive care!'}</p>
+          ${activeOffer?.discount_code ? `
+            <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(245,196,83,0.15); border:1px dashed #F6C64A; padding:6px 14px; border-radius:50px; margin:10px auto; color:#F6C64A; font-weight:700; font-size:0.82rem;">
+              <span>🏷️ Code: <strong>${activeOffer.discount_code}</strong></span>
+              <span style="background:#F6C64A; color:#1a0d2e; padding:2px 8px; border-radius:12px; font-size:0.72rem;">${activeOffer.discount_value}% OFF</span>
+            </div>
+          ` : ''}
           <div class="diwali-promo-diya-glow">
             <svg class="diya-glow-svg" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="50" cy="50" r="38" stroke="#F6C64A" stroke-width="1" stroke-dasharray="3 3"/>

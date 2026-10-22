@@ -106,13 +106,26 @@ CREATE TABLE IF NOT EXISTS `faqs` (
 CREATE TABLE IF NOT EXISTS `offers` (
   `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `title` VARCHAR(150) NOT NULL,
+  `subtitle` VARCHAR(255) NULL,
   `description` TEXT NOT NULL,
+  `discount_type` ENUM('percentage', 'fixed') NOT NULL DEFAULT 'percentage',
+  `discount_value` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  `promotional_price` DECIMAL(10,2) NULL,
+  `applicable_services` VARCHAR(255) NOT NULL DEFAULT 'all',
+  `min_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   `discount_code` VARCHAR(50) NULL,
-  `discount_percent` INT NULL,
+  `badge_text` VARCHAR(50) NULL DEFAULT 'Festive Offer',
+  `image_url` VARCHAR(255) NULL,
+  `terms` TEXT NULL,
+  `cta_text` VARCHAR(50) NOT NULL DEFAULT 'Book Pickup',
+  `fireworks_enabled` TINYINT(1) NOT NULL DEFAULT 1,
   `is_active` TINYINT(1) NOT NULL DEFAULT 1,
-  `start_date` DATE NULL,
-  `end_date` DATE NULL,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `start_date` DATETIME NULL,
+  `end_date` DATETIME NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX `idx_offer_active` (`is_active`),
+  INDEX `idx_offer_dates` (`start_date`, `end_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 8. Customer Reviews Table (Authentic Kanpur Feedback)

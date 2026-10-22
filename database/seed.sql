@@ -66,3 +66,37 @@ VALUES
   ('Neha Verma', 'Kidwai Nagar, Kanpur', 5, 'Very professional and on-time doorstep delivery. Now I only trust Diwakar Ji for all our family laundry needs.', 1, 2),
   ('Amit Tiwari', 'Kalyanpur, Kanpur', 5, 'The best laundry service in Kanpur. Quality is top-notch and rates are genuine. My heavy winter blankets look brand new!', 1, 3)
 ON DUPLICATE KEY UPDATE `review_text` = VALUES(`review_text`);
+
+-- 6. Initial Diwali Offer (Configurable from Backend Admin)
+INSERT INTO `offers` (
+  `id`, `title`, `subtitle`, `description`, `discount_type`, `discount_value`,
+  `promotional_price`, `applicable_services`, `min_amount`, `discount_code`,
+  `badge_text`, `image_url`, `terms`, `cta_text`, `fireworks_enabled`,
+  `is_active`, `start_date`, `end_date`
+)
+VALUES (
+  1,
+  'Diwali Special',
+  'Fresh Clothes for a Brighter Tomorrow',
+  'Celebrate Diwali with fresh clothes and special laundry savings.',
+  'percentage',
+  15.00,
+  NULL,
+  'all',
+  100.00,
+  'SHUBHDIWALI',
+  'Festive Offer',
+  NULL,
+  'Valid on all standard laundry and dry cleaning orders throughout the festive campaign.',
+  'Book Pickup',
+  1,
+  1,
+  '2026-10-01 00:00:00',
+  '2026-11-15 23:59:59'
+)
+ON DUPLICATE KEY UPDATE
+  `title` = VALUES(`title`),
+  `subtitle` = VALUES(`subtitle`),
+  `description` = VALUES(`description`),
+  `discount_value` = VALUES(`discount_value`);
+

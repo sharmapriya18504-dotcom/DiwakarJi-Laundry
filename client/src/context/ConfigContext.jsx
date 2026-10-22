@@ -31,7 +31,13 @@ export function ConfigProvider({ children }) {
     ],
     faqs: [],
     reviews: [],
-    offers: []
+    offers: [],
+    active_offer: null,
+    theme_settings: {
+      active_theme: 'diwali',
+      theme_mode: 'manual',
+      fireworks_enabled: true
+    }
   });
   const [loading, setLoading] = useState(true);
 
@@ -40,8 +46,12 @@ export function ConfigProvider({ children }) {
       const data = await fetchPublicConfig();
       if (data && data.settings) {
         setConfig(data);
-        if (data.settings.active_theme && !localStorage.getItem('diwakar_theme_preference')) {
-          setTheme(data.settings.active_theme);
+        const serverTheme = data.theme_settings?.active_theme || data.settings.active_theme;
+        if (serverTheme) {
+          // If no manual preference was stored yet, adopt server theme
+          if (!localStorage.getItem('diwakar_theme_preference')) {
+            setTheme(serverTheme);
+          }
         }
       }
     } catch (e) {
@@ -56,7 +66,13 @@ export function ConfigProvider({ children }) {
   }, []);
 
   return (
-    <ConfigContext.Provider value={{ config, loading, refreshConfig: loadConfig }}>
+    <ConfigContext.Provider value={{
+      config,
+      activeOffer: config.active_offer || null,
+      themeSettings: config.theme_settings || null,
+      loading,
+      refreshConfig: loadConfig
+    }}>
       {children}
     </ConfigContext.Provider>
   );
