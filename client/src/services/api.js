@@ -27,11 +27,78 @@ export async function fetchPublicConfig() {
   try {
     const res = await fetch(`${API_BASE}/public/config`);
     const data = await parseJsonSafely(res);
-    if (res.ok && data) return data;
+    if (res.ok && data && data.settings) return data;
   } catch (e) {
-    console.warn('Backend unavailable, using client fallback config');
+    // Backend offline / static host fallback
   }
-  return null;
+
+  // Load live active theme configured from Admin appearance tab
+  let activeTheme = 'diwali';
+  let fireworks = true;
+  try {
+    const storedTheme = JSON.parse(localStorage.getItem('diwakar_admin_theme') || 'null');
+    if (storedTheme?.active_theme) activeTheme = storedTheme.active_theme;
+    else if (storedTheme?.configured_theme) activeTheme = storedTheme.configured_theme;
+    else if (localStorage.getItem('diwakar_theme')) activeTheme = localStorage.getItem('diwakar_theme');
+    if (storedTheme?.fireworks_enabled !== undefined) fireworks = storedTheme.fireworks_enabled;
+  } catch (e) {}
+
+  const isDiwali = activeTheme === 'diwali';
+  const storedSettings = JSON.parse(localStorage.getItem('diwakar_admin_settings') || '{}');
+
+  return {
+    settings: {
+      active_theme: activeTheme,
+      business_name: storedSettings.store_name || 'Diwakar Ji Laundry',
+      owner_name: 'Diwakar Ji',
+      whatsapp_number: storedSettings.whatsapp_number || '917860462268',
+      contact_phone: storedSettings.contact_phone || '+91 7860462268',
+      address: storedSettings.store_address || 'Kidwai Nagar & IIT Kanpur Area, Kanpur, Uttar Pradesh 208011',
+      service_areas: 'Kakadeo, Swaroop Nagar, Kidwai Nagar, Kalyanpur, Civil Lines, Govind Nagar, Barra, IIT Kanpur Campus',
+      hero_headline: 'Fresh Clothes.<br/><span class="gradient-text">Fresh Feel.</span>',
+      hero_subtitle: 'Professional laundry & dry cleaning with free doorstep pickup & delivery across Kanpur. Cleaner clothes, happier homes.',
+      festive_banner_enabled: isDiwali ? 'true' : (storedSettings.festive_banner_enabled || 'false'),
+      festive_banner_text: '✨ Shubh Diwali Offer: 15% OFF on Blankets & Dry Cleaning! Free Doorstep Pickup & Delivery across Kanpur.',
+      diwali_decorations_enabled: isDiwali ? 'true' : 'false'
+    },
+    services: [
+      { id: 1, service_id: 'wash_fold', name: 'Wash & Fold', price: 50, unit: '/kg', image_url: '/assets/laundry/wash-fold.webp' },
+      { id: 2, service_id: 'wash_iron', name: 'Wash & Iron', price: 75, unit: '/kg', image_url: '/assets/laundry/wash-iron.webp' },
+      { id: 3, service_id: 'dry_cleaning', name: 'Dry Cleaning', price: 150, unit: '/piece', image_url: '/assets/laundry/dry-clean.webp' },
+      { id: 4, service_id: 'steam_iron', name: 'Steam Ironing', price: 25, unit: '/piece', image_url: '/assets/laundry/ironing.webp' },
+      { id: 5, service_id: 'blankets', name: 'Blankets & Bedsheets', price: 250, unit: '/piece', image_url: '/assets/laundry/blankets.webp' },
+      { id: 6, service_id: 'express', name: 'Express Laundry', price: 90, unit: '/kg', image_url: '/assets/laundry/express.webp' }
+    ],
+    faqs: [],
+    reviews: [],
+    offers: [
+      {
+        id: 1,
+        title: 'Diwali Festive Fabric Care Special',
+        subtitle: 'Flat 15% OFF on all Dry Cleaning & Steam Ironing across Kanpur',
+        badge_text: 'Festival Special',
+        discount_code: 'SHUBHDIWALI',
+        discount_value: 15,
+        is_active: isDiwali
+      }
+    ],
+    active_offer: isDiwali ? {
+      id: 1,
+      title: 'Diwali Festive Fabric Care Special',
+      subtitle: 'Flat 15% OFF on all Dry Cleaning & Steam Ironing across Kanpur',
+      badge_text: 'Festival Special',
+      description: 'Flat 15% OFF on all Dry Cleaning & Steam Ironing across Kanpur',
+      discount_code: 'SHUBHDIWALI',
+      discount_value: 15,
+      cta_text: 'Book Pickup',
+      is_active: true
+    } : null,
+    theme_settings: {
+      active_theme: activeTheme,
+      theme_mode: 'manual',
+      fireworks_enabled: fireworks
+    }
+  };
 }
 
 export async function submitBooking(bookingData) {
@@ -840,11 +907,40 @@ export async function fetchAdminTheme() {
 }
 
 export async function updateAdminTheme(themeData) {
-  localStorage.setItem('diwakar_admin_theme', JSON.stringify(themeData));
-  if (themeData.configured_theme) {
-    document.documentElement.setAttribute('data-theme', themeData.configured_theme);
+  try {
+    const res = await fetch(`${API_BASE}/admin/theme`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeader()
+      },
+      body: JSON.stringify(themeData)
+    });
+    const data = await parseJsonSafely(res);
+    if (res.ok && data) {
+      // Backend sync success
+    }
+  } catch (e) {
+    // Offline / static host
   }
-  return { success: true, theme: themeData, message: 'Theme updated' };
+
+  const activeTheme = themeData.active_theme || themeData.configured_theme || 'diwali';
+  const updated = {
+    ...themeData,
+    active_theme: activeTheme,
+    configured_theme: activeTheme
+  };
+
+  localStorage.setItem('diwakar_admin_theme', JSON.stringify(updated));
+  localStorage.setItem('diwakar_theme', activeTheme);
+
+  document.documentElement.setAttribute('data-theme', activeTheme);
+  document.body.setAttribute('data-theme', activeTheme);
+
+  // Broadcast to ThemeContext across all components and open tabs
+  window.dispatchEvent(new CustomEvent('diwakar_theme_changed', { detail: { theme: activeTheme } }));
+
+  return { success: true, theme: updated, message: `Theme updated to ${activeTheme}` };
 }
 
 // Audit Logs

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useConfig } from '../context/ConfigContext';
+import { useTheme } from '../context/ThemeContext';
 
 export default function FestiveBanner() {
   const { config, activeOffer } = useConfig();
+  const { theme } = useTheme();
   const [closed, setClosed] = useState(false);
 
-  const isEnabled = config?.settings?.festive_banner_enabled === 'true' || config?.settings?.festive_banner_enabled === true;
+  const isEnabled = config?.settings?.festive_banner_enabled === 'true' || config?.settings?.festive_banner_enabled === true || theme === 'diwali';
   const bannerText = activeOffer
-    ? `✨ <strong>${activeOffer.title}</strong>: ${activeOffer.description}${activeOffer.discount_code ? ` (Use Code: <strong>${activeOffer.discount_code}</strong>)` : ''}`
-    : (config?.settings?.festive_banner_text || 'Shubh Diwali Offer: 15% OFF on Blankets & Dry Cleaning! Free Doorstep Pickup & Delivery across Kanpur.');
+    ? `✨ <strong>${activeOffer.title}</strong>: ${activeOffer.description || activeOffer.subtitle || '15% OFF on Blankets & Dry Cleaning'}${activeOffer.discount_code ? ` (Use Code: <strong>${activeOffer.discount_code}</strong>)` : ''}`
+    : (config?.settings?.festive_banner_text || '✨ Shubh Diwali Offer: 15% OFF on Blankets & Dry Cleaning! Free Doorstep Pickup & Delivery across Kanpur.');
 
   if (!isEnabled || closed) return null;
 

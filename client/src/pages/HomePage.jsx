@@ -12,6 +12,7 @@ import Footer from '../components/Footer';
 import WhatsAppFloat from '../components/WhatsAppFloat';
 import OrderTrackingModal from '../components/OrderTrackingModal';
 import FireworksCanvas from '../components/FireworksCanvas';
+import FestiveBanner from '../components/FestiveBanner';
 import { useTheme } from '../context/ThemeContext';
 import { useConfig } from '../context/ConfigContext';
 
@@ -41,6 +42,8 @@ export default function HomePage() {
       {/* Background Diwali Crackers Animation */}
       {isDiwali && <FireworksCanvas enabled={true} />}
       <WhatsAppFloat />
+      {/* Festive Banner at top of page during Diwali */}
+      {isDiwali && <FestiveBanner />}
       <Header onOpenTracking={handleOpenTracking} />
       <main>
         {/* 1. Hero Section */}

@@ -540,8 +540,16 @@ export default function AdminDashboardPage() {
 
   const handlePublishAllConfig = async () => {
     try {
+      await updateAdminTheme({
+        active_theme: themeConfig.active_theme,
+        theme_mode: themeConfig.theme_mode,
+        campaign_start: themeConfig.campaign_start,
+        campaign_end: themeConfig.campaign_end,
+        fireworks_enabled: Boolean(themeConfig.fireworks_enabled)
+      });
       await publishSiteConfig();
-      showToast('Live website configuration published successfully!');
+      switchTheme(themeConfig.active_theme);
+      showToast('Live website configuration & theme published successfully!');
       refreshConfig();
     } catch (err) {
       alert(err.message || 'Failed to publish site config');
