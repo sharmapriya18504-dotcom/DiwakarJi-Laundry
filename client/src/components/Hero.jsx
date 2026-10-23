@@ -68,8 +68,8 @@ export default function Hero() {
               </div>
 
               <div className="hero-badge-item">
-                <span className="badge-icon-circle">
-                  <i className="fa-solid fa-sparkles"></i>
+                <span className="badge-icon-circle" title={t('qualityCleaningBadge')}>
+                  <i className="fa-solid fa-wand-magic-sparkles"></i>
                 </span>
                 <span>{t('qualityCleaningBadge')}</span>
               </div>

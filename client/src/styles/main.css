@@ -62,72 +62,171 @@ html {
   100% { transform: translateY(-4px); }
 }
 
-/* ---- FESTIVE ANNOUNCEMENT BANNER ---- */
+/* ---- FESTIVE ANNOUNCEMENT BANNER (CONTINUOUS HORIZONTAL MOVING TICKER) ---- */
 .festive-banner {
-  background: linear-gradient(90deg, #1b0c30 0%, #3d1445 50%, #1b0c30 100%);
-  border-bottom: 1px solid rgba(245, 196, 83, 0.35);
+  background: linear-gradient(90deg, #180927 0%, #350f3d 50%, #180927 100%);
+  border-bottom: 1px solid rgba(245, 196, 83, 0.4);
   color: #fdfbf7;
-  padding: 10px 24px;
-  font-size: 0.85rem;
+  height: 38px;
+  overflow: hidden;
   position: relative;
   z-index: 1001;
-}
-
-.festive-banner-inner {
-  max-width: 1240px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.festive-marquee-viewport {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 2%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 2%, #000 94%, transparent 100%);
+}
+
+.festive-marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  will-change: transform;
+  animation: festiveTickerLoop 30s linear infinite;
+}
+
+.festive-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes festiveTickerLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.festive-marquee-group {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.festive-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  font-size: 0.82rem;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+}
+
+.festive-diya-icon {
+  font-size: 0.95rem;
+  filter: drop-shadow(0 0 5px rgba(245, 196, 83, 0.7));
 }
 
 .festive-tag-pill {
-  background: #f5c453;
+  background: linear-gradient(135deg, #f5c453 0%, #e6a824 100%);
   color: #170d2b;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  padding: 3px 10px;
+  padding: 2px 9px;
   border-radius: 50px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  box-shadow: 0 2px 6px rgba(245, 196, 83, 0.3);
+}
+
+.festive-ticker-text {
+  color: #f5f0eb;
+  font-weight: 500;
+}
+
+.festive-ticker-text strong {
+  color: #f5c453;
+  font-weight: 700;
+}
+
+.festive-coupon-tag {
+  color: #ffd875;
+}
+
+.festive-coupon-tag strong {
+  background: rgba(245, 196, 83, 0.2);
+  border: 1px dashed rgba(245, 196, 83, 0.8);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
 .festive-cta-link {
   color: #f5c453;
   font-weight: 700;
   text-decoration: underline;
-  margin-left: 6px;
+  text-underline-offset: 3px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.festive-cta-link:hover {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.festive-sep {
+  color: rgba(245, 196, 83, 0.6);
+  font-size: 0.72rem;
+  margin-left: 6px;
 }
 
 .festive-banner-close {
   position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 36px;
+  background: linear-gradient(90deg, transparent 0%, #180927 65%);
   border: none;
-  color: #ffffff;
-  font-size: 20px;
+  color: #f5c453;
+  font-size: 18px;
   cursor: pointer;
-  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 6px;
+  z-index: 5;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, color 0.2s ease;
 }
 
-.festive-banner-close:hover { opacity: 1; }
+.festive-banner-close:hover {
+  opacity: 1;
+  color: #ffffff;
+}
 
-/* ---- HEADER / NAVIGATION (FLOATING ATELIER NAVBAR) ---- */
+/* ---- HEADER / NAVIGATION (STICKY ATELIER NAVBAR) ---- */
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: var(--header-bg);
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  background: var(--header-bg, #061a33);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-subtle);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  background: var(--header-bg, #061a33);
 }
 
 .header-inner {
@@ -2302,9 +2401,14 @@ html {
 
 /* 1. Header Styling matching screenshot */
 .header {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
   background: var(--header-bg, #061a33);
   border-bottom: 1px solid var(--border-subtle);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   transition: all 0.3s ease;
 }
 
@@ -3605,11 +3709,42 @@ html {
 }
 
 @media (max-width: 991px) {
-  /* Prevent any horizontal screen scrolling */
+  /* Prevent horizontal screen scrolling without breaking sticky positioning */
   html, body {
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
     max-width: 100vw !important;
     width: 100% !important;
+  }
+
+  /* Hero CTAs side-by-side ("amne samne") on mobile */
+  .hero-ctas-screenshot {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .hero-ctas-screenshot .btn-lg-hero,
+  .hero-ctas-screenshot #hero-book-btn,
+  .hero-ctas-screenshot #hero-explore-btn,
+  .hero-ctas-screenshot .btn-gold-pill,
+  .hero-ctas-screenshot .btn-outline-pill {
+    flex: 1 1 50% !important;
+    min-width: 0 !important;
+    padding: 12px 10px !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    gap: 6px !important;
+  }
+
+  .hero-ctas-screenshot #hero-book-btn i {
+    font-size: 0.75rem !important;
   }
 
   /* Header Mobile Compact */

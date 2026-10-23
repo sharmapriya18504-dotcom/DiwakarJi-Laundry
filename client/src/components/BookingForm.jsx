@@ -346,7 +346,7 @@ export default function BookingForm({ selectedServiceFromParent, onOpenTracking 
             {/* Special Diwali Campaign Offer Card with 1-Click Coupon Apply */}
             <div className="booking-festive-offer-card" id="booking-festive-offer-card">
               <div className="festive-offer-badge">
-                <i className="fa-solid fa-sparkles"></i> ✦ DIWALI SPECIAL FESTIVE OFFER ✦
+                <i className="fa-solid fa-wand-magic-sparkles"></i> ✦ DIWALI SPECIAL FESTIVE OFFER ✦
               </div>
               <div className="festive-offer-content">
                 <div className="festive-offer-info">

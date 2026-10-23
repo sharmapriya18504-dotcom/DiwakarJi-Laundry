@@ -148,7 +148,7 @@ body {
   color: var(--text-body);
   font-family: var(--font-sans);
   transition: background-color 0.4s ease, color 0.4s ease;
-  overflow-x: hidden;
+  overflow-x: clip;
   margin: 0;
   padding: 0;
 }

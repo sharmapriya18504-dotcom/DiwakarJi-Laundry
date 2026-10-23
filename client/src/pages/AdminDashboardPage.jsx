@@ -1391,7 +1391,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setThemeConfig({ ...themeConfig, active_theme: 'diwali' })}
                   >
                     <div className="theme-card-preview diwali-preview">
-                      <i className="fa-solid fa-sparkles" style={{ fontSize: '24px', color: '#f5c453' }}></i>
+                      <i className="fa-solid fa-wand-magic-sparkles" style={{ fontSize: '24px', color: '#f5c453' }}></i>
                     </div>
                     <strong>Diwali Festival Edition</strong>
                     <p>Deep Navy #0c1424, Royal Festive Gold #d4a34b, Warm Ambient Lighting &amp; Marigolds</p>
