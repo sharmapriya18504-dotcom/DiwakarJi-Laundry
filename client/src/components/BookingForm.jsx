@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useConfig } from '../context/ConfigContext';
-import { submitBooking } from '../services/api';
+import { submitBooking, validateCoupon } from '../services/api';
 import BookingModal from './BookingModal';
 
-export default function BookingForm({ selectedServiceFromParent }) {
-  const { config } = useConfig();
+export default function BookingForm({ selectedServiceFromParent, onOpenTracking }) {
+  const { config, activeOffer } = useConfig();
   const services = config?.services || [];
 
   const getTodayStr = (offsetDays = 0) => {
@@ -35,13 +35,19 @@ export default function BookingForm({ selectedServiceFromParent }) {
   const [whatsappUrl, setWhatsappUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Coupon management
+  const [couponInput, setCouponInput] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [couponMsg, setCouponMsg] = useState({ type: '', text: '' });
+
   useEffect(() => {
     if (selectedServiceFromParent) {
       setFormData(prev => ({ ...prev, service: selectedServiceFromParent }));
     }
   }, [selectedServiceFromParent]);
 
-  // Live Price Calculation
+  // Live Price Calculation with coupon discount
   const calculateEstimate = () => {
     if (!formData.service) return null;
     const svc = services.find(s => s.name.toLowerCase() === formData.service.toLowerCase())
@@ -53,6 +59,9 @@ export default function BookingForm({ selectedServiceFromParent }) {
 
     if (!formData.quantity || formData.quantity.includes('Not sure')) {
       return {
+        rawSubtotal: price,
+        subtotal: price,
+        discount: 0,
         amount: `Starting from ₹${price}${unit}`,
         note: `Rate is ₹${price}${unit}. Final weight & amount will be confirmed at doorstep pickup.`
       };
@@ -65,14 +74,82 @@ export default function BookingForm({ selectedServiceFromParent }) {
     else if (q.includes('7–10') || q.includes('7-10')) mult = 8;
     else if (q.includes('10+')) mult = 12;
 
-    const est = Math.round(price * mult);
+    const rawSubtotal = Math.round(price * mult);
+    let discount = 0;
+    if (appliedCoupon && appliedCoupon.valid) {
+      discount = appliedCoupon.discount_amount || 0;
+    }
+    const finalEst = Math.max(0, rawSubtotal - discount);
+
     return {
-      amount: `~₹${est}`,
-      note: `Estimated for ${formData.quantity} @ ₹${price}${unit}. Final amount confirmed upon weighing at pickup. No advance needed.`
+      rawSubtotal,
+      subtotal: rawSubtotal,
+      discount,
+      finalTotal: finalEst,
+      amount: discount > 0 ? `~₹${finalEst} (₹${discount} saved)` : `~₹${finalEst}`,
+      note: discount > 0
+        ? `Applied coupon ${appliedCoupon.coupon_code}! Base estimate ~₹${rawSubtotal} minus ₹${discount} discount. Final amount confirmed upon weighing at pickup.`
+        : `Estimated for ${formData.quantity} @ ₹${price}${unit}. Final amount confirmed upon weighing at pickup. No advance needed.`
     };
   };
 
   const estimate = calculateEstimate();
+
+  const handleApplyCoupon = async (e) => {
+    if (e) e.preventDefault();
+    if (!couponInput || !couponInput.trim()) {
+      setCouponMsg({ type: 'error', text: 'Please enter a coupon code.' });
+      return;
+    }
+
+    setCouponLoading(true);
+    setCouponMsg({ type: '', text: '' });
+    try {
+      const subtotalToValidate = estimate ? estimate.rawSubtotal : 150;
+      const res = await validateCoupon(couponInput.trim().toUpperCase(), subtotalToValidate, formData.service);
+      if (res.valid) {
+        setAppliedCoupon(res);
+        setCouponMsg({ type: 'success', text: res.message || `Coupon ${res.coupon_code} applied successfully!` });
+      } else {
+        setAppliedCoupon(null);
+        setCouponMsg({ type: 'error', text: res.message || 'Invalid coupon code.' });
+      }
+    } catch (err) {
+      setAppliedCoupon(null);
+      setCouponMsg({ type: 'error', text: err.message || 'Coupon code is invalid or expired.' });
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const handleQuickApplyDiwaliCoupon = async (codeToApply) => {
+    const code = (codeToApply || 'SHUBHDIWALI').trim().toUpperCase();
+    setCouponInput(code);
+    setCouponLoading(true);
+    setCouponMsg({ type: '', text: '' });
+    try {
+      const subtotalToValidate = estimate ? estimate.rawSubtotal : 300;
+      const res = await validateCoupon(code, subtotalToValidate, formData.service);
+      if (res.valid) {
+        setAppliedCoupon(res);
+        setCouponMsg({ type: 'success', text: res.message || `Festive offer ${res.coupon_code} applied: 15% discount!` });
+      } else {
+        setAppliedCoupon(null);
+        setCouponMsg({ type: 'error', text: res.message || 'Invalid coupon code.' });
+      }
+    } catch (err) {
+      setAppliedCoupon(null);
+      setCouponMsg({ type: 'error', text: err.message || 'Coupon code could not be verified.' });
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput('');
+    setCouponMsg({ type: '', text: '' });
+  };
 
   const handleQuickDate = (offset) => {
     setDateOffset(offset);
@@ -134,7 +211,11 @@ export default function BookingForm({ selectedServiceFromParent }) {
 
     setSubmitting(true);
     try {
-      const res = await submitBooking(formData);
+      const payload = {
+        ...formData,
+        coupon_code: appliedCoupon ? appliedCoupon.coupon_code : null
+      };
+      const res = await submitBooking(payload);
       setConfirmedBooking(res.booking || {
         booking_ref: res.booking_ref,
         customer_name: formData.full_name,
@@ -188,51 +269,109 @@ export default function BookingForm({ selectedServiceFromParent }) {
         </div>
 
         <div className="booking-wrapper">
+          {/* Left Column: Equal-Height Process & Trust Card */}
           <div className="booking-info">
-            <h3>What happens next?</h3>
-            <div className="booking-steps">
-              <div className="b-step">
-                <div className="b-step-num">1</div>
-                <div className="b-step-text">
-                  <strong>Submit the form</strong>
-                  <p>Choose your service, Kanpur area, and pickup slot.</p>
-                </div>
+            <div className="booking-info-top">
+              <div className="booking-process-badge">
+                <i className="fa-solid fa-clock-rotate-left"></i>
+                <span>EFFORTLESS LAUNDRY PROCESS</span>
               </div>
-              <div className="b-step">
-                <div className="b-step-num">2</div>
-                <div className="b-step-text">
-                  <strong>Database confirmation</strong>
-                  <p>System issues your unique booking reference (DWK-XXXX).</p>
+              <h3 className="booking-info-headline">What happens next?</h3>
+              <p className="booking-info-sub">
+                Transparent 4-step care cycle with live 9-stage order tracking.
+              </p>
+
+              <div className="booking-steps">
+                <div className="b-step">
+                  <div className="b-step-num">1</div>
+                  <div className="b-step-text">
+                    <strong>Submit Online Request</strong>
+                    <p>Select service, approximate load &amp; your preferred pickup slot.</p>
+                  </div>
                 </div>
-              </div>
-              <div className="b-step">
-                <div className="b-step-num">3</div>
-                <div className="b-step-text">
-                  <strong>WhatsApp opens</strong>
-                  <p>Pre-filled order dispatch with exact details for Diwakar Ji.</p>
+                <div className="b-step">
+                  <div className="b-step-num">2</div>
+                  <div className="b-step-text">
+                    <strong>Digital Confirmation</strong>
+                    <p>System generates your unique reference code (DWK-XXXX) instantly.</p>
+                  </div>
                 </div>
-              </div>
-              <div className="b-step">
-                <div className="b-step-num">4</div>
-                <div className="b-step-text">
-                  <strong>Free doorstep pickup</strong>
-                  <p>Delivery partner arrives on time for digital weighing.</p>
+                <div className="b-step">
+                  <div className="b-step-num">3</div>
+                  <div className="b-step-text">
+                    <strong>Doorstep Pickup &amp; Weighing</strong>
+                    <p>Our rider arrives with a certified digital weighing scale at your address.</p>
+                  </div>
+                </div>
+                <div className="b-step">
+                  <div className="b-step-num">4</div>
+                  <div className="b-step-text">
+                    <strong>Express Return Delivery</strong>
+                    <p>Clean, crisp, sanitized and steam ironed clothes delivered in 24–48h.</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="booking-contact">
-              <p className="contact-label">Have questions? Call or WhatsApp directly:</p>
-              <a href="tel:+917860462268" className="contact-num">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.39 2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-                +91 7860462268
-              </a>
+            {/* Quality & Trust Highlights */}
+            <div className="booking-trust-pills-wrap">
+              <div className="b-trust-pill">
+                <i className="fa-solid fa-circle-check"></i>
+                <span>100% Separate Batch Wash — Zero Mixing</span>
+              </div>
+              <div className="b-trust-pill">
+                <i className="fa-solid fa-circle-check"></i>
+                <span>Eco-Friendly Softeners &amp; Zero Color Bleed</span>
+              </div>
+              <div className="b-trust-pill">
+                <i className="fa-solid fa-circle-check"></i>
+                <span>Free Doorstep Pickup Across Covered Kanpur Zones</span>
+              </div>
+            </div>
+
+            {/* Verified Owner Direct WhatsApp Contact Box */}
+            <div className="booking-contact-card">
+              <div className="b-contact-icon">
+                <i className="fa-brands fa-whatsapp"></i>
+              </div>
+              <div className="b-contact-details">
+                <span className="b-contact-label">Direct Owner Helpline (Diwakar Sharma)</span>
+                <a href="tel:+917860462268" className="b-contact-phone">+91 7860462268</a>
+                <span className="b-contact-sub">Available Mon–Sun: 8:00 AM – 9:00 PM</span>
+              </div>
             </div>
           </div>
 
           <div className="booking-form-wrap">
+            {/* Special Diwali Campaign Offer Card with 1-Click Coupon Apply */}
+            <div className="booking-festive-offer-card" id="booking-festive-offer-card">
+              <div className="festive-offer-badge">
+                <i className="fa-solid fa-sparkles"></i> ✦ DIWALI SPECIAL FESTIVE OFFER ✦
+              </div>
+              <div className="festive-offer-content">
+                <div className="festive-offer-info">
+                  <h4>{activeOffer?.title || 'Diwali Special 2026'} — {activeOffer?.discount_value || '15'}% OFF</h4>
+                  <p>{activeOffer?.description || 'Get 15% instant festive discount on all laundry & dry cleaning orders across Kanpur!'}</p>
+                </div>
+                <div className="festive-coupon-box">
+                  <div className="coupon-code-pill" title="Coupon code for 15% off">
+                    <span>CODE:</span>
+                    <strong>{activeOffer?.coupon_code || 'SHUBHDIWALI'}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    className={`btn-apply-festive-coupon ${appliedCoupon && (appliedCoupon.coupon_code === (activeOffer?.coupon_code || 'SHUBHDIWALI')) ? 'applied' : ''}`}
+                    onClick={() => handleQuickApplyDiwaliCoupon(activeOffer?.coupon_code || 'SHUBHDIWALI')}
+                    disabled={couponLoading}
+                  >
+                    {appliedCoupon && (appliedCoupon.coupon_code === (activeOffer?.coupon_code || 'SHUBHDIWALI'))
+                      ? '✓ 15% Applied'
+                      : (couponLoading ? 'Applying...' : 'Apply Coupon')}
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {errorMessage && (
               <div className="form-error-banner" style={{ background: '#fee2e2', border: '1px solid #f87171', color: '#991b1b', padding: '12px 16px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.85rem' }}>
                 <i className="fa-solid fa-triangle-exclamation"></i> {errorMessage}
@@ -265,6 +404,28 @@ export default function BookingForm({ selectedServiceFromParent }) {
                           if (errors.service) setErrors(prev => ({ ...prev, service: null }));
                         }}
                       >
+                        {isSelected && (
+                          <span
+                            style={{
+                              position: 'absolute',
+                              top: '5px',
+                              left: '6px',
+                              width: '18px',
+                              height: '18px',
+                              borderRadius: '50%',
+                              background: '#38bdf8',
+                              color: '#06090e',
+                              fontSize: '11px',
+                              fontWeight: 900,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              lineHeight: 1
+                            }}
+                          >
+                            ✓
+                          </span>
+                        )}
                         {isPopular && <span className="chip-badge">Popular</span>}
                         <span className="chip-icon">{iconEmoji}</span>
                         <span className="chip-name">{svc.name}</span>
@@ -372,33 +533,10 @@ export default function BookingForm({ selectedServiceFromParent }) {
                 </div>
               </div>
 
-              {/* Quick Date Selector */}
+              {/* Pickup Date & Time Selector */}
               <div className="form-row two-col">
                 <div className={`form-group ${errors.pickup_date ? 'error' : ''}`}>
                   <label htmlFor="pickup-date">Pickup Date <span className="required">*</span></label>
-                  <div className="quick-date-row">
-                    <button
-                      type="button"
-                      className={`date-quick-btn ${dateOffset === 0 ? 'active' : ''}`}
-                      onClick={() => handleQuickDate(0)}
-                    >
-                      Today
-                    </button>
-                    <button
-                      type="button"
-                      className={`date-quick-btn ${dateOffset === 1 ? 'active' : ''}`}
-                      onClick={() => handleQuickDate(1)}
-                    >
-                      Tomorrow
-                    </button>
-                    <button
-                      type="button"
-                      className={`date-quick-btn ${dateOffset === 2 ? 'active' : ''}`}
-                      onClick={() => handleQuickDate(2)}
-                    >
-                      Day After
-                    </button>
-                  </div>
                   <input
                     type="date"
                     id="pickup-date"
@@ -434,35 +572,60 @@ export default function BookingForm({ selectedServiceFromParent }) {
                 </div>
               </div>
 
-              {/* Live Transparent Price Estimation Box */}
-              {estimate && (
-                <div id="live-price-estimate" className="price-estimate-box" aria-live="polite">
-                  <div className="estimate-header">
-                    <span className="estimate-title">
-                      <i className="fa-solid fa-calculator"></i> Estimated Pricing
-                    </span>
-                    <span className="estimate-badge">{formData.service}</span>
-                  </div>
-                  <div className="estimate-amount-display">{estimate.amount}</div>
-                  <p className="estimate-note">{estimate.note}</p>
+              {/* Optional Coupon Code Bar */}
+              <div className="form-group coupon-input-group" style={{ marginBottom: '16px' }}>
+                <div className="coupon-row" style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="text"
+                    id="coupon-code"
+                    value={couponInput}
+                    onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                    placeholder="Coupon Code (e.g. SHUBHDIWALI)"
+                    disabled={appliedCoupon !== null}
+                    style={{ textTransform: 'uppercase', flex: 1, padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border-medium)', background: 'var(--bg-card)', color: 'var(--text-headline)', fontSize: '0.85rem' }}
+                  />
+                  {appliedCoupon ? (
+                    <button
+                      type="button"
+                      className="btn-remove-coupon"
+                      onClick={handleRemoveCoupon}
+                      style={{ padding: '0 14px', background: '#fee2e2', color: '#b91c1c', border: '1px solid #fca5a5', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.82rem' }}
+                    >
+                      Remove
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn-apply-coupon"
+                      onClick={handleApplyCoupon}
+                      disabled={couponLoading || !couponInput.trim()}
+                      style={{ padding: '0 16px', background: '#0284c7', color: '#ffffff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.82rem' }}
+                    >
+                      {couponLoading ? <i className="fa-solid fa-spinner fa-spin"></i> : 'Apply'}
+                    </button>
+                  )}
                 </div>
-              )}
-
-              <div className="form-group">
-                <label htmlFor="instructions">Special Instructions <span className="optional">(Optional)</span></label>
-                <textarea
-                  id="instructions"
-                  value={formData.instructions}
-                  onChange={(e) => setFormData({ ...formData, instructions: e.target.value })}
-                  placeholder="Any special care instructions, delicate items, or notes for us..."
-                  rows={2}
-                />
+                {couponMsg.text && (
+                  <div
+                    className={`coupon-feedback-msg ${couponMsg.type}`}
+                    style={{
+                      marginTop: '6px',
+                      fontSize: '0.82rem',
+                      fontWeight: '500',
+                      color: couponMsg.type === 'success' ? '#10b981' : '#ef4444'
+                    }}
+                  >
+                    {couponMsg.type === 'success' ? <i className="fa-solid fa-circle-check"></i> : <i className="fa-solid fa-circle-exclamation"></i>}{' '}
+                    {couponMsg.text}
+                  </div>
+                )}
               </div>
 
               <button
                 type="submit"
                 className="btn btn-whatsapp btn-submit"
                 disabled={submitting}
+                style={{ width: '100%', padding: '14px', fontSize: '1rem', fontWeight: 700 }}
               >
                 {submitting ? (
                   <>
@@ -477,45 +640,22 @@ export default function BookingForm({ selectedServiceFromParent }) {
                 )}
               </button>
 
-              <p className="form-note">
-                <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
-                  <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"/>
-                </svg>
-                Your booking is securely recorded in the database. Diwakar Ji is directly notified on WhatsApp.
+              <div style={{ textAlign: 'center', margin: '14px 0 6px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                Already booked with us?{' '}
+                <button
+                  type="button"
+                  onClick={() => onOpenTracking && onOpenTracking()}
+                  style={{ background: 'none', border: 'none', color: '#38bdf8', fontWeight: '600', textDecoration: 'underline', cursor: 'pointer', padding: 0 }}
+                >
+                  Track Order Status
+                </button>
+              </div>
+
+              <p className="form-note" style={{ textAlign: 'center', marginTop: '10px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                <i className="fa-solid fa-shield-halved" style={{ color: '#10b981', marginRight: '6px' }}></i>
+                Instant confirmation code (DWK-XXXX) issued upon submission.
               </p>
             </form>
-
-            {/* Quality Trust Strip */}
-            <div className="booking-trust-strip">
-              <div className="trust-badge-card">
-                <span className="trust-icon">🧼</span>
-                <div>
-                  <strong>100% Separate Wash</strong>
-                  <p>Never mixed with other clothes</p>
-                </div>
-              </div>
-              <div className="trust-badge-card">
-                <span className="trust-icon">⚖️</span>
-                <div>
-                  <strong>Digital Weighing</strong>
-                  <p>Accurate digital scale at pickup</p>
-                </div>
-              </div>
-              <div className="trust-badge-card">
-                <span className="trust-icon">🚚</span>
-                <div>
-                  <strong>Free Pickup &amp; Delivery</strong>
-                  <p>Direct to your doorstep in Kanpur</p>
-                </div>
-              </div>
-              <div className="trust-badge-card">
-                <span className="trust-icon">🛡️</span>
-                <div>
-                  <strong>Safe Fabric Promise</strong>
-                  <p>Zero shrinkage or color bleed</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

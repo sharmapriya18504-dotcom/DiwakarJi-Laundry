@@ -2,7 +2,7 @@ const { db } = require('../config/db');
 const { generateBookingReference } = require('../utils/refGenerator');
 const { buildOwnerWhatsAppMessage, getOwnerWhatsAppUrl } = require('../utils/whatsappHelper');
 
-// 1. GET /api/public/config
+// 1. GET /api/public/config or /api/public/site-config
 async function getPublicConfig(req, res) {
   try {
     const settings = await db.getSettings();
@@ -12,6 +12,7 @@ async function getPublicConfig(req, res) {
     const offers = await db.getOffers(true);
     const active_offer = await db.getActiveOffer();
     const theme_settings = await db.getThemeSettings();
+    const sections = await db.getSiteSections();
 
     return res.json({
       success: true,
@@ -21,7 +22,8 @@ async function getPublicConfig(req, res) {
       reviews,
       offers,
       active_offer,
-      theme_settings
+      theme_settings,
+      sections
     });
   } catch (err) {
     console.error('Error fetching public config:', err);
@@ -29,7 +31,7 @@ async function getPublicConfig(req, res) {
   }
 }
 
-// 2. GET /api/offers/active
+// 2. GET /api/offers/active or /api/public/campaign
 async function getActiveOffer(req, res) {
   try {
     const offer = await db.getActiveOffer();
@@ -49,7 +51,7 @@ async function getThemeSettings(req, res) {
   }
 }
 
-// 4. GET /api/services
+// 4. GET /api/services or /api/public/services
 async function getActiveServices(req, res) {
   try {
     const services = await db.getServices(true);
@@ -59,7 +61,17 @@ async function getActiveServices(req, res) {
   }
 }
 
-// 3. POST /api/bookings
+// 5. GET /api/public/faqs
+async function getFaqs(req, res) {
+  try {
+    const faqs = await db.getFaqs(true);
+    return res.json({ success: true, faqs });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Failed to fetch FAQs' });
+  }
+}
+
+// 6. POST /api/bookings
 async function createBooking(req, res) {
   try {
     const {
@@ -71,7 +83,8 @@ async function createBooking(req, res) {
       quantity,
       pickup_date,
       pickup_time,
-      instructions
+      instructions,
+      coupon_code
     } = req.body;
 
     // Field Validations
@@ -101,74 +114,74 @@ async function createBooking(req, res) {
     }
 
     if (!pickup_date) {
-      return res.status(400).json({ success: false, message: 'Please select a valid pickup date.' });
+      return res.status(400).json({ success: false, message: 'Please select a pickup date.' });
     }
 
-    // Date range validation
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const selectedDate = new Date(pickup_date + 'T00:00:00');
-    if (isNaN(selectedDate.getTime()) || selectedDate < today) {
-      return res.status(400).json({ success: false, message: 'Pickup date cannot be in the past.' });
+    if (!pickup_time) {
+      return res.status(400).json({ success: false, message: 'Please select a pickup time window.' });
     }
 
-    if (!pickup_time || !pickup_time.trim()) {
-      return res.status(400).json({ success: false, message: 'Please select a preferred pickup time slot.' });
-    }
-
-    // Duplicate Prevention Check (same mobile & service in past 10 minutes)
-    const duplicate = await db.checkRecentDuplicate(cleanMobile, service.trim());
+    // Duplicate Check: Return existing booking if placed within last 10 minutes
+    const duplicate = await db.findRecentDuplicateBooking(cleanMobile, service.trim(), 10);
     if (duplicate) {
-      const settings = await db.getSettings();
-      const ownerPhone = settings.whatsapp_number || '917860462268';
-      const ownerName = settings.owner_name || 'Diwakar Ji';
-      const waMsg = buildOwnerWhatsAppMessage({
+      const whatsappMessage = buildOwnerWhatsAppMessage({
         customer_name: duplicate.customer_name,
         mobile_number: duplicate.mobile_number,
         pickup_address: duplicate.pickup_address,
         area: duplicate.area,
         service_name: duplicate.service_name,
         quantity: duplicate.quantity,
-        estimated_price: duplicate.estimated_price,
         pickup_date: duplicate.pickup_date,
         pickup_time: duplicate.pickup_time,
         special_instructions: duplicate.special_instructions
-      }, duplicate.booking_ref, ownerName);
+      }, duplicate.booking_ref);
+      const whatsappUrl = getOwnerWhatsAppUrl(whatsappMessage);
 
       return res.status(200).json({
         success: true,
         is_duplicate: true,
+        booking: duplicate,
         booking_ref: duplicate.booking_ref,
-        message: 'A booking with these details was already recorded a few moments ago.',
-        whatsapp_url: getOwnerWhatsAppUrl(waMsg, ownerPhone),
-        whatsapp_message: waMsg,
-        booking: duplicate
+        whatsapp_url: whatsappUrl,
+        whatsapp_message: whatsappMessage,
+        message: 'A recent booking for this service is already active.'
       });
     }
 
-    // Retrieve active service for pricing snapshot
-    const allServices = await db.getServices(false);
-    const matchedService = allServices.find(s => s.name.toLowerCase() === service.trim().toLowerCase())
-      || allServices.find(s => service.trim().toLowerCase().includes(s.name.toLowerCase()));
+    // Lookup service details
+    const allServices = await db.getServices();
+    const matchedService = allServices.find(s => s.name.toLowerCase() === service.trim().toLowerCase());
+    const unitPrice = matchedService ? matchedService.price : 40.0;
+    const serviceId = matchedService ? matchedService.service_id : 'custom';
 
-    const unitPrice = matchedService ? matchedService.price : 0;
-    const serviceId = matchedService ? matchedService.service_id : null;
+    // Calculate initial estimated subtotal
+    let mult = 1;
+    const qLower = quantity.toLowerCase();
+    if (qLower.includes('1–3') || qLower.includes('1-3')) mult = 2;
+    else if (qLower.includes('4–6') || qLower.includes('4-6')) mult = 5;
+    else if (qLower.includes('7–10') || qLower.includes('7-10')) mult = 8;
+    else if (qLower.includes('10+')) mult = 12;
 
-    // Calculate Estimated Price snapshot
-    let estimatedPriceStr = `From ₹${unitPrice}${matchedService ? matchedService.unit : ''}`;
-    if (quantity && !quantity.includes('Not sure')) {
-      let mult = 1;
-      const q = quantity.toLowerCase();
-      if (q.includes('1–3') || q.includes('1-3')) mult = 2;
-      else if (q.includes('4–6') || q.includes('4-6')) mult = 5;
-      else if (q.includes('7–10') || q.includes('7-10')) mult = 8;
-      else if (q.includes('10+')) mult = 12;
-      estimatedPriceStr = `~₹${Math.round(unitPrice * mult)}`;
+    const subtotal = Math.round(unitPrice * mult);
+    let discountAmount = 0;
+    let validatedCoupon = null;
+
+    if (coupon_code) {
+      const couponCheck = await db.validateCoupon(coupon_code, subtotal, service);
+      if (couponCheck.valid) {
+        discountAmount = couponCheck.discount_amount;
+        validatedCoupon = couponCheck.coupon_code;
+      }
     }
 
+    const totalAmount = Math.max(0, subtotal - discountAmount);
+    const estimatedPrice = `~₹${totalAmount}`;
+
+    // Generate canonical reference code
     const bookingRef = generateBookingReference();
 
-    const newBookingData = {
+    // Persist Booking
+    const newBookingId = await db.createBooking({
       booking_ref: bookingRef,
       customer_name: full_name.trim(),
       mobile_number: cleanMobile,
@@ -178,55 +191,117 @@ async function createBooking(req, res) {
       service_id: serviceId,
       unit_price: unitPrice,
       quantity: quantity.trim(),
-      estimated_price: estimatedPriceStr,
+      estimated_price: estimatedPrice,
+      subtotal,
+      discount_amount: discountAmount,
+      total_amount: totalAmount,
+      coupon_code: validatedCoupon,
       pickup_date,
-      pickup_time: pickup_time.trim(),
-      special_instructions: instructions ? instructions.trim() : ''
-    };
+      pickup_time,
+      special_instructions: instructions ? instructions.trim() : null
+    });
 
-    const savedResult = await db.createBooking(newBookingData);
+    // Build prefilled WhatsApp URL for Diwakar Ji
+    const whatsappMessage = buildOwnerWhatsAppMessage({
+      customer_name: full_name.trim(),
+      mobile_number: cleanMobile,
+      pickup_address: address.trim(),
+      area: area.trim(),
+      service_name: service.trim(),
+      quantity: quantity.trim(),
+      estimated_price: estimatedPrice,
+      pickup_date: pickup_date,
+      pickup_time: pickup_time,
+      special_instructions: instructions
+    }, bookingRef);
+    const whatsappUrl = getOwnerWhatsAppUrl(whatsappMessage);
 
-    // Build the Preserved Owner WhatsApp Message
-    const settings = await db.getSettings();
-    const ownerPhone = settings.whatsapp_number || '917860462268';
-    const ownerName = settings.owner_name || 'Diwakar Ji';
-
-    const waMsg = buildOwnerWhatsAppMessage(newBookingData, bookingRef, ownerName);
-    const waUrl = getOwnerWhatsAppUrl(waMsg, ownerPhone);
+    // Audit log
+    await db.logAudit('BOOKING_CREATED', 'booking', bookingRef, `Customer ${full_name.trim()} (${cleanMobile}) created booking ${bookingRef}.`);
 
     return res.status(201).json({
       success: true,
+      booking_id: newBookingId,
       booking_ref: bookingRef,
-      booking_id: savedResult.id,
-      message: 'Booking successfully saved to database.',
-      whatsapp_url: waUrl,
-      whatsapp_message: waMsg,
-      booking: { ...newBookingData, id: savedResult.id }
+      whatsapp_url: whatsappUrl,
+      whatsapp_message: whatsappMessage,
+      estimated_total: totalAmount,
+      discount_applied: discountAmount,
+      message: 'Booking created successfully! Please tap Send on WhatsApp to confirm with Diwakar Ji.'
     });
   } catch (err) {
-    console.error('Booking submission error:', err);
-    return res.status(500).json({ success: false, message: 'Server error processing your booking. Please try again.' });
+    console.error('Error creating booking:', err);
+    return res.status(500).json({ success: false, message: 'Internal server error while processing booking.' });
   }
 }
 
-// 4. PATCH /api/bookings/:ref/notification
+// 7. POST /api/orders/track or GET /api/public/track/:ref
+async function trackOrder(req, res) {
+  try {
+    const bookingRef = req.params.ref || req.body.booking_ref || req.query.ref;
+    const mobileNumber = req.body.mobile || req.query.mobile;
+
+    if (!bookingRef) {
+      return res.status(400).json({ success: false, message: 'Please provide a valid Booking Reference (e.g. DWK-202610-0001).' });
+    }
+
+    const trackingData = await db.trackBooking(bookingRef, mobileNumber);
+    if (!trackingData) {
+      return res.status(404).json({
+        success: false,
+        message: 'No active booking found matching this reference code and phone number. Please check and try again.'
+      });
+    }
+
+    return res.json({
+      success: true,
+      tracking: trackingData
+    });
+  } catch (err) {
+    console.error('Error tracking order:', err);
+    return res.status(500).json({ success: false, message: 'Failed to retrieve order tracking information.' });
+  }
+}
+
+// 8. POST /api/public/validate-coupon
+async function validateCoupon(req, res) {
+  try {
+    const { code, subtotal, service_name } = req.body;
+    if (!code || !code.trim()) {
+      return res.status(400).json({ success: false, message: 'Please enter a coupon code.' });
+    }
+
+    const result = await db.validateCoupon(code, subtotal, service_name);
+    if (!result.valid) {
+      return res.status(400).json({ success: false, valid: false, message: result.message });
+    }
+
+    return res.json({ success: true, ...result });
+  } catch (err) {
+    console.error('Error validating coupon:', err);
+    return res.status(500).json({ success: false, message: 'Error checking coupon code.' });
+  }
+}
+
+// 9. PATCH /api/bookings/:ref/notification
 async function updateNotificationStatus(req, res) {
   try {
     const { ref } = req.params;
-    if (!ref) return res.status(400).json({ success: false, message: 'Booking reference is required.' });
-
-    await db.markWhatsAppNotified(ref);
-    return res.json({ success: true, message: 'WhatsApp notification recorded.' });
+    await db.setBookingWhatsAppNotified(ref);
+    return res.json({ success: true, message: 'WhatsApp notification marked as dispatched.' });
   } catch (err) {
-    return res.status(500).json({ success: false, message: 'Failed to update notification status' });
+    return res.status(500).json({ success: false, message: 'Failed to update notification state.' });
   }
 }
 
 module.exports = {
   getPublicConfig,
-  getActiveServices,
   getActiveOffer,
   getThemeSettings,
+  getActiveServices,
+  getFaqs,
   createBooking,
+  trackOrder,
+  validateCoupon,
   updateNotificationStatus
 };

@@ -15,7 +15,7 @@ export default function FestiveBanner() {
   return (
     <aside id="festive-banner" className="festive-banner" aria-label="Festive Announcement">
       <div className="festive-banner-inner">
-        <span className="festive-diya-icon">🪔</span>
+        <span className="festive-diya-icon">✨</span>
         <span className="festive-tag-pill" id="festive-pill">{activeOffer?.badge_text || 'Diwali Special'}</span>
         <span
           className="festive-banner-text"

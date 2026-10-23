@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useConfig } from '../context/ConfigContext';
 
-export default function Footer() {
+export default function Footer({ onOpenTracking }) {
   const { theme } = useTheme();
   const { config } = useConfig();
   const phone = config?.settings?.contact_phone || '+91 7860462268';
@@ -41,6 +41,15 @@ export default function Footer() {
             <li><a href="#home">Home</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#pricing">Pricing</a></li>
+            <li>
+              <button
+                type="button"
+                onClick={() => onOpenTracking && onOpenTracking()}
+                style={{ background: 'none', border: 'none', color: 'inherit', padding: 0, font: 'inherit', cursor: 'pointer', textAlign: 'left' }}
+              >
+                Track Order
+              </button>
+            </li>
             <li><a href="#about">About Us</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -96,31 +105,27 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Col 5: Right Festive Blessing (Diwali Theme) / Owner Portal */}
+        {/* Col 5: Kanpur's Premier Fabric Care Card */}
         <div className="footer-festive-col">
-          {isDiwali ? (
-            <div className="diwali-blessing-box">
-              <p className="blessing-calligraphy">
-                “May this Diwali bring happiness, prosperity and freshness to your life.”
-              </p>
-              <div className="blessing-diyas-row">
-                <span className="blessing-diya">🪔</span>
-                <span className="blessing-diya central-diya">🪔</span>
-                <span className="blessing-diya">🪔</span>
+          <div className="kanpur-premier-card">
+            <div className="premier-card-badge">
+              <i className="fa-solid fa-award"></i>
+              <span>ESTD. 2010 • KANPUR</span>
+            </div>
+            <h4 className="premier-card-title">Kanpur's Premier Fabric Care</h4>
+            <p className="premier-card-text">
+              Professional laundry &amp; dry cleaning with 100% individual batch hygiene. Free doorstep pickup across Kidwai Nagar, Kalyanpur &amp; IIT area.
+            </p>
+            <div className="premier-rating-row">
+              <div className="premier-stars">
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
               </div>
+              <span className="premier-score">4.9 / 5.0 (500+ Orders)</span>
             </div>
-          ) : (
-            <div className="normal-trust-box">
-              <p className="trust-atelier-text">
-                Kanpur's Premier Fabric Atelier • Modern Hygienic Washing • Transparent Per-Kg Pricing
-              </p>
-            </div>
-          )}
-
-          <div style={{ marginTop: '16px' }}>
-            <Link to="/admin" className="admin-portal-link" style={{ fontSize: '0.78rem', color: '#94a3b8', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <i className="fa-solid fa-lock"></i> Owner Admin Portal
-            </Link>
           </div>
         </div>
       </div>

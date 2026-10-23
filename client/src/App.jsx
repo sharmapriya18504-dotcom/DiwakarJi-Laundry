@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { ConfigProvider } from './context/ConfigContext';
 import { AuthProvider } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import HomePage from './pages/HomePage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
@@ -12,9 +13,10 @@ import './styles/admin.css';
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <ConfigProvider>
-        <AuthProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <ConfigProvider>
+          <AuthProvider>
           <BrowserRouter>
             <Routes>
               {/* Customer Website Routes */}
@@ -34,5 +36,6 @@ export default function App() {
         </AuthProvider>
       </ConfigProvider>
     </ThemeProvider>
+  </LanguageProvider>
   );
 }

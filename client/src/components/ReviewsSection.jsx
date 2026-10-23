@@ -32,13 +32,15 @@ export default function ReviewsSection() {
   return (
     <section className="customer-trust-section section-pad" id="reviews">
       <div className="container">
-        {/* Section Header with Gold Crest */}
+        {/* Section Header with Clean Star Icon (No Diya) */}
         <div className="trust-header-wrap">
           <div className="trust-title-row">
-            <span className="gold-crest-icon">🪔</span>
+            <span className="gold-crest-icon" style={{ color: '#f6c64a' }}>
+              <i className="fa-solid fa-star"></i>
+            </span>
             <h2 className="trust-main-heading">Trusted by 500+ Happy Customers</h2>
           </div>
-          <p className="trust-sub-heading">We're proud to be a part of your everyday life.</p>
+          <p className="trust-sub-heading">We're proud to be a part of your everyday life across Kanpur.</p>
         </div>
 
         {/* 2-Column Layout matching screenshot: Stats on Left, Testimonial on Right */}

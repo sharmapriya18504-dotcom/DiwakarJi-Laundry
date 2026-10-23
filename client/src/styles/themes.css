@@ -17,82 +17,124 @@
 }
 
 /* ============================================================
-   1. NORMAL DAILY THEME
-   Deep navy, primary blue, warm gold buttons, light cream & white cards.
+   1. NORMAL DAILY THEME — SLEEK DEEP BLACK LUXURY NIGHT MODE
+   Deep black #06090e, elevated surfaces #0a0f18, luxury cards #0f1624,
+   crisp brilliant headlines #ffffff, cool silver text #e2e8f0, cyan & gold accents.
    ============================================================ */
 [data-theme="classic"],
+[data-theme="dark"],
 [data-theme="normal"] {
-  --bg-page: #f8fafc;
-  --bg-surface: #ffffff;
-  --bg-card: #ffffff;
-  --bg-subtle: #f1f5f9;
-  --bg-cream: #fff9ef;
+  --bg-page: #06090e;
+  --bg-surface: #0a0f18;
+  --bg-card: #0f1624;
+  --bg-subtle: #141e30;
+  --bg-cream: #18253b;
 
-  --navy-dark: #061a33;
-  --blue-primary: #0b3b70;
+  --navy-dark: #06090e;
+  --blue-primary: #38bdf8;
   --gold-warm: #f6c64a;
-  --gold-hover: #e5b336;
+  --gold-hover: #ffd700;
 
-  --text-headline: #061a33;
-  --text-body: #334155;
-  --text-muted: #64748b;
-  --text-accent: #0b3b70;
+  --text-headline: #ffffff;
+  --text-body: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-accent: #38bdf8;
 
-  --border-subtle: #e2e8f0;
-  --border-medium: #cbd5e1;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-medium: rgba(255, 255, 255, 0.22);
 
   --btn-gold-bg: #f6c64a;
-  --btn-gold-text: #061a33;
-  --btn-gold-hover: #e5b336;
+  --btn-gold-text: #06090e;
+  --btn-gold-hover: #ffd700;
 
-  --header-bg: #061a33;
+  --header-bg: rgba(6, 9, 14, 0.95);
   --header-text: #ffffff;
-  --hero-bg: linear-gradient(180deg, #061a33 0%, #0b2548 100%);
+  --hero-bg: radial-gradient(circle at 50% 25%, #0d1726 0%, #06090e 85%);
 
-  --shadow-subtle: 0 2px 12px rgba(6, 26, 51, 0.05);
-  --shadow-card: 0 8px 25px rgba(6, 26, 51, 0.08);
-  --shadow-hover: 0 14px 35px rgba(6, 26, 51, 0.14);
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.75);
 
   --festive-decor-display: none !important;
 }
 
 /* ============================================================
-   2. SPECIAL DIWALI THEME (MATCHES SCREENSHOT)
-   Deep navy header/footer, dark cinematic hero, glowing marigolds,
-   hanging lanterns, brass thali folded clothes, festive maroon accents.
+   2. PURE EXECUTIVE LIGHT MODE (CRISP WHITE)
+   Pure white surface #ffffff, crisp slate #0f172a, high contrast,
+   crystal clear readability across all devices.
    ============================================================ */
-[data-theme="diwali"] {
+[data-theme="light"] {
   --bg-page: #f8fafc;
   --bg-surface: #ffffff;
   --bg-card: #ffffff;
   --bg-subtle: #f1f5f9;
-  --bg-cream: #fff9ef;
+  --bg-cream: #fefce8;
 
-  --navy-dark: #061a33;
-  --blue-primary: #0b3b70;
-  --gold-warm: #f6c64a;
-  --gold-hover: #ffd700;
-  --festive-maroon: #5c0d18;
+  --navy-dark: #0f172a;
+  --blue-primary: #0284c7;
+  --gold-warm: #d97706;
+  --gold-hover: #b45309;
 
-  --text-headline: #061a33;
+  --text-headline: #0f172a;
   --text-body: #334155;
   --text-muted: #64748b;
-  --text-accent: #f6c64a;
+  --text-accent: #0284c7;
 
-  --border-subtle: #e2e8f0;
-  --border-medium: #cbd5e1;
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-medium: rgba(15, 23, 42, 0.16);
 
   --btn-gold-bg: #f6c64a;
-  --btn-gold-text: #061a33;
+  --btn-gold-text: #06090e;
   --btn-gold-hover: #ffd700;
 
-  --header-bg: #061a33;
-  --header-text: #ffffff;
-  --hero-bg: radial-gradient(circle at 65% 40%, #1e1135 0%, #0c0817 60%, #04020a 100%);
+  --header-bg: rgba(255, 255, 255, 0.96);
+  --header-text: #0f172a;
+  --hero-bg: radial-gradient(circle at 50% 25%, #eff6ff 0%, #f8fafc 85%);
 
-  --shadow-subtle: 0 2px 12px rgba(6, 26, 51, 0.06);
-  --shadow-card: 0 8px 25px rgba(6, 26, 51, 0.09);
-  --shadow-hover: 0 14px 35px rgba(6, 26, 51, 0.16);
+  --shadow-subtle: 0 4px 20px rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 8px 30px rgba(15, 23, 42, 0.08);
+  --shadow-hover: 0 16px 40px rgba(15, 23, 42, 0.14);
+
+  --festive-decor-display: none !important;
+}
+
+/* ============================================================
+   3. SPECIAL DIWALI THEME (FESTIVE CELEBRATION MODE)
+   Deep cosmic night #090514, royal plum cards #160c28,
+   festive maroon, warm gold glows, marigolds & background crackers.
+   ============================================================ */
+[data-theme="diwali"] {
+  --bg-page: #090514;
+  --bg-surface: #120a22;
+  --bg-card: #180e2e;
+  --bg-subtle: #23143f;
+  --bg-cream: #2d1850;
+
+  --navy-dark: #090514;
+  --blue-primary: #f59e0b;
+  --gold-warm: #f6c64a;
+  --gold-hover: #ffd700;
+  --festive-maroon: #881337;
+
+  --text-headline: #ffffff;
+  --text-body: #fde68a;
+  --text-muted: #d4d4d8;
+  --text-accent: #f6c64a;
+
+  --border-subtle: rgba(246, 198, 74, 0.2);
+  --border-medium: rgba(246, 198, 74, 0.35);
+
+  --btn-gold-bg: #f6c64a;
+  --btn-gold-text: #090514;
+  --btn-gold-hover: #ffd700;
+
+  --header-bg: rgba(9, 5, 20, 0.95);
+  --header-text: #ffffff;
+  --hero-bg: radial-gradient(circle at 60% 35%, #2a1145 0%, #110722 65%, #05020a 100%);
+
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 10px 32px rgba(0, 0, 0, 0.55);
+  --shadow-hover: 0 18px 45px rgba(246, 198, 74, 0.2);
 
   --festive-decor-display: block !important;
 }

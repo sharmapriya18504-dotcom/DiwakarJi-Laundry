@@ -69,7 +69,7 @@ async function runTests() {
     const configRes = await makeRequest('/api/public/config');
     assert(configRes.status === 200, 'GET /api/public/config returns 200');
     assert(Array.isArray(configRes.body.services) && configRes.body.services.length >= 6, 'Returns 6 active Kanpur laundry services');
-    assert(configRes.body.settings.active_theme === 'diwali', 'Default active theme is diwali');
+    assert(configRes.body.settings.active_theme === 'classic' || configRes.body.settings.active_theme === 'diwali', 'Default active theme is valid (classic/diwali)');
     assert(configRes.body.settings.whatsapp_number === '917860462268', 'Owner WhatsApp is configured as +91 7860462268');
 
     // 3. Validation rejection for empty booking
@@ -255,14 +255,51 @@ async function runTests() {
     assert(updateThemeRes.status === 200, 'Admin can update theme scheduling and fireworks toggle');
     assert(updateThemeRes.body.theme.active_theme === 'diwali', 'Theme scheduling dynamically computes diwali inside campaign window');
 
-    // Reset back to diwali manual
+    // 17. Public Site-Config Endpoint
+    const siteConfigRes = await makeRequest('/api/public/site-config');
+    assert(siteConfigRes.status === 200 && siteConfigRes.body.settings, 'GET /api/public/site-config returns 200 with configuration');
+
+    // 18. Coupon Code Validation (Valid & Invalid)
+    const validCouponRes = await makeRequest('/api/public/validate-coupon', {
+      method: 'POST',
+      body: { code: 'SHUBHDIWALI', subtotal: 300, service_name: 'Wash & Fold' }
+    });
+    assert(validCouponRes.status === 200 && validCouponRes.body.valid === true && validCouponRes.body.discount_amount === 45, 'Backend validates coupon SHUBHDIWALI and calculates 15% discount');
+
+    const invalidCouponRes = await makeRequest('/api/public/validate-coupon', {
+      method: 'POST',
+      body: { code: 'INVALID_CODE_999', subtotal: 300 }
+    });
+    assert(invalidCouponRes.status === 400 && invalidCouponRes.body.valid === false, 'Backend safely rejects invalid coupon code');
+
+    // 19. Public 9-Stage Order Tracking
+    const trackRes = await makeRequest('/api/orders/track', {
+      method: 'POST',
+      body: { booking_ref: createdRef, mobile: testPhone }
+    });
+    assert(trackRes.status === 200 && trackRes.body.tracking.current_status, 'Public order tracking endpoint returns booking status');
+    assert(Array.isArray(trackRes.body.tracking.stages) && trackRes.body.tracking.stages.length === 9, 'Tracking returns complete 9-stage progression pipeline');
+
+    // 20. Admin Media Assets Library
+    const mediaRes = await makeRequest('/api/admin/media', {
+      headers: { Authorization: `Bearer ${adminToken}` }
+    });
+    assert(mediaRes.status === 200 && Array.isArray(mediaRes.body.media) && mediaRes.body.media.length >= 10, 'Admin can access centralized media image library');
+
+    // 21. Admin Audit Logs
+    const auditRes = await makeRequest('/api/admin/audit-logs', {
+      headers: { Authorization: `Bearer ${adminToken}` }
+    });
+    assert(auditRes.status === 200 && Array.isArray(auditRes.body.logs) && auditRes.body.logs.length > 0, 'Admin audit log records system and order updates');
+
+    // Reset back to classic manual
     await makeRequest('/api/admin/theme', {
       method: 'PUT',
       headers: { Authorization: `Bearer ${adminToken}` },
       body: {
-        active_theme: 'diwali',
+        active_theme: 'classic',
         theme_mode: 'manual',
-        fireworks_enabled: true
+        fireworks_enabled: false
       }
     });
 

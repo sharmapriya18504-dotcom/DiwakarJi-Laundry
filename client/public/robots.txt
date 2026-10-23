@@ -1,0 +1,7 @@
+# Robots.txt for Diwakar Ji Laundry Kanpur
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://diwakar-ji.netlify.app/sitemap.xml

@@ -18,9 +18,6 @@ export default function WhatsAppFloat() {
       className="whatsapp-float"
       aria-label="Chat on WhatsApp with Diwakar Ji"
     >
-      {showCompanion && (
-        <span className="whatsapp-diya-companion" title="Shubh Diwali!">🪔</span>
-      )}
       <i className="fa-brands fa-whatsapp" style={{ fontSize: '26px' }}></i>
       <span>Chat on WhatsApp</span>
     </a>

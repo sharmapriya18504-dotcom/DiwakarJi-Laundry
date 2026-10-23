@@ -4,7 +4,7 @@ import { useConfig } from '../context/ConfigContext';
 import { submitBooking } from '../services/api';
 import BookingModal from './BookingModal';
 
-export default function MidSection({ selectedServiceFromParent }) {
+export default function MidSection({ selectedServiceFromParent, onOpenTracking }) {
   const { theme } = useTheme();
   const { config, activeOffer } = useConfig();
   const isDiwali = theme === 'diwali';
@@ -161,7 +161,9 @@ export default function MidSection({ selectedServiceFromParent }) {
           {/* COLUMN 1: Why Choose Us? (Matches Screenshot) */}
           <div className="mid-col-why-us">
             <div className="why-us-header-wrap">
-              <span className="gold-crest-icon">🪔</span>
+              <span className="gold-crest-icon" style={{ fontSize: '1.25rem', color: '#d97706' }}>
+                <i className="fa-solid fa-award"></i>
+              </span>
               <h2 className="why-us-title">Why Choose Us?</h2>
             </div>
 
@@ -309,7 +311,7 @@ export default function MidSection({ selectedServiceFromParent }) {
             <div className="booking-card-screenshot">
               <div className="booking-card-header">
                 <div className="booking-title-row">
-                  <span className="gold-crest-icon">🪔</span>
+                  <span className="gold-crest-icon">{isDiwali ? '🪔' : '🧺'}</span>
                   <h3 className="booking-main-title">Book Your Pickup</h3>
                 </div>
                 <p className="booking-sub-title">
@@ -506,6 +508,16 @@ export default function MidSection({ selectedServiceFromParent }) {
                   <i className="fa-brands fa-whatsapp"></i>
                   <span>{submitting ? 'Recording Booking...' : 'Send on WhatsApp'}</span>
                 </button>
+
+                <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '0.85rem' }}>
+                  <button
+                    type="button"
+                    onClick={() => onOpenTracking && onOpenTracking()}
+                    style={{ background: 'none', border: 'none', color: '#F6C64A', textDecoration: 'underline', cursor: 'pointer', fontWeight: 600 }}
+                  >
+                    <i className="fa-solid fa-truck-fast"></i> Track Existing Order
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -518,6 +530,7 @@ export default function MidSection({ selectedServiceFromParent }) {
           booking={confirmedBooking}
           whatsappUrl={whatsappUrl}
           onClose={() => setConfirmedBooking(null)}
+          onTrackOrder={onOpenTracking}
         />
       )}
     </section>

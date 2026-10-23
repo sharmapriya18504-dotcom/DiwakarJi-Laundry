@@ -2,15 +2,18 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
-export function ThemeProvider({ children, initialTheme = 'diwali' }) {
+export function ThemeProvider({ children, initialTheme = 'classic' }) {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('diwakar_theme_preference') || initialTheme;
+    // Check URL preview first
+    const params = new URLSearchParams(window.location.search);
+    const preview = params.get('theme_preview');
+    if (preview) return preview;
+    return initialTheme;
   });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('diwakar_theme_preference', theme);
   }, [theme]);
 
   const switchTheme = (newTheme) => {

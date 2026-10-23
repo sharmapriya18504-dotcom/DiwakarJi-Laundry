@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { markWhatsAppNotified } from '../services/api';
 
-export default function BookingModal({ booking, whatsappUrl, onClose }) {
+export default function BookingModal({ booking, whatsappUrl, onClose, onTrackOrder }) {
   const [copied, setCopied] = useState(false);
 
   if (!booking) return null;
@@ -30,7 +30,8 @@ export default function BookingModal({ booking, whatsappUrl, onClose }) {
             &times;
           </button>
           <h3 className="modal-title">
-            <span>🪔</span> Confirm Your Booking
+            <i className="fa-solid fa-circle-check" style={{ color: '#10b981', marginRight: '8px' }}></i>
+            Confirm Your Booking
           </h3>
           <p className="modal-subtitle">
             <span className="diya-flame-mini"></span> Diwakar Ji Laundry • Free Doorstep Pickup Kanpur
@@ -98,7 +99,34 @@ export default function BookingModal({ booking, whatsappUrl, onClose }) {
               <span>Continue to WhatsApp &amp; Notify Owner</span>
             </button>
 
-            <div className="modal-alt-actions">
+            <button
+              type="button"
+              className="btn-track-modal-action"
+              onClick={() => {
+                if (onTrackOrder) onTrackOrder(booking.booking_ref);
+                onClose();
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                width: '100%',
+                padding: '12px 18px',
+                background: '#0f172a',
+                color: '#f8fafc',
+                border: 'none',
+                borderRadius: '8px',
+                marginTop: '10px',
+                fontWeight: '600',
+                cursor: 'pointer'
+              }}
+            >
+              <i className="fa-solid fa-truck-ramp-box"></i>
+              <span>Track This Order Live</span>
+            </button>
+
+            <div className="modal-alt-actions" style={{ marginTop: '10px' }}>
               <button type="button" className="btn-copy-wa" onClick={handleCopy}>
                 <i className="fa-solid fa-copy"></i> {copied ? 'Copied to Clipboard!' : 'Copy Booking Details'}
               </button>

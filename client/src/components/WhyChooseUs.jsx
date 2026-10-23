@@ -1,72 +1,91 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function WhyChooseUs() {
+  const { t } = useLanguage();
+
   return (
-    <section className="why-us section-pad" id="about">
+    <section className="why-us-section section-pad" id="about">
       <div className="container">
-        <div className="why-inner">
-          <div className="why-content">
-            <span className="section-tag light">Why Choose Us</span>
-            <h2 className="section-title white">Why Choose Diwakar Ji?</h2>
-            <p className="section-desc light">
-              We use modern machines, premium detergents and expert care to give your clothes the best cleaning and fresh look — every single time.
-            </p>
+        {/* Section Header */}
+        <div className="why-us-header-centered">
+          <div className="why-badge-pill">
+            <i className="fa-solid fa-award"></i>
+            <span>{t('whyChooseUsTitle')}</span>
+          </div>
+          <h2 className="why-headline-main">
+            Kanpur's Most Trusted Laundry Care
+          </h2>
+          <p className="why-subtitle-main">
+            Serving Kidwai Nagar, Kalyanpur, Kakadeo, Swaroop Nagar &amp; IIT Kanpur since 2010.
+          </p>
+        </div>
 
-            <div className="why-features">
-              <div className="why-feature" id="why-1">
-                <div className="why-feature-icon">
-                  <i className="fa-solid fa-users"></i>
+        {/* 2-Column Balanced Horizontal Grid */}
+        <div className="why-us-balanced-grid">
+          {/* Left Column: Smiling Indian Woman with Fresh Laundry */}
+          <div className="why-visual-col">
+            <div className="why-photo-wrapper">
+              <img
+                src="/why_us_woman.jpg"
+                alt="Smiling Indian woman holding pristine folded laundry"
+                className="why-photo-img"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.src = '/blankets.png';
+                }}
+              />
+              <div className="why-floating-trust-tag">
+                <div className="trust-tag-icon">
+                  <i className="fa-solid fa-circle-check"></i>
                 </div>
-                <div>
-                  <h4>Expert Team</h4>
-                  <p>Trained &amp; professional staff with years of experience in fabric care.</p>
-                </div>
-              </div>
-
-              <div className="why-feature" id="why-2">
-                <div className="why-feature-icon">
-                  <i className="fa-solid fa-flask-vial"></i>
-                </div>
-                <div>
-                  <h4>Premium Detergents</h4>
-                  <p>Safe for all fabrics. No damage, no shrinkage — guaranteed.</p>
-                </div>
-              </div>
-
-              <div className="why-feature" id="why-3">
-                <div className="why-feature-icon">
-                  <i className="fa-solid fa-clock"></i>
-                </div>
-                <div>
-                  <h4>On-Time Delivery</h4>
-                  <p>We respect your time. Pickup &amp; delivery always on schedule.</p>
-                </div>
-              </div>
-
-              <div className="why-feature" id="why-4">
-                <div className="why-feature-icon">
-                  <i className="fa-solid fa-hand-sparkles"></i>
-                </div>
-                <div>
-                  <h4>Hygienic Process</h4>
-                  <p>Clean, germ-free individual washing batches — 100% separate wash.</p>
+                <div className="trust-tag-text">
+                  <strong>14+ Years Serving Kanpur</strong>
+                  <span>500+ Happy Families &amp; Students</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="why-visual">
-            <div className="why-img-card">
-              <img src="/blankets.png" alt="Professional laundry care Diwakar Ji" loading="lazy" />
-            </div>
-            <div className="why-stat-cards">
-              <div className="mini-stat-card">
-                <span className="mini-num">500+</span>
-                <span className="mini-label">Orders Done</span>
+          {/* Right Column: 4 Core Features */}
+          <div className="why-features-col">
+            <div className="why-feature-card">
+              <div className="why-feature-icon-box">
+                <i className="fa-solid fa-medal"></i>
               </div>
-              <div className="mini-stat-card">
-                <span className="mini-num">4.9★</span>
-                <span className="mini-label">Avg Rating</span>
+              <div className="why-feature-details">
+                <h3 className="why-feature-title">{t('experiencedTrusted')}</h3>
+                <p className="why-feature-desc">{t('experiencedSub')}</p>
+              </div>
+            </div>
+
+            <div className="why-feature-card">
+              <div className="why-feature-icon-box">
+                <i className="fa-solid fa-shield-halved"></i>
+              </div>
+              <div className="why-feature-details">
+                <h3 className="why-feature-title">{t('safeHygienic')}</h3>
+                <p className="why-feature-desc">{t('safeSub')}</p>
+              </div>
+            </div>
+
+            <div className="why-feature-card">
+              <div className="why-feature-icon-box">
+                <i className="fa-solid fa-truck-fast"></i>
+              </div>
+              <div className="why-feature-details">
+                <h3 className="why-feature-title">{t('onTimeDelivery')}</h3>
+                <p className="why-feature-desc">{t('onTimeSub')}</p>
+              </div>
+            </div>
+
+            <div className="why-feature-card">
+              <div className="why-feature-icon-box">
+                <i className="fa-solid fa-headset"></i>
+              </div>
+              <div className="why-feature-details">
+                <h3 className="why-feature-title">{t('customerSupport')}</h3>
+                <p className="why-feature-desc">{t('supportSub')}</p>
               </div>
             </div>
           </div>

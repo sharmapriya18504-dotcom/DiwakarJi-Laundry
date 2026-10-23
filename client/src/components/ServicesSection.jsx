@@ -4,12 +4,12 @@ import { useConfig } from '../context/ConfigContext';
 export default function ServicesSection({ onSelectService }) {
   const { config } = useConfig();
   const services = config?.services || [
-    { service_id: 'wash_fold', name: 'Wash & Fold', description: 'Clean, fresh and neatly folded clothes.', price: 40, unit: '/kg' },
-    { service_id: 'wash_iron', name: 'Wash & Iron', description: 'Clean and perfectly ironed clothes.', price: 60, unit: '/kg' },
-    { service_id: 'dry_cleaning', name: 'Dry Cleaning', description: 'Special care for premium fabrics.', price: 120, unit: '/item' },
-    { service_id: 'steam_iron', name: 'Steam Ironing', description: 'Wrinkle-free and fresh look.', price: 30, unit: '/item' },
-    { service_id: 'blankets', name: 'Bedding & Home Linen', description: 'Bedsheets, curtains, comforters & more.', price: 80, unit: '/item' },
-    { service_id: 'express', name: 'Express Laundry', description: 'When you need it faster.', price: 70, unit: '/kg' }
+    { service_id: 'wash_fold', name: 'Wash & Fold', description: 'Clean, fresh and neatly folded clothes.', price: 40, unit: '/kg', image_url: '/assets/laundry/wash-fold.webp' },
+    { service_id: 'wash_iron', name: 'Wash & Iron', description: 'Clean and perfectly ironed clothes.', price: 60, unit: '/kg', image_url: '/assets/laundry/wash-iron.webp' },
+    { service_id: 'dry_cleaning', name: 'Dry Cleaning', description: 'Special care for premium fabrics.', price: 120, unit: '/item', image_url: '/assets/laundry/dry-cleaning.webp' },
+    { service_id: 'steam_iron', name: 'Steam Ironing', description: 'Wrinkle-free and fresh look.', price: 30, unit: '/item', image_url: '/assets/laundry/steam-iron.webp' },
+    { service_id: 'blankets', name: 'Bedding & Home Linen', description: 'Bedsheets, curtains, comforters & more.', price: 80, unit: '/item', image_url: '/assets/laundry/blankets.webp' },
+    { service_id: 'express', name: 'Express Laundry', description: 'When you need it faster.', price: 70, unit: '/kg', image_url: '/assets/laundry/express-laundry.webp' }
   ];
 
   const handleSelect = (serviceName) => {
@@ -30,27 +30,41 @@ export default function ServicesSection({ onSelectService }) {
     }
   };
 
+  const getShortDesc = (svc) => {
+    switch (svc.service_id) {
+      case 'wash_fold': return 'Fresh wash, dried & neatly folded.';
+      case 'wash_iron': return 'Hygienic wash & sharp steam press.';
+      case 'dry_cleaning': return 'Specialist care for suits & sarees.';
+      case 'steam_iron': return 'Wrinkle-free high-pressure steam.';
+      case 'blankets': return 'Deep antibacterial sanitize for quilts.';
+      case 'express': return 'Guaranteed priority 24h turnaround.';
+      default: return svc.description || 'Professional fabric care.';
+    }
+  };
+
   return (
     <section className="services section-pad" id="services">
       <div className="container">
-        {/* Section Header Row with Gold Crest matching screenshot */}
+        {/* Section Header Row with Clean Laundry Icon (No Diya) */}
         <div className="services-header-row">
           <div className="services-title-col">
             <div className="services-title-wrap">
-              <span className="gold-crest-icon">🪔</span>
+              <span className="gold-crest-icon" style={{ color: '#0ea5e9' }}>
+                <i className="fa-solid fa-shirt"></i>
+              </span>
               <h2 className="services-section-title">Our Services</h2>
             </div>
             <p className="services-section-sub">
-              Complete care for your clothes, home and lifestyle.
+              Complete care for your clothes, home and lifestyle across Kanpur.
             </p>
           </div>
           <a href="#booking" className="services-view-all-link">
-            <span>View All Services</span>
+            <span>Book a Service</span>
             <i className="fa-solid fa-arrow-right"></i>
           </a>
         </div>
 
-        {/* 6 Services Grid matching screenshot */}
+        {/* 6 Services Grid with Premium Commercial Photography */}
         <div className="services-grid-screenshot">
           {services.map((svc) => (
             <div
@@ -61,15 +75,30 @@ export default function ServicesSection({ onSelectService }) {
               role="button"
               tabIndex={0}
             >
+              <div className="service-card-img-wrap" style={{ width: '100%', height: '170px', borderRadius: '12px', overflow: 'hidden', marginBottom: '14px', background: '#0f172a' }}>
+                <img
+                  src={svc.image_url || '/assets/laundry/wash-fold.webp'}
+                  alt={svc.name}
+                  loading="lazy"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                  onError={(e) => {
+                    // Fallback to png if webp not supported
+                    if (e.target.src.includes('.webp')) {
+                      e.target.src = `/${svc.service_id || 'wash_fold'}.png`;
+                    }
+                  }}
+                />
+              </div>
+
               <div className="svc-icon-box">
                 <i className={`fa-solid ${getServiceIcon(svc.service_id)}`}></i>
               </div>
 
               <h3 className="svc-card-name">{svc.name}</h3>
-              <p className="svc-card-desc">{svc.description}</p>
+              <p className="svc-card-desc">{getShortDesc(svc)}</p>
 
               <div className="svc-price-pill">
-                Starting from ₹{svc.price}{svc.unit}
+                Starting ₹{svc.price}{svc.unit}
               </div>
             </div>
           ))}
@@ -78,4 +107,3 @@ export default function ServicesSection({ onSelectService }) {
     </section>
   );
 }
-

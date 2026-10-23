@@ -8,7 +8,7 @@ export function ConfigProvider({ children }) {
   const { setTheme } = useTheme();
   const [config, setConfig] = useState({
     settings: {
-      active_theme: 'diwali',
+      active_theme: 'classic',
       business_name: 'Diwakar Ji Laundry',
       owner_name: 'Diwakar Ji',
       whatsapp_number: '917860462268',
@@ -17,9 +17,9 @@ export function ConfigProvider({ children }) {
       service_areas: 'Kakadeo, Swaroop Nagar, Kidwai Nagar, Kalyanpur, Civil Lines, Govind Nagar, Barra, IIT Kanpur Campus',
       hero_headline: 'Fresh Clothes.<br/><span class="gradient-text">Fresh Feel.</span>',
       hero_subtitle: 'Professional laundry & dry cleaning with free doorstep pickup & delivery across Kanpur. Cleaner clothes, happier homes.',
-      festive_banner_enabled: 'true',
-      festive_banner_text: '🪔 Shubh Diwali Offer: 15% OFF on Blankets & Dry Cleaning! Free Doorstep Pickup & Delivery across Kanpur.',
-      diwali_decorations_enabled: 'true'
+      festive_banner_enabled: 'false',
+      festive_banner_text: '✨ Shubh Diwali Offer: 15% OFF on Blankets & Dry Cleaning! Free Doorstep Pickup & Delivery across Kanpur.',
+      diwali_decorations_enabled: 'false'
     },
     services: [
       { id: 1, service_id: 'wash_fold', name: 'Wash & Fold', price: 40, unit: '/kg', image_url: '/wash_fold.png' },
@@ -34,7 +34,7 @@ export function ConfigProvider({ children }) {
     offers: [],
     active_offer: null,
     theme_settings: {
-      active_theme: 'diwali',
+      active_theme: 'classic',
       theme_mode: 'manual',
       fireworks_enabled: true
     }
@@ -46,12 +46,11 @@ export function ConfigProvider({ children }) {
       const data = await fetchPublicConfig();
       if (data && data.settings) {
         setConfig(data);
-        const serverTheme = data.theme_settings?.active_theme || data.settings.active_theme;
-        if (serverTheme) {
-          // If no manual preference was stored yet, adopt server theme
-          if (!localStorage.getItem('diwakar_theme_preference')) {
-            setTheme(serverTheme);
-          }
+        const serverTheme = data.theme_settings?.active_theme || data.settings?.active_theme;
+        const params = new URLSearchParams(window.location.search);
+        const isPreview = params.get('theme_preview');
+        if (serverTheme && !isPreview) {
+          setTheme(serverTheme);
         }
       }
     } catch (e) {
