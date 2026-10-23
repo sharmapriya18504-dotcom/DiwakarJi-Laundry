@@ -64,10 +64,10 @@ export async function fetchPublicConfig() {
     services: [
       { id: 1, service_id: 'wash_fold', name: 'Wash & Fold', price: 50, unit: '/kg', image_url: '/assets/laundry/wash-fold.webp' },
       { id: 2, service_id: 'wash_iron', name: 'Wash & Iron', price: 75, unit: '/kg', image_url: '/assets/laundry/wash-iron.webp' },
-      { id: 3, service_id: 'dry_cleaning', name: 'Dry Cleaning', price: 150, unit: '/piece', image_url: '/assets/laundry/dry-clean.webp' },
-      { id: 4, service_id: 'steam_iron', name: 'Steam Ironing', price: 25, unit: '/piece', image_url: '/assets/laundry/ironing.webp' },
+      { id: 3, service_id: 'dry_cleaning', name: 'Dry Cleaning', price: 150, unit: '/piece', image_url: '/assets/laundry/dry-cleaning.webp' },
+      { id: 4, service_id: 'steam_iron', name: 'Steam Ironing', price: 25, unit: '/piece', image_url: '/assets/laundry/steam-iron.webp' },
       { id: 5, service_id: 'blankets', name: 'Blankets & Bedsheets', price: 250, unit: '/piece', image_url: '/assets/laundry/blankets.webp' },
-      { id: 6, service_id: 'express', name: 'Express Laundry', price: 90, unit: '/kg', image_url: '/assets/laundry/express.webp' }
+      { id: 6, service_id: 'express', name: 'Express Laundry', price: 90, unit: '/kg', image_url: '/assets/laundry/express-laundry.webp' }
     ],
     faqs: [],
     reviews: [],
@@ -584,10 +584,10 @@ export async function updateBookingDetails(id, details) {
 const DEFAULT_SERVICES = [
   { id: 1, name: 'Wash & Fold', slug: 'wash-fold', description: 'Everyday wear washed, tumble dried, and neatly packed.', price: 50, unit: 'kg', min_order: 3, turnaround: '24-48 hrs', is_active: true, image_url: '/assets/laundry/wash-fold.webp' },
   { id: 2, name: 'Wash & Steam Iron', slug: 'wash-iron', description: 'Complete wash with crisp wrinkle-free steam pressing.', price: 75, unit: 'kg', min_order: 3, turnaround: '24-48 hrs', is_active: true, image_url: '/assets/laundry/wash-iron.webp' },
-  { id: 3, name: 'Steam Ironing Only', slug: 'steam-iron', description: 'Zero shine high-temperature Italian steam press.', price: 25, unit: 'piece', min_order: 5, turnaround: '12-24 hrs', is_active: true, image_url: '/assets/laundry/ironing.webp' },
-  { id: 4, name: 'Premium Dry Cleaning', slug: 'dry-cleaning', description: 'Suits, sherwanis, festive lehengas, and designer silks.', price: 150, unit: 'piece', min_order: 1, turnaround: '48-72 hrs', is_active: true, image_url: '/assets/laundry/dry-clean.webp' },
+  { id: 3, name: 'Steam Ironing Only', slug: 'steam-iron', description: 'Zero shine high-temperature Italian steam press.', price: 25, unit: 'piece', min_order: 5, turnaround: '12-24 hrs', is_active: true, image_url: '/assets/laundry/steam-iron.webp' },
+  { id: 4, name: 'Premium Dry Cleaning', slug: 'dry-cleaning', description: 'Suits, sherwanis, festive lehengas, and designer silks.', price: 150, unit: 'piece', min_order: 1, turnaround: '48-72 hrs', is_active: true, image_url: '/assets/laundry/dry-cleaning.webp' },
   { id: 5, name: 'Winter Blankets & Quilts', slug: 'blanket-care', description: 'Deep anti-allergen sanitized washing and fluffing.', price: 250, unit: 'piece', min_order: 1, turnaround: '48 hrs', is_active: true, image_url: '/assets/laundry/blankets.webp' },
-  { id: 6, name: '24Hr Express Service', slug: 'express-laundry', description: 'Priority same-day express pickup, washing, and delivery.', price: 90, unit: 'kg', min_order: 3, turnaround: 'Within 24 hrs', is_active: true, image_url: '/assets/laundry/express.webp' }
+  { id: 6, name: '24Hr Express Service', slug: 'express-laundry', description: 'Priority same-day express pickup, washing, and delivery.', price: 90, unit: 'kg', min_order: 3, turnaround: 'Within 24 hrs', is_active: true, image_url: '/assets/laundry/express-laundry.webp' }
 ];
 
 export async function fetchAdminServices() {

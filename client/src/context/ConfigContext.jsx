@@ -22,12 +22,12 @@ export function ConfigProvider({ children }) {
       diwali_decorations_enabled: 'false'
     },
     services: [
-      { id: 1, service_id: 'wash_fold', name: 'Wash & Fold', price: 40, unit: '/kg', image_url: '/wash_fold.png' },
-      { id: 2, service_id: 'wash_iron', name: 'Wash & Iron', price: 60, unit: '/kg', image_url: '/wash_iron.png' },
-      { id: 3, service_id: 'dry_cleaning', name: 'Dry Cleaning', price: 120, unit: '/piece', image_url: '/dry_cleaning.png' },
-      { id: 4, service_id: 'steam_iron', name: 'Steam Ironing', price: 30, unit: '/piece', image_url: '/steam_iron.png' },
-      { id: 5, service_id: 'blankets', name: 'Blankets & Bedsheets', price: 80, unit: '/piece', image_url: '/blankets.png' },
-      { id: 6, service_id: 'express', name: 'Express Laundry', price: 70, unit: '/kg', image_url: '/express_laundry.png' }
+      { id: 1, service_id: 'wash_fold', name: 'Wash & Fold', price: 50, unit: '/kg', image_url: '/assets/laundry/wash-fold.webp' },
+      { id: 2, service_id: 'wash_iron', name: 'Wash & Iron', price: 75, unit: '/kg', image_url: '/assets/laundry/wash-iron.webp' },
+      { id: 3, service_id: 'dry_cleaning', name: 'Dry Cleaning', price: 150, unit: '/piece', image_url: '/assets/laundry/dry-cleaning.webp' },
+      { id: 4, service_id: 'steam_iron', name: 'Steam Ironing', price: 25, unit: '/piece', image_url: '/assets/laundry/steam-iron.webp' },
+      { id: 5, service_id: 'blankets', name: 'Blankets & Bedsheets', price: 250, unit: '/piece', image_url: '/assets/laundry/blankets.webp' },
+      { id: 6, service_id: 'express', name: 'Express Laundry', price: 90, unit: '/kg', image_url: '/assets/laundry/express-laundry.webp' }
     ],
     faqs: [],
     reviews: [],
