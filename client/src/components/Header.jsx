@@ -44,7 +44,7 @@ export default function Header({ onOpenTracking }) {
           </div>
         </Link>
 
-        {/* Center Nav Links - Strictly 1 Line, No Word Wrapping */}
+        {/* Center Nav Links - Strictly 1 Line, Centered in Header */}
         <nav className={`nav-links ${menuOpen ? 'open' : ''}`} id="nav-links">
           <a href="#home" className="nav-link active-link" onClick={closeMenu}>
             <span>{t('home')}</span>
@@ -57,9 +57,6 @@ export default function Header({ onOpenTracking }) {
           </a>
           <a href="#how-it-works" className="nav-link" onClick={closeMenu}>
             <span>{t('howItWorks')}</span>
-          </a>
-          <a href="#about" className="nav-link" onClick={closeMenu}>
-            <span>{t('whyChooseUs')}</span>
           </a>
           <a href="#reviews" className="nav-link" onClick={closeMenu}>
             <span>{t('reviews')}</span>
@@ -78,26 +75,11 @@ export default function Header({ onOpenTracking }) {
           <a href="#contact" className="nav-link" onClick={closeMenu}>
             <span>{t('contact')}</span>
           </a>
-          {/* Mobile Drawer Book Pickup CTA */}
+          {/* Mobile Drawer Book Pickup CTA (Only visible inside open mobile drawer) */}
           <a
             href="#booking"
             className="mobile-menu-cta-btn"
             onClick={closeMenu}
-            style={{
-              marginTop: '14px',
-              padding: '12px 20px',
-              borderRadius: '50px',
-              background: 'linear-gradient(135deg, #f5c453 0%, #e6a827 100%)',
-              color: '#0c1424',
-              fontWeight: 800,
-              fontSize: '0.92rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              textDecoration: 'none',
-              boxShadow: '0 4px 14px rgba(245, 196, 83, 0.4)'
-            }}
           >
             <span>{t('bookPickup')}</span>
             <i className="fa-solid fa-arrow-right"></i>
