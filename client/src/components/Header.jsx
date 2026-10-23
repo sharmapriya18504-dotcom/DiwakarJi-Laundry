@@ -78,6 +78,30 @@ export default function Header({ onOpenTracking }) {
           <a href="#contact" className="nav-link" onClick={closeMenu}>
             <span>{t('contact')}</span>
           </a>
+          {/* Mobile Drawer Book Pickup CTA */}
+          <a
+            href="#booking"
+            className="mobile-menu-cta-btn"
+            onClick={closeMenu}
+            style={{
+              marginTop: '14px',
+              padding: '12px 20px',
+              borderRadius: '50px',
+              background: 'linear-gradient(135deg, #f5c453 0%, #e6a827 100%)',
+              color: '#0c1424',
+              fontWeight: 800,
+              fontSize: '0.92rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              textDecoration: 'none',
+              boxShadow: '0 4px 14px rgba(245, 196, 83, 0.4)'
+            }}
+          >
+            <span>{t('bookPickup')}</span>
+            <i className="fa-solid fa-arrow-right"></i>
+          </a>
         </nav>
 
         {/* Right Header Actions */}
@@ -90,7 +114,7 @@ export default function Header({ onOpenTracking }) {
             title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
           >
             <i className={theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun'}></i>
-            <span>{theme === 'light' ? 'Dark' : 'Light'}</span>
+            <span className="pill-text-desktop">{theme === 'light' ? 'Dark' : 'Light'}</span>
           </button>
 
           {/* Language Switcher Pill (EN / HI) */}
@@ -104,7 +128,7 @@ export default function Header({ onOpenTracking }) {
             <span>{lang === 'en' ? 'HI' : 'EN'}</span>
           </button>
 
-          {/* Verified WhatsApp Contact Pill (Single Line) */}
+          {/* Verified WhatsApp Contact Pill (Single Line, Desktop Only) */}
           <a
             href={`https://wa.me/${ownerPhone}?text=${encodeURIComponent('Hello Diwakar Ji Laundry, I would like to inquire about laundry pickup in Kanpur.')}`}
             target="_blank"
@@ -118,8 +142,8 @@ export default function Header({ onOpenTracking }) {
             <span className="wa-number-single">+91 7860462268</span>
           </a>
 
-          {/* Book Pickup Gold CTA */}
-          <a href="#booking" className="btn-gold-pill" id="nav-book-pickup-btn">
+          {/* Book Pickup Gold CTA (Desktop Only, hidden on mobile) */}
+          <a href="#booking" className="btn-gold-pill nav-cta-desktop" id="nav-book-pickup-btn">
             <span>{t('bookPickup')}</span>
             <i className="fa-solid fa-arrow-right"></i>
           </a>
