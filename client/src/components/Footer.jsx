@@ -139,7 +139,9 @@ export default function Footer({ onOpenTracking }) {
             <span>|</span>
             <a href="#home">Terms &amp; Conditions</a>
             <span>|</span>
-            <a href="#home">Cancellation Policy</a>
+            <Link to="/admin/login" style={{ color: '#64748b', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }} title="Admin Console">
+              <i className="fa-solid fa-lock" style={{ fontSize: '10px' }}></i> Admin
+            </Link>
           </div>
         </div>
       </div>
